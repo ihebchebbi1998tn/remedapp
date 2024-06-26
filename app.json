@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "sitterbabyapp",
-    "slug": "sitterbabyapp",
+    "name": "remed",
+    "slug": "remed",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,16 +15,35 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyCp9ra0Wds6wiRGSRQywr8NhQn799lbpZA"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "CAMERA",
+        "CAMERA_ROLL",
+        "LOCATION"
+      ],
+      "package": "com.dev.remed",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCp9ra0Wds6wiRGSRQywr8NhQn799lbpZA"
+        }
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c9aaf46f-6577-421b-83b9-b3ffeeb5e648"
+      }
     }
   }
 }
