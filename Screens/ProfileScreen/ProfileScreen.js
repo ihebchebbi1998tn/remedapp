@@ -153,80 +153,6 @@ const ProfileScreen = () => {
         <View style={styles.header}>
           <Text style={styles.title}>{t("profileScreen.settings")}</Text>
         </View>
-        {appLanguage === "ar" ? (
-          <>
-            <TouchableOpacity
-              style={styles.item}
-              onPress={openEditProfileModal}
-            >
-              <Ionicons name="person-outline" size={24} color="green" />
-              <Text style={styles.itemText}>
-                {t("profileScreen.editProfile")}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.item} onPress={toggleFAQVisibility}>
-              <Ionicons name="help-circle-outline" size={24} color="green" />
-              <Text style={styles.itemText}>{t("profileScreen.faqs")}</Text>
-            </TouchableOpacity>
-            {isFAQVisible && (
-              <View style={styles.faqContainer}>
-                <View style={styles.faqItem}>
-                  <Text style={styles.faqQuestion}>What is this app for?</Text>
-                  <Text style={styles.faqAnswer}>
-                    This app is created so user can take pictures or upload an
-                    image of a place the building waste should be taken.
-                  </Text>
-                </View>
-                <View style={styles.faqItem}>
-                  <Text style={styles.faqQuestion}>Why do we use it?</Text>
-                  <Text style={styles.faqAnswer}>
-                    It is you can just enter the app with your account, click on
-                    the camera app then snap or upload a picture.
-                  </Text>
-                </View>
-                <View style={styles.faqItem}>
-                  <Text style={styles.faqQuestion}>
-                    I have to create an account?
-                  </Text>
-                  <Text style={styles.faqAnswer}>
-                    Contrary to popular belief, Lorem Ipsum is not simply random
-                    text.
-                  </Text>
-                </View>
-              </View>
-            )}
-            <TouchableOpacity
-              style={styles.item}
-              onPress={toggleHelpVisibility}
-            >
-              <Ionicons name="help-buoy-outline" size={24} color="green" />
-              <Text style={styles.itemText}>{t("profileScreen.help")}</Text>
-            </TouchableOpacity>
-            {isHelpVisible && <View style={styles.helpContainer}></View>}
-            <TouchableOpacity
-              style={styles.item}
-              onPress={togglePrivacyVisibility}
-            >
-              <Ionicons name="lock-closed-outline" size={24} color="green" />
-              <Text style={styles.itemText}>{t("profileScreen.privacy")}</Text>
-            </TouchableOpacity>
-            {isPrivacyVisible && (
-              <View style={styles.privacyContainer}>
-                <Text style={styles.privacyText}>
-                  This Privacy Policy describes how your personal information is
-                  collected, used, and shared when you visit our app.
-                </Text>
-              </View>
-            )}
-            <TouchableOpacity style={styles.item} onPress={openContactModal}>
-              <Ionicons name="mail-outline" size={24} color="green" />
-              <Text style={styles.itemText}>
-                {t("profileScreen.contactUs")}
-              </Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <>
             <TouchableOpacity
               style={styles.item}
               onPress={openEditProfileModal}
@@ -301,8 +227,6 @@ const ProfileScreen = () => {
                 {t("profileScreen.contactUs")}
               </Text>
             </TouchableOpacity>
-          </>
-        )}
         <Modal
           visible={isContactModalVisible}
           transparent={true}
