@@ -151,7 +151,6 @@ const HistoryScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
-      <Header title="Reports History" />
       <View style={styles.content}>
         <View style={styles.searchContainer}>
           <TextInput
@@ -180,7 +179,6 @@ const HistoryScreen = () => {
           />
         )}
       </View>
-      <BottomTabNavigator />
       <Modal visible={showModal} transparent={true} animationType="fade" onRequestClose={closeSortModal}>
         <TouchableOpacity style={styles.modalOverlay} onPress={closeSortModal}>
           <View style={styles.modalContent}>

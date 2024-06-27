@@ -148,7 +148,6 @@ const ProfileScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.white }}>
-      <Header />
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>{t("profileScreen.settings")}</Text>
@@ -387,7 +386,6 @@ const ProfileScreen = () => {
           </View>
         </Modal>
       </ScrollView>
-      <BottomTabNavigator />
     </SafeAreaView>
   );
 };

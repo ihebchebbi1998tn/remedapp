@@ -396,7 +396,6 @@ const MapScreenAdmin = () => {
     
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.lightGrey }}>
-      <Header />
       <View style={styles.container}>
         <View style={styles.searchContainer}>
           <View style={styles.inputText}>
@@ -722,7 +721,7 @@ const MapScreenAdmin = () => {
           </View>
         </Modal>
       </View>
-      <BottomTabNavigatorAdmin />
+      
     </SafeAreaView>
   );
 };

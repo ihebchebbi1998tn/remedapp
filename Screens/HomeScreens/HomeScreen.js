@@ -152,7 +152,6 @@ const HomeScreen = () => {
           return (
             <SafeAreaView style={{ flex: 1, backgroundColor: Colors.lightGrey }}>
               <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
-              <Header />
               <FlatList
                 data={filteredData}
                 keyExtractor={(item) => item.id.toString()}
@@ -164,7 +163,6 @@ const HomeScreen = () => {
                 key={'two-column'}
               />
               <View style={styles.bottomNavigator}>
-                <BottomTabNavigator />
               </View>
             </SafeAreaView>
           );

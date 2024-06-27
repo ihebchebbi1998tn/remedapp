@@ -62,9 +62,9 @@ export default function LoginScreen({ navigation }) {
           const parsedUser = JSON.parse(user);
           updateUser(parsedUser);
           if (parsedUser.role === "user") {
-            navigation.navigate("HomeScreen");
+            navigation.navigate("UserScreens");
           } else {
-            navigation.navigate("HomeScreenAdmin");
+            navigation.navigate("AdminScreens");
           }
         }
       } catch (error) {
@@ -99,9 +99,9 @@ export default function LoginScreen({ navigation }) {
           }
           console.log(data);
           if (data.user.role === "user") {
-            navigation.navigate("HomeScreen");
+            navigation.navigate("UserScreens");
           } else {
-            navigation.navigate("HomeScreenAdmin");
+            navigation.navigate("AdminScreens");
           }
         }
       } catch (error) {

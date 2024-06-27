@@ -16,9 +16,14 @@ import { useTranslation } from "react-i18next";
 const { width, height } = Dimensions.get("window");
 
 const TabArr = [
-  { route: "Home", label: "BottomTabNavigator.Home", icon: "home", screen: "HomeScreenAdmin" },
   {
-    route: "Profile",
+    route: "Home",
+    label: "BottomTabNavigator.Home",
+    icon: "home",
+    screen: "HomeScreenAdmin",
+  },
+  {
+    route: "ProfileScreen",
     label: "BottomTabNavigator.Profile",
     icon: "user",
     screen: "ProfileScreenAdmin",
@@ -46,14 +51,6 @@ const BottomTabNavigatorAdmin = () => {
 
   const handleOptionSelect = () => {
     navigation.navigate("MapScreenAdmin");
-  };
-
-  const animateModal = () => {
-    Animated.timing(animation, {
-      toValue: 1,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
   };
 
   const animateModalClose = () => {
@@ -118,7 +115,8 @@ const BottomTabNavigatorAdmin = () => {
   );
 };
 
-const TabButton = ({ icon, label, screen, t }) => { // Pass 't' as prop here
+const TabButton = ({ icon, label, screen, t }) => {
+  // Pass 't' as prop here
   const navigation = useNavigation();
   const route = useRoute();
   const isActive = route.name === screen;

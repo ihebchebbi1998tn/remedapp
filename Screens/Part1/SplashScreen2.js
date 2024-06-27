@@ -19,9 +19,9 @@ const SplashScreen2 = ({ navigation }) => {
           const parsedUser = JSON.parse(user);
           updateUser(parsedUser);
           if (parsedUser.role === "user") {
-            navigation.navigate("HomeScreen");
+            navigation.navigate("UserScreens");
           } else {
-            navigation.navigate("HomeScreenAdmin");
+            navigation.navigate("AdminScreens");
           }
         } else {
           const timeout = setTimeout(() => {
