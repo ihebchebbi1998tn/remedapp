@@ -110,23 +110,6 @@ const HomeScreen = () => {
 
   const renderHeader = () => (
     <>
-      <View style={styles.searchContainer}>
-       {/*  <View style={styles.inputText}>
-          <Ionicons name="search-outline" size={17} color={Colors.primary} />
-          <TextInput
-            placeholder="Search"
-            style={styles.input}
-            value={search}
-            onChangeText={setSearch}
-            autoCorrect={false}
-          />
-          {search.length > 0 && (
-            <TouchableOpacity onPress={() => setSearch("")}>
-              <AntDesign name="close" size={17} color={Colors.primary} />
-            </TouchableOpacity>
-          )}
-        </View> */}
-      </View>
       <Stats />
     </>
   );
