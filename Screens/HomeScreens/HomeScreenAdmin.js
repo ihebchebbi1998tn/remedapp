@@ -10,6 +10,7 @@ import {
   Dimensions,
   StatusBar,
   FlatList,
+  RefreshControl,
 } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import Colors from "../../utils/color";
@@ -27,18 +28,20 @@ const HomeScreenAdmin = () => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [page, setPage] = useState(1);
   const { t } = useTranslation();
 
   useEffect(() => {
     fetchData();
     getUserLocation();
-  }, []);
+  }, [page]);
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`${BASE_URL}remed/api/reports/getall_report.php`);
+      const response = await fetch(`${BASE_URL}remed/api/reports/getall_report.php?page=${page}`);
       const result = await response.json();
-      setData(result);
+      setData(prevData => page === 1 ? result : [...prevData, ...result]);
     } catch (error) {
       console.error(error);
     }
@@ -56,9 +59,8 @@ const HomeScreenAdmin = () => {
   };
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
-
     const toRad = (value) => (value * Math.PI) / 180;
-    const R = 6371; 
+    const R = 6371;
     const dLat = toRad(lat2 - lat1);
     const dLon = toRad(lon2 - lon1);
     const a =
@@ -66,29 +68,40 @@ const HomeScreenAdmin = () => {
       Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
       Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = R * c; 
+    const distance = R * c;
     return distance.toFixed(1);
-    
   };
 
-  const enhancedData = data.map((item) => {
+  const enhancedData = data.map((item, index) => {
+    const uniqueKey = `${item.reported_by}-${item.location}-${index}-${item.id || Date.now()}`;
     const distance = userLocation
       ? calculateDistance(userLocation.latitude, userLocation.longitude, parseFloat(item.altitude), parseFloat(item.longitude))
       : 'N/A';
     return {
-      id: item.id,
+      id: uniqueKey, 
       name: item.reported_by || "Unknown",
       location: item.location || "Unknown",
       distance: distance + ' km',
       coords: { lat: parseFloat(item.altitude), lng: parseFloat(item.longitude) },
       image: { uri: `${BASE_URL}remed/api/reports/` + item.picture },
       isLiked: false,
- };
+    };
   });
+  
 
   const filteredData = enhancedData.filter((item) =>
     item.name.toLowerCase().includes(search.toLowerCase())
   );
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setPage(1);
+    setRefreshing(false);
+  };
+
+  const loadMore = () => {
+    setPage(prevPage => prevPage + 1);
+  };
 
   const renderHeader = () => (
     <>
@@ -109,12 +122,11 @@ const HomeScreenAdmin = () => {
           )}
         </View>
       </View>
-      
     </>
   );
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.card}>
+  const renderItem = ({ item, index }) => (
+    <TouchableOpacity style={styles.card} key={item.id}>
       <View style={styles.cardContent}>
         <Image source={item.image} style={styles.cardImage} />
         {item.isLiked && (
@@ -122,7 +134,7 @@ const HomeScreenAdmin = () => {
             <AntDesign name="checkcircle" size={24} color={Colors.primary} />
           </View>
         )}
-                 <View style={styles.infoContainer}>
+        <View style={styles.infoContainer}>
           <Text style={styles.userName}>{item.name}</Text>
           <Text style={styles.userLocation}>{item.location}</Text>
           <Text style={styles.distance}>{item.distance}</Text>
@@ -135,15 +147,19 @@ const HomeScreenAdmin = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.lightGrey }}>
       <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
       <FlatList
-        data={filteredData}
-        keyExtractor={(item) => item.id.toString()}
-        ListHeaderComponent={renderHeader}
-        contentContainerStyle={styles.listContent}
-        renderItem={renderItem}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        key={'two-column'}
-      />
+  data={filteredData}
+  keyExtractor={(item) => item.id}
+  ListHeaderComponent={renderHeader}
+  contentContainerStyle={styles.listContent}
+  renderItem={renderItem}
+  numColumns={2}
+  columnWrapperStyle={styles.row}
+  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+  onEndReached={loadMore}
+  onEndReachedThreshold={0.5}
+  key={'two-column'}
+/>
+
       <View style={styles.bottomNavigator}>
       </View>
     </SafeAreaView>
@@ -154,7 +170,7 @@ const styles = StyleSheet.create({
   listContent: {
     backgroundColor: Colors.pageBackground,
     paddingHorizontal: 15,
-    paddingBottom: 80 
+    paddingBottom: 80
   },
   row: {
     justifyContent: 'space-between',
@@ -234,4 +250,3 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreenAdmin;
-

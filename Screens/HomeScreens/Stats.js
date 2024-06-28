@@ -376,6 +376,7 @@ const QrModal = ({ qrVisible, setQrVisible, t }) => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop:15,
     backgroundColor: Colors.white,
     padding: 20,
     marginBottom: 10,
@@ -389,6 +390,8 @@ const styles = StyleSheet.create({
   statsContainer: {
     alignItems: "center",
     marginBottom: 20,
+    maringTop:10,
+
   },
   icon: {
     marginRight: 0,

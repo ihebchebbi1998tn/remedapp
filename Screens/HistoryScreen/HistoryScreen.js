@@ -2,8 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, View, Text, FlatList, TextInput, TouchableOpacity, ActivityIndicator, Image, Modal, RefreshControl } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Switch } from 'react-native-paper';
-import BottomTabNavigator from '../../Navigation/BottomTabNavigator';
-import Header from '../../Navigation/Header';
 import Colors from '../../utils/color';
 import { useTranslation } from "react-i18next";
 import { BASE_URL } from '../../Navigation/apiConfig';
@@ -23,31 +21,32 @@ const HistoryScreen = () => {
   const [sortByLocation, setSortByLocation] = useState(false);
   const [sortByStatus, setSortByStatus] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [page, setPage] = useState(1);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
 
   useEffect(() => {
-    fetchData(); // Fetch initial data
+    fetchReports();
   }, []);
 
   useEffect(() => {
-    // Debounce search input
     const delayDebounceFn = setTimeout(() => {
       filterReports(searchQuery);
     }, 300);
-    return () => clearTimeout(delayDebounceFn); // Clear timeout on cleanup
+
+    return () => clearTimeout(delayDebounceFn);
   }, [searchQuery]);
 
   useEffect(() => {
-    // Sort filtered reports
     sortReports();
   }, [sortByDate, sortByLocation, sortByStatus]);
 
-  const fetchData = async () => {
-    setInitialLoading(true); // Set initial loading state
+  const fetchReports = async () => {
+    setInitialLoading(true);
     try {
       const response = await fetch(`${BASE_URL}remed/api/reports/getmy_reports.php?current_user_id=${user.id}`);
       const data = await response.json();
       const transformedData = data.map((item) => ({
-        id: item.id,
+        id: `${item.id}-${item.created_at}`,
         title: item.title,
         location: `${item.location} (${item.altitude}, ${item.longitude})`,
         description: item.description,
@@ -56,12 +55,38 @@ const HistoryScreen = () => {
         createdAt: new Date(item.created_at),
         image: { uri: `${BASE_URL}remed/api/reports/` + item.picture },
       }));
-      setReports(transformedData); // Update reports
-      setFilteredReports(transformedData); // Update filtered reports
+      setReports(transformedData);
+      setFilteredReports(transformedData);
     } catch (error) {
       console.error('Error fetching data:', error);
+    } finally {
+      setInitialLoading(false);
     }
-    setInitialLoading(false); // Clear initial loading state
+  };
+
+  const fetchMoreReports = async () => {
+    if (isFetchingMore) return;
+    setIsFetchingMore(true);
+    try {
+      const response = await fetch(`${BASE_URL}remed/api/reports/getmy_reports.php?current_user_id=${user.id}&page=${page + 1}`);
+      const data = await response.json();
+      const transformedData = data.map((item) => ({
+        id: `${item.id}-${item.created_at}`,
+        title: item.title,
+        location: `${item.location} (${item.altitude}, ${item.longitude})`,
+        description: item.description,
+        status: item.state,
+        collected: item.pickedup_by !== null,
+        createdAt: new Date(item.created_at),
+        image: { uri: `${BASE_URL}remed/api/reports/` + item.picture },
+      }));
+      setReports((prevReports) => [...prevReports, ...transformedData]);
+      setFilteredReports((prevReports) => [...prevReports, ...transformedData]);
+      setPage((prevPage) => prevPage + 1);
+    } catch (error) {
+      console.error('Error fetching more data:', error);
+    }
+    setIsFetchingMore(false);
   };
 
   const renderReportItem = ({ item }) => (
@@ -73,7 +98,7 @@ const HistoryScreen = () => {
       <Text>{t("HistoryScreen.Status")}: 
         <Text style={{ color: getStatusColor(item.status) }}>{getStatusText(item.status)}</Text>
       </Text>
-      <Text>{t("HistoryScreen.CreatedAt")} At: {item.createdAt.toLocaleDateString()}</Text>
+      <Text>{t("HistoryScreen.CreatedAt")}: {item.createdAt.toLocaleDateString()}</Text>
     </TouchableOpacity>
   );
 
@@ -86,7 +111,7 @@ const HistoryScreen = () => {
       case "Reported":
         return 'red';
       default:
-        return 'red'; // Default to red for any other status
+        return 'gray';
     }
   };
 
@@ -99,28 +124,29 @@ const HistoryScreen = () => {
       case "Reported":
         return 'ϟ';
       default:
-        return status; // Use the status itself for any other status
+        return status;
     }
   };
 
   const handleReportPress = (report) => {
+    // Handle report press, possibly navigate to a report details screen
     console.log('Pressed report:', report);
   };
 
   const filterReports = (query) => {
-    setLoading(true); // Set loading state
+    setLoading(true);
     const filtered = reports.filter(
       (report) =>
         report.title.toLowerCase().includes(query.toLowerCase()) ||
         report.location.toLowerCase().includes(query.toLowerCase()) ||
         report.description.toLowerCase().includes(query.toLowerCase())
     );
-    setFilteredReports(filtered); // Update filtered reports
-    setLoading(false); // Clear loading state
+    setFilteredReports(filtered);
+    setLoading(false);
   };
 
   const sortReports = () => {
-    setLoading(true); // Set loading state
+    setLoading(true);
     let sortedReports = [...filteredReports];
     if (sortByDate) {
       sortedReports.sort((a, b) => a.createdAt - b.createdAt);
@@ -129,10 +155,10 @@ const HistoryScreen = () => {
       sortedReports.sort((a, b) => a.location.localeCompare(b.location));
     }
     if (sortByStatus) {
-      sortedReports.sort((a, b) => (a.collected === b.collected ? 0 : a.collected ? -1 : 1));
+      sortedReports.sort((a, b) => (a.status === b.status ? 0 : a.status === "Collected" ? -1 : 1));
     }
-    setFilteredReports(sortedReports); // Update filtered reports
-    setLoading(false); // Clear loading state
+    setFilteredReports(sortedReports);
+    setLoading(false);
   };
 
   const openSortModal = () => {
@@ -144,8 +170,8 @@ const HistoryScreen = () => {
   };
 
   const handleRefresh = () => {
-    setRefreshing(true); // Set refreshing state
-    fetchData().then(() => setRefreshing(false)); // Fetch data and clear refreshing state
+    setRefreshing(true);
+    fetchReports().then(() => setRefreshing(false));
   };
 
   return (
@@ -163,19 +189,24 @@ const HistoryScreen = () => {
             <Ionicons name="settings" size={24} color="white" />
           </TouchableOpacity>
         </View>
-        {initialLoading ? <ActivityIndicator size="large" color={Colors.primary} /> : (
+        {initialLoading ? (
+          <ActivityIndicator size="large" color={Colors.primary} />
+        ) : (
           <FlatList
             data={filteredReports}
+            keyExtractor={(item) => item.id}
             renderItem={renderReportItem}
-            keyExtractor={(item) => item.id.toString()}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}
                 onRefresh={handleRefresh}
-                colors={[Colors.primary]} // Android colors
-                tintColor={Colors.primary} // iOS color
+                colors={[Colors.primary]}
+                tintColor={Colors.primary}
               />
             }
+            onEndReached={fetchMoreReports}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={isFetchingMore && <ActivityIndicator size="large" color={Colors.primary} />}
           />
         )}
       </View>
@@ -212,6 +243,7 @@ const HistoryScreen = () => {
       </Modal>
     </SafeAreaView>
   );
+  
 };
 
 const styles = StyleSheet.create({
@@ -277,8 +309,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 0,
+    marginBottom: 10,
   },
 });
 
-export default HistoryScreen;
+export default HistoryScreen;  
