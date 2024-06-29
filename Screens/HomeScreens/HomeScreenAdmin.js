@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useCallback } from "react";
 import {
   View,
   Text,
@@ -11,15 +11,12 @@ import {
   StatusBar,
   FlatList,
   RefreshControl,
+  ActivityIndicator,
 } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import Colors from "../../utils/color";
-import BottomTabNavigator from "../../Navigation/BottomTabNavigator";
-import Header from "../../Navigation/Header";
-import Stats from "./Stats";
 import * as Location from 'expo-location';
 import { BASE_URL } from "../../Navigation/apiConfig";
-import BottomTabNavigatorAdmin from "../../Navigation/BottomTabNavigatorAdmin";
 import { useTranslation } from "react-i18next";
 
 const screenWidth = Dimensions.get("window").width;
@@ -30,23 +27,26 @@ const HomeScreenAdmin = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(1);
+  const [isLoadingMore, setIsLoadingMore] = useState(true); 
   const { t } = useTranslation();
-
   useEffect(() => {
-    fetchData();
+    fetchData(page);
     getUserLocation();
   }, [page]);
-
-  const fetchData = async () => {
+  const fetchData = async (pageNum) => {
     try {
-      const response = await fetch(`${BASE_URL}remed/api/reports/getall_report.php?page=${page}`);
+      const limit = 2; 
+      const response = await fetch(`${BASE_URL}remed/api/reports/getall_reportslazy.php?page=${pageNum}&limit=${limit}`);
       const result = await response.json();
-      setData(prevData => page === 1 ? result : [...prevData, ...result]);
+      if (result.length > 0) {
+        setData(prevData => (pageNum === 1 ? result : [...prevData, ...result]));
+      } else {
+        setIsLoadingMore(false); 
+      }
     } catch (error) {
       console.error(error);
     }
   };
-
   const getUserLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
@@ -57,7 +57,6 @@ const HomeScreenAdmin = () => {
     let location = await Location.getCurrentPositionAsync({});
     setUserLocation(location.coords);
   };
-
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const toRad = (value) => (value * Math.PI) / 180;
     const R = 6371;
@@ -71,7 +70,6 @@ const HomeScreenAdmin = () => {
     const distance = R * c;
     return distance.toFixed(1);
   };
-
   const enhancedData = data.map((item, index) => {
     const uniqueKey = `${item.reported_by}-${item.location}-${index}-${item.id || Date.now()}`;
     const distance = userLocation
@@ -87,22 +85,19 @@ const HomeScreenAdmin = () => {
       isLiked: false,
     };
   });
-  
-
   const filteredData = enhancedData.filter((item) =>
     item.name.toLowerCase().includes(search.toLowerCase())
   );
-
-  const onRefresh = () => {
+  const onRefresh = useCallback(() => {
     setRefreshing(true);
     setPage(1);
-    setRefreshing(false);
-  };
-
+    fetchData(1).then(() => setRefreshing(false));
+  }, []);
   const loadMore = () => {
-    setPage(prevPage => prevPage + 1);
+    if (isLoadingMore) {
+      setPage(prevPage => prevPage + 1);
+    }
   };
-
   const renderHeader = () => (
     <>
       <View style={styles.searchContainer}>
@@ -124,7 +119,6 @@ const HomeScreenAdmin = () => {
       </View>
     </>
   );
-
   const renderItem = ({ item, index }) => (
     <TouchableOpacity style={styles.card} key={item.id}>
       <View style={styles.cardContent}>
@@ -142,30 +136,29 @@ const HomeScreenAdmin = () => {
       </View>
     </TouchableOpacity>
   );
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.lightGrey }}>
       <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
       <FlatList
-  data={filteredData}
-  keyExtractor={(item) => item.id}
-  ListHeaderComponent={renderHeader}
-  contentContainerStyle={styles.listContent}
-  renderItem={renderItem}
-  numColumns={2}
-  columnWrapperStyle={styles.row}
-  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-  onEndReached={loadMore}
-  onEndReachedThreshold={0.5}
-  key={'two-column'}
-/>
-
+        data={filteredData}
+        keyExtractor={(item) => item.id.toString()}
+        ListHeaderComponent={renderHeader}
+        contentContainerStyle={styles.listContent}
+        renderItem={renderItem}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        key={'two-column'}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.5}
+      />
       <View style={styles.bottomNavigator}>
       </View>
     </SafeAreaView>
   );
-};
-
+  };
 const styles = StyleSheet.create({
   listContent: {
     backgroundColor: Colors.pageBackground,

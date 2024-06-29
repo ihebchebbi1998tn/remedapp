@@ -19,8 +19,6 @@ import * as Location from 'expo-location';
 import { BASE_URL } from "../../Navigation/apiConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const screenWidth = Dimensions.get("window").width;
-
 const HomeScreen = () => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
@@ -28,8 +26,7 @@ const HomeScreen = () => {
   const [appLanguage, setAppLanguage] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(1);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-
+  const [isLoadingMore, setIsLoadingMore] = useState(true); 
   useEffect(() => {
     const fetchAppLanguage = async () => {
       try {
@@ -42,7 +39,6 @@ const HomeScreen = () => {
         console.error(error);
       }
     };
-
     fetchAppLanguage();
   }, []);
 
@@ -53,14 +49,18 @@ const HomeScreen = () => {
 
   const fetchData = async (pageNum) => {
     try {
-      const response = await fetch(`${BASE_URL}remed/api/reports/getall_report.php?page=${pageNum}`);
+      const limit = 2; 
+      const response = await fetch(`${BASE_URL}remed/api/reports/getall_reportslazy.php?page=${pageNum}&limit=${limit}`);
       const result = await response.json();
-      setData(prevData => (pageNum === 1 ? result : [...prevData, ...result]));
+      if (result.length > 0) {
+        setData(prevData => (pageNum === 1 ? result : [...prevData, ...result]));
+      } else {
+        setIsLoadingMore(false); 
+      }
     } catch (error) {
       console.error(error);
     }
   };
-
   const getUserLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
@@ -71,11 +71,9 @@ const HomeScreen = () => {
     let location = await Location.getCurrentPositionAsync({});
     setUserLocation(location.coords);
   };
-
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const toRad = (value) => (value * Math.PI) / 180;
-
-    const R = 6371; // Radius of the Earth in km
+    const R = 6371; 
     const dLat = toRad(lat2 - lat1);
     const dLon = toRad(lon1 - lon2);
     const a =
@@ -83,10 +81,9 @@ const HomeScreen = () => {
       Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
       Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = R * c; // Distance in km
+    const distance = R * c; 
     return distance.toFixed(1);
   };
-
   const enhancedData = data.map((item, index) => {
     const uniqueKey = `${item.reported_by}-${item.location}-${index}-${item.id || Date.now()}`;
     const distance = userLocation
@@ -102,8 +99,6 @@ const HomeScreen = () => {
       isLiked: false,
     };
   });
-  
-
   const filteredData = enhancedData.filter((item) =>
     item.name.toLowerCase().includes(search.toLowerCase())
   );
@@ -113,21 +108,16 @@ const HomeScreen = () => {
     setPage(1);
     fetchData(1).then(() => setRefreshing(false));
   }, []);
-
   const loadMore = () => {
-    if (!isLoadingMore) {
-      setIsLoadingMore(true);
+    if (isLoadingMore) {
       setPage(prevPage => prevPage + 1);
-      setIsLoadingMore(false);
     }
   };
-
   const renderHeader = () => (
     <>
       <Stats />
     </>
   );
-
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.card}>
       <View style={styles.cardContent}>
@@ -145,7 +135,6 @@ const HomeScreen = () => {
       </View>
     </TouchableOpacity>
   );
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.lightGrey }}>
       <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
@@ -168,7 +157,6 @@ const HomeScreen = () => {
     </SafeAreaView>
   );
 };
-
 const styles = StyleSheet.create({
   listContent: {
     backgroundColor: Colors.pageBackground,

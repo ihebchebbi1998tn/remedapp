@@ -1,17 +1,30 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { SafeAreaView, StatusBar, StyleSheet, View, Text, FlatList, TextInput, TouchableOpacity, ActivityIndicator, Image, Modal, RefreshControl } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { Switch } from 'react-native-paper';
-import Colors from '../../utils/color';
+import React, { useState, useEffect, useContext } from "react";
+import {
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  Image,
+  Modal,
+  RefreshControl,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { Switch } from "react-native-paper";
+import Colors from "../../utils/color";
 import { useTranslation } from "react-i18next";
-import { BASE_URL } from '../../Navigation/apiConfig';
-import { UserContext } from '../../Navigation/UserContext';
+import { BASE_URL } from "../../Navigation/apiConfig";
+import { UserContext } from "../../Navigation/UserContext";
 
 const HistoryScreen = () => {
   const { t } = useTranslation();
   const { user } = useContext(UserContext);
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [reports, setReports] = useState([]);
   const [filteredReports, setFilteredReports] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -23,27 +36,18 @@ const HistoryScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(1);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const [hasMoreReports, setHasMoreReports] = useState(true);
 
   useEffect(() => {
     fetchReports();
   }, []);
 
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      filterReports(searchQuery);
-    }, 300);
-
-    return () => clearTimeout(delayDebounceFn);
-  }, [searchQuery]);
-
-  useEffect(() => {
-    sortReports();
-  }, [sortByDate, sortByLocation, sortByStatus]);
-
   const fetchReports = async () => {
     setInitialLoading(true);
     try {
-      const response = await fetch(`${BASE_URL}remed/api/reports/getmy_reports.php?current_user_id=${user.id}`);
+      const response = await fetch(
+        `${BASE_URL}remed/api/reports/getmy_reports.php?current_user_id=${user.id}`
+      );
       const data = await response.json();
       const transformedData = data.map((item) => ({
         id: `${item.id}-${item.created_at}`,
@@ -57,19 +61,25 @@ const HistoryScreen = () => {
       }));
       setReports(transformedData);
       setFilteredReports(transformedData);
+      setHasMoreReports(data.length > 0);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     } finally {
       setInitialLoading(false);
     }
   };
 
   const fetchMoreReports = async () => {
-    if (isFetchingMore) return;
+    if (isFetchingMore || !hasMoreReports) return;
     setIsFetchingMore(true);
     try {
-      const response = await fetch(`${BASE_URL}remed/api/reports/getmy_reports.php?current_user_id=${user.id}&page=${page + 1}`);
+      const response = await fetch(
+        `${BASE_URL}remed/api/reports/getmy_reports.php?current_user_id=${
+          user.id
+        }&page=${page + 1}`
+      );
       const data = await response.json();
+      console.log(data);
       const transformedData = data.map((item) => ({
         id: `${item.id}-${item.created_at}`,
         title: item.title,
@@ -80,57 +90,80 @@ const HistoryScreen = () => {
         createdAt: new Date(item.created_at),
         image: { uri: `${BASE_URL}remed/api/reports/` + item.picture },
       }));
-      setReports((prevReports) => [...prevReports, ...transformedData]);
-      setFilteredReports((prevReports) => [...prevReports, ...transformedData]);
+      setReports((prevReports) => {
+        const uniqueReports = [...prevReports];
+        transformedData.forEach((item) => {
+          if (!uniqueReports.some((report) => report.id === item.id)) {
+            uniqueReports.push(item);
+          }
+        });
+        return uniqueReports;
+      });
+      setFilteredReports((prevReports) => {
+        const uniqueReports = [...prevReports];
+        transformedData.forEach((item) => {
+          if (!uniqueReports.some((report) => report.id === item.id)) {
+            uniqueReports.push(item);
+          }
+        });
+        return uniqueReports;
+      });
       setPage((prevPage) => prevPage + 1);
+      setHasMoreReports(data.length > 0);
     } catch (error) {
-      console.error('Error fetching more data:', error);
+      console.error("Error fetching more data:", error);
     }
     setIsFetchingMore(false);
   };
 
   const renderReportItem = ({ item }) => (
-    <TouchableOpacity style={styles.reportItem} onPress={() => handleReportPress(item)}>
+    <TouchableOpacity style={styles.reportItem}>
       <Image source={item.image} style={styles.image} />
-      <Text>{t("HistoryScreen.Title")}: {item.title}</Text>
-      <Text>{t("HistoryScreen.Location")}: {item.location}</Text>
-      <Text>{t("HistoryScreen.Description")}: {item.description}</Text>
-      <Text>{t("HistoryScreen.Status")}: 
-        <Text style={{ color: getStatusColor(item.status) }}>{getStatusText(item.status)}</Text>
+      <Text>
+        {t("HistoryScreen.Title")}: {item.title}
       </Text>
-      <Text>{t("HistoryScreen.CreatedAt")}: {item.createdAt.toLocaleDateString()}</Text>
+      <Text>
+        {t("HistoryScreen.Location")}: {item.location}
+      </Text>
+      <Text>
+        {t("HistoryScreen.Description")}: {item.description}
+      </Text>
+      <Text>
+        {t("HistoryScreen.Status")}:
+        <Text style={{ color: getStatusColor(item.status) }}>
+          {getStatusText(item.status)}
+        </Text>
+      </Text>
+      <Text>
+        {t("HistoryScreen.CreatedAt")}: {item.createdAt.toLocaleDateString()}
+      </Text>
     </TouchableOpacity>
   );
 
   const getStatusColor = (status) => {
     switch (status) {
       case "Pending":
-        return 'orange';
+        return "orange";
       case "Collected":
-        return 'green';
+        return "green";
       case "Reported":
-        return 'red';
+        return "red";
       default:
-        return 'gray';
+        return "gray";
     }
   };
 
   const getStatusText = (status) => {
     switch (status) {
       case "Pending":
-        return '⟳';
+        return "⟳";
       case "Collected":
-        return '✓';
+        return "✓";
       case "Reported":
-        return 'ϟ';
+        return "ϟ";
       default:
         return status;
     }
-  };
-
-  const handleReportPress = (report) => {
-    // Handle report press, possibly navigate to a report details screen
-    console.log('Pressed report:', report);
   };
 
   const filterReports = (query) => {
@@ -148,15 +181,28 @@ const HistoryScreen = () => {
   const sortReports = () => {
     setLoading(true);
     let sortedReports = [...filteredReports];
-    if (sortByDate) {
-      sortedReports.sort((a, b) => a.createdAt - b.createdAt);
-    }
-    if (sortByLocation) {
-      sortedReports.sort((a, b) => a.location.localeCompare(b.location));
-    }
-    if (sortByStatus) {
-      sortedReports.sort((a, b) => (a.status === b.status ? 0 : a.status === "Collected" ? -1 : 1));
-    }
+  
+    sortedReports.sort((a, b) => {
+      if (sortByDate && a.createdAt !== b.createdAt) {
+        return a.createdAt - b.createdAt;
+      }
+  
+      if (sortByLocation && a.location !== b.location) {
+        return a.location.localeCompare(b.location);
+      }
+  
+      if (sortByStatus) {
+        const statusOrder = {
+          "Collected": 0,
+          "Pending": 1,
+          "Reported": 2,
+        };
+        return statusOrder[a.status] - statusOrder[b.status];
+      }
+  
+      return 0; 
+    });
+  
     setFilteredReports(sortedReports);
     setLoading(false);
   };
@@ -173,7 +219,6 @@ const HistoryScreen = () => {
     setRefreshing(true);
     fetchReports().then(() => setRefreshing(false));
   };
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
@@ -183,9 +228,15 @@ const HistoryScreen = () => {
             style={styles.searchInput}
             placeholder={t("HistoryScreen.Search")}
             value={searchQuery}
-            onChangeText={(text) => setSearchQuery(text)}
+            onChangeText={(text) => {
+              setSearchQuery(text);
+              filterReports(text);
+            }}
           />
-          <TouchableOpacity style={styles.settingsButton} onPress={openSortModal}>
+          <TouchableOpacity
+            style={styles.settingsButton}
+            onPress={openSortModal}
+          >
             <Ionicons name="settings" size={24} color="white" />
           </TouchableOpacity>
         </View>
@@ -206,11 +257,20 @@ const HistoryScreen = () => {
             }
             onEndReached={fetchMoreReports}
             onEndReachedThreshold={0.5}
-            ListFooterComponent={isFetchingMore && <ActivityIndicator size="large" color={Colors.primary} />}
+            ListFooterComponent={
+              isFetchingMore && (
+                <ActivityIndicator size="large" color={Colors.primary} />
+              )
+            }
           />
         )}
       </View>
-      <Modal visible={showModal} transparent={true} animationType="fade" onRequestClose={closeSortModal}>
+      <Modal
+        visible={showModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={closeSortModal}
+      >
         <TouchableOpacity style={styles.modalOverlay} onPress={closeSortModal}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>{t("HistoryScreen.SortBy")}</Text>
@@ -218,7 +278,10 @@ const HistoryScreen = () => {
               <Text>{t("HistoryScreen.DateCreated")}</Text>
               <Switch
                 value={sortByDate}
-                onValueChange={(value) => setSortByDate(value)}
+                onValueChange={(value) => {
+                  setSortByDate(value);
+                  sortReports();
+                }}
                 color={Colors.primary}
               />
             </View>
@@ -226,7 +289,10 @@ const HistoryScreen = () => {
               <Text>{t("HistoryScreen.Location")}</Text>
               <Switch
                 value={sortByLocation}
-                onValueChange={(value) => setSortByLocation(value)}
+                onValueChange={(value) => {
+                  setSortByLocation(value);
+                  sortReports();
+                }}
                 color={Colors.primary}
               />
             </View>
@@ -234,7 +300,10 @@ const HistoryScreen = () => {
               <Text>{t("HistoryScreen.Status")}</Text>
               <Switch
                 value={sortByStatus}
-                onValueChange={(value) => setSortByStatus(value)}
+                onValueChange={(value) => {
+                  setSortByStatus(value);
+                  sortReports();
+                }}
                 color={Colors.primary}
               />
             </View>
@@ -243,13 +312,12 @@ const HistoryScreen = () => {
       </Modal>
     </SafeAreaView>
   );
-  
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
   },
   content: {
     flex: 1,
@@ -257,31 +325,31 @@ const styles = StyleSheet.create({
   },
   reportItem: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 8,
     padding: 10,
     marginBottom: 10,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: 100,
     marginBottom: 10,
     borderRadius: 8,
   },
   searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
   },
   searchInput: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 12,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     marginRight: 10,
   },
   settingsButton: {
@@ -291,26 +359,26 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   modalContent: {
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 10,
     padding: 15,
   },
   modalTitle: {
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
   },
   sortOption: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 10,
   },
 });
 
-export default HistoryScreen;  
+export default HistoryScreen;
