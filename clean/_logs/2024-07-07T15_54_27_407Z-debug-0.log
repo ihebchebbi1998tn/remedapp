@@ -7,9 +7,15 @@
 6 silly config:load:file:C:\Users\ihebc\AppData\Roaming\npm\etc\npmrc
 7 verbose title npm start
 8 verbose argv "start"
-9 verbose logfile logs-max:10 dir:C:\REMED\clean\_logs\2024-06-29T12_15_31_570Z-
-10 verbose logfile C:\REMED\clean\_logs\2024-06-29T12_15_31_570Z-debug-0.log
+9 verbose logfile logs-max:10 dir:C:\REMED\clean\_logs\2024-07-07T15_54_27_407Z-
+10 verbose logfile C:\REMED\clean\_logs\2024-07-07T15_54_27_407Z-debug-0.log
 11 silly logfile start cleaning logs, removing 1 files
 12 silly logfile done cleaning log files
-13 verbose exit 1073807364
-14 verbose code 1073807364
+13 http fetch GET 200 https://registry.npmjs.org/npm 1084ms
+14 notice
+14 notice New [33mminor[39m version of npm available! [33m10.6.0[39m -> [34m10.8.1[39m
+14 notice Changelog: [34mhttps://github.com/npm/cli/releases/tag/v10.8.1[39m
+14 notice To update run: [4mnpm install -g npm@10.8.1[24m
+14 notice  { force: true, [Symbol(proc-log.meta)]: true }
+15 verbose exit 0
+16 info ok

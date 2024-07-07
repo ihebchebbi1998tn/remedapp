@@ -1,71 +1,82 @@
-import React, { useEffect, useState ,useContext } from "react";
-import { View, Image, StyleSheet, Text, ActivityIndicator, StatusBar,SafeAreaView } from "react-native";
+import React, { useEffect , useContext } from "react";
+import { View, Image, StyleSheet, StatusBar, SafeAreaView } from "react-native";
 import Colors from "../../utils/color";
-const SplashScreen = ({ navigation }) => {
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../Navigation/LanguageContext";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserContext } from "../../Navigation/Routings/UserContext";
+import styles from "./Styles/StyleSplashScreen";
+const SplashScreen= ({ navigation }) => {
+  const { t, i18n } = useTranslation();
+  const { changeLanguage } = useLanguage();
+  const { user, updateUser } = useContext(UserContext);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      navigation.navigate("Walk1");
-    }, 5000);
+    const checkLoggedInUser = async () => {
+      try {
+        const user = await AsyncStorage.getItem('user');
+        if (user) {
+          const parsedUser = JSON.parse(user);
+          updateUser(parsedUser);
+          if (parsedUser.role === "user") {
+            navigation.navigate("UserScreens");
+          } else {
+            navigation.navigate("AdminScreens");
+          }
+        } else {
+          const timeout = setTimeout(() => {
+            navigation.navigate("Walk1");
+          }, 1000);
+          return () => clearTimeout(timeout);
+        }
+      } catch (error) {
+        console.error("Error retrieving user from AsyncStorage:", error);
+      }
+    };
 
-    return () => clearTimeout(timeout);
+    checkLoggedInUser();
   }, [navigation]);
+  
+
+  useEffect(() => {
+    const userLanguage = Intl.DateTimeFormat().resolvedOptions().locale;
+    let displayLanguage;
+    switch (userLanguage.substring(0, 2)) {
+      case "en":
+        displayLanguage = "en";
+        break;
+      case "fr":
+        displayLanguage = "fr";
+        break;
+      case "ar":
+        displayLanguage = "ar";
+        break;
+      case "it":
+        displayLanguage = "it";
+        break;
+      default:
+        displayLanguage = "en";
+    }
+    i18n.changeLanguage(displayLanguage);
+    changeLanguage(displayLanguage);
+     AsyncStorage.setItem('appLanguage', JSON.stringify(displayLanguage));
+    console.log('User Phone Language:', displayLanguage);
+  }, []);
+
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
       <StatusBar backgroundColor={Colors.primary} barStyle="light-content" />
-      <Image
-        source={require("../../assets/splash.png")} 
-        style={styles.backgroundImage}
-        resizeMode="cover"
-      />
-      <View style={styles.overlay}>
-        <ActivityIndicator color={Colors.primary} size="large" />
-        <LoadingText />
+      <View style={styles.centeredContent}>
+        <Image
+          source={require("../../assets/logoall.png")}
+          resizeMode="contain"
+          style={styles.image}
+        />
       </View>
     </SafeAreaView>
   );
 };
 
-const LoadingText = () => {
-  const [dots, setDots] = useState("");
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDots((prevDots) => (prevDots.length < 3 ? prevDots + "." : ""));
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <Text style={styles.loadingText}>
-      Chargement{dots}
-    </Text>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#000000", 
-  },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    position: "absolute",
-  },
-  overlay: {
-    position: "absolute",
-    bottom: 20,
-    alignSelf: "center",
-    alignItems: "center",
-  },
-  loadingText: {
-    color: Colors.primary,
-    marginTop: 10,
-    fontSize: 16,
-  },
-});
 
 export default SplashScreen;
