@@ -1,6 +1,6 @@
 // src/viewModels/MapViewModel.js
 import { useState, useEffect, useRef } from 'react';
-import { fetchAppLanguage, fetchMarkers } from '../Services/MapService';
+import { fetchAppLanguage, fetchMarkers } from '../Services/apiServiceUser';
 import * as Location from 'expo-location';
 import { Animated } from 'react-native';
 import { TouchableOpacity } from 'react-native';

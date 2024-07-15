@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import en from './locales/en/translation.json';
 import fr from './locales/fr/translation.json';
 import ar from './locales/ar/translation.json';
-import it from './locales/it/translation.json'; // Add this line
+import it from './locales/it/translation.json'; 
 
 i18n
   .use(initReactI18next)
@@ -19,12 +19,12 @@ i18n
         translation: ar,
       },
       it: {
-        translation: it, // Add this line
+        translation: it,
       },
     },
     compatibilityJSON: 'v3', 
-    lng: 'fr', // Default language
-    fallbackLng: 'fr', // Fallback language if translation is missing
+    lng: 'en', 
+    fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
     },

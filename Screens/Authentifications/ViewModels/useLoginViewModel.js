@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 import { useTranslation } from "react-i18next";
 import { UserContext } from "../../../Navigation/Routings/UserContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { fetchLogin } from "../Services/authServiceApi";
+import { fetchLogin } from "../Services/apiService";
 
 export const useLoginViewModel = (navigation) => {
   const [email, setEmail] = useState("");
@@ -33,7 +33,7 @@ export const useLoginViewModel = (navigation) => {
     const intervalId = setInterval(fetchAppLanguage, 1000);
     return () => clearInterval(intervalId);
   }, []);
-  
+
   const openSidebar = () => setIsSidebarOpen(true);
   const closeSidebar = () => setIsSidebarOpen(false);
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
@@ -58,7 +58,7 @@ export const useLoginViewModel = (navigation) => {
     };
 
     checkLoggedInUser();
-  }, []);
+  }, [navigation, updateUser]);
 
   const handleLogin = async () => {
     setIsLoading(true);
@@ -83,8 +83,13 @@ export const useLoginViewModel = (navigation) => {
     } else {
       updateUser(data.user);
       if (stayLoggedIn) {
-         AsyncStorage.setItem("user", JSON.stringify(data.user));
+        AsyncStorage.setItem("user", JSON.stringify(data.user));
+        console.log(user);
+      } else {
+        AsyncStorage.setItem("user", JSON.stringify("0"));
+        console.log("not saved");
       }
+      console.log(data.user.role);
       if (data.user.role === "user") {
         navigation.navigate("UserScreens");
       } else {

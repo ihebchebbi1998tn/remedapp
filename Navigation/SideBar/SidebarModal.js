@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, TouchableOpacity,  Modal, Animated, PanResponder, Text, Image } from 'react-native';
+import { View, TouchableOpacity, Modal, Animated, PanResponder, Text, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../LanguageContext";
@@ -25,17 +25,13 @@ const SidebarModal = ({ isOpen, onClose }) => {
     };
     loadLanguage();
   }, []);
-  
-  useEffect(() => {
-  }, [selectedLanguage]);
-  
+
   useEffect(() => {
     Animated.spring(slideAnim, {
       toValue: isOpen ? 0 : -300,
       useNativeDriver: true,
     }).start();
   }, [isOpen]);
-  
 
   const handleLanguageSelect = async (languageKey, isInitialLoad = false) => {
     const language = languages.find(lang => lang.key === languageKey);
@@ -44,10 +40,11 @@ const SidebarModal = ({ isOpen, onClose }) => {
       i18n.changeLanguage(languageKey);
       if (!isInitialLoad) {
         await AsyncStorage.setItem('appLanguage', JSON.stringify(language));
+        
       }
       changeLanguage(languageKey);
       setIsLanguageMenuOpen(false);
-      if (!isInitialLoad) onClose(); // Avoiding close on initial load
+      if (!isInitialLoad) onClose();
     }
   };
 
@@ -61,7 +58,6 @@ const SidebarModal = ({ isOpen, onClose }) => {
     { key: 'ar', name: 'Arabic', flag: require('../../assets/images/ar.png') },
     { key: 'it', name: 'Italian', flag: require('../../assets/images/it.jpg') },
   ];
-
 
   const panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: (evt, gestureState) => {
@@ -153,7 +149,5 @@ const SidebarModal = ({ isOpen, onClose }) => {
     </Modal>
   );
 };
-
-
 
 export default SidebarModal;

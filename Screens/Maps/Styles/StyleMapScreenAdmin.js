@@ -137,9 +137,9 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     position: "absolute",
-    top: "2%", // Adjust as necessary
-    right: "6%", // Adjust as necessary
-    width: "88%",
+    top: "2%",
+    right: "2.3%", 
+    width: "95%",
     height: 40,
     borderRadius: 25,
     backgroundColor: Colors.primary,

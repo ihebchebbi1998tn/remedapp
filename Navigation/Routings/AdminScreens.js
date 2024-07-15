@@ -2,9 +2,9 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreenAdmin from '../../Screens/HomeScreens/Views/HomeScreenAdmin';
-import Header from '../Headers/Header';
-import BottomTabNavigatorAdmin from '../BottomNavs/Admin/BottomTabNavigatorAdmin';
-import MapScreenAdmin from '../../Screens/Maps/MapScreenAdmin';
+import Header from '../Headers/View/Header';
+import BottomTabNavigatorAdmin from '../BottomNavs/Admin/View/BottomTabNavigatorAdmin';
+import MapScreenAdmin from '../../Screens/Maps/Views/MapScreenAdmin';
 import ProfileScreen from '../../Screens/ProfileScreen/Views/ProfileScreen';
 const Stack = createStackNavigator();
 

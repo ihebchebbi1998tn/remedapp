@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { signup } from '../Services/authServiceApi';
+import { signup } from '../Services/apiService';
 import { useTranslation } from 'react-i18next';
 
 const useSignupViewModel = (navigation) => {

@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
-import { BASE_URL } from "../../../Navigation/apiConfig";
+import {  fetchReports } from "../Services/apiService"; // Import the API function
 import { UserContext } from "../../../Navigation/Routings/UserContext";
-
 export const useHistoryViewModel = () => {
   const { user } = useContext(UserContext);
 
@@ -20,28 +19,15 @@ export const useHistoryViewModel = () => {
   const [hasMoreReports, setHasMoreReports] = useState(true);
 
   useEffect(() => {
-    fetchReports();
+    fetchReportsData();
   }, []);
 
-  const fetchReports = async () => {
+  const fetchReportsData = async () => {
     setInitialLoading(true);
     try {
-      const response = await fetch(
-        `${BASE_URL}remed/api/reports/getmy_reports.php?current_user_id=${user.id}`
-      );
-      const data = await response.json();
-      const transformedData = data.map((item) => ({
-        id: `${item.id}-${item.created_at}`,
-        title: item.title,
-        location: `${item.location} (${item.altitude}, ${item.longitude})`,
-        description: item.description,
-        status: item.state,
-        collected: item.pickedup_by !== null,
-        createdAt: new Date(item.created_at),
-        image: { uri: `${BASE_URL}remed/api/reports/` + item.picture },
-      }));
-      setReports(transformedData);
-      setFilteredReports(transformedData);
+      const data = await fetchReports(user.id);
+      setReports(data);
+      setFilteredReports(data);
       setHasMoreReports(data.length > 0);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -54,25 +40,10 @@ export const useHistoryViewModel = () => {
     if (isFetchingMore || !hasMoreReports) return;
     setIsFetchingMore(true);
     try {
-      const response = await fetch(
-        `${BASE_URL}remed/api/reports/getmy_reports.php?current_user_id=${
-          user.id
-        }&page=${page + 1}`
-      );
-      const data = await response.json();
-      const transformedData = data.map((item) => ({
-        id: `${item.id}-${item.created_at}`,
-        title: item.title,
-        location: `${item.location} (${item.altitude}, ${item.longitude})`,
-        description: item.description,
-        status: item.state,
-        collected: item.pickedup_by !== null,
-        createdAt: new Date(item.created_at),
-        image: { uri: `${BASE_URL}remed/api/reports/` + item.picture },
-      }));
+      const data = await fetchReports(user.id, page + 1);
       setReports((prevReports) => {
         const uniqueReports = [...prevReports];
-        transformedData.forEach((item) => {
+        data.forEach((item) => {
           if (!uniqueReports.some((report) => report.id === item.id)) {
             uniqueReports.push(item);
           }
@@ -81,7 +52,7 @@ export const useHistoryViewModel = () => {
       });
       setFilteredReports((prevReports) => {
         const uniqueReports = [...prevReports];
-        transformedData.forEach((item) => {
+        data.forEach((item) => {
           if (!uniqueReports.some((report) => report.id === item.id)) {
             uniqueReports.push(item);
           }
@@ -147,7 +118,7 @@ export const useHistoryViewModel = () => {
 
   const handleRefresh = () => {
     setRefreshing(true);
-    fetchReports().then(() => setRefreshing(false));
+    fetchReportsData().then(() => setRefreshing(false));
   };
 
   return {
@@ -167,8 +138,8 @@ export const useHistoryViewModel = () => {
     openSortModal,
     closeSortModal,
     handleRefresh,
-    setSortByDate,      // Adding missing setters
-    setSortByLocation,  // Adding missing setters
-    setSortByStatus,    // Adding missing setters
+    setSortByDate,
+    setSortByLocation,
+    setSortByStatus,
   };
 };

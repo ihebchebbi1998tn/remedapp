@@ -3,11 +3,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from '../../Screens/Authentifications/Views/LoginScreen';
 import { UserProvider } from './UserContext';
-import SplashScreen from '../../Screens/Part1/SplashScreen';
-import { Walk1 , Walk2 , Walk3 , Walk4} from '../../Screens/Part1/Walk1';
+import SplashScreen from '../../Screens/Part1/Views/SplashScreen';
+import { Walk1 , Walk2 , Walk3 , Walk4} from '../../Screens/Part1/Views/Walk1';
 import SignupScreen from '../../Screens/Authentifications/Views/SignupScreen';
-import ForgotPasswordScreen from '../../Screens/Authentifications/ForgotPasswordScreen';
-import ForgotPasswordOtp from '../../Screens/Authentifications/ForgotPasswordOtp';
+import ForgotPasswordScreen from '../../Screens/Authentifications/Views/ForgotPasswordScreen';
+import ForgotPasswordOtp from '../../Screens/Authentifications/Views/ForgotPasswordOtp';
 import UserScreens from './UserScreens';
 import AdminScreens from './AdminScreens';
 

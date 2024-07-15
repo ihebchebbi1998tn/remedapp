@@ -17,7 +17,7 @@ import Colors from '../../../utils/color';
 import { useMapViewModel } from '../ViewModels/MapViewModel';
 import styles from '../Styles/StyleMapScreen';
 import customMapStyle from '../Styles/customMapStyle';
-
+import { BASE_URL } from '../../../Navigation/apiConfig';
 const collectedMarkerImage = require('../../../assets/images/collected_marker.png');
 const pendingMarkerImage = require('../../../assets/images/pending_marker.png');
 const reportedMarkerImage = require('../../../assets/images/reported.png');
@@ -30,7 +30,6 @@ const MapScreen = () => {
     filteredMarkers,
     selectedMarker,
     dropdownVisible,
-    filterStatus,
     userLocation,
     pulseAnimation,
     carLocations,
