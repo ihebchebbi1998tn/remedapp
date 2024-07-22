@@ -1,5 +1,4 @@
-import { Dimensions } from "react-native";
-import { StyleSheet } from "react-native";
+import { Dimensions , StyleSheet } from "react-native";
 import Colors from "../../../utils/color";
 
 const screenWidth = Dimensions.get("window").width;
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   modalReportButton: {
-    backgroundColor: "#f28b82", 
+    backgroundColor: Colors.reportButton, 
   },
   modalButtonText: {
     color: Colors.white,
@@ -162,7 +161,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   sortButton: {
-    backgroundColor: "#eab845",
+    backgroundColor: Colors.secondary,
     borderRadius: 25,
     paddingHorizontal: 15,
     paddingVertical: 13,
@@ -235,10 +234,10 @@ const styles = StyleSheet.create({
   },
   confirmationModal: {
     padding: 20,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 10,
     alignItems: "center",
-    width: screenWidth * 0.7, // Make the modal narrower
+    width: screenWidth * 0.7, 
     marginTop: "50%",
   },
   confirmationTitle: {
@@ -259,10 +258,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   confirmationCancelButton: {
-    backgroundColor: "#f28b82", // Light red color for cancel button
+    backgroundColor: Colors.reportButton, 
   },
   confirmationConfirmButton: {
-    backgroundColor: Colors.primary, // Primary color for confirm button
+    backgroundColor: Colors.primary,
   },
   confirmationButtonText: {
     color: Colors.white,

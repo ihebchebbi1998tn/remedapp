@@ -9,14 +9,14 @@ const styles = StyleSheet.create({
     },
     header: {
       padding: 16,
-      backgroundColor: "green",
+      backgroundColor: Colors.primary,
       alignItems: "center",
       justifyContent: "center",
     },
     title: {
       fontSize: 24,
       fontWeight: "bold",
-      color: "white",
+      color: Colors.white,
     },
     item: {
       flexDirection: "row",
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     },
     faqContainer: {
       padding: 16,
-      backgroundColor: "#f0f0f0",
+      backgroundColor: Colors.MainBackground,
     },
     faqItem: {
       marginBottom: 16,
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     faqQuestion: {
       fontSize: 16,
       fontWeight: "bold",
-      color: "green",
+      color: Colors.primary,
     },
     faqAnswer: {
       fontSize: 14,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     },
     helpContainer: {
       padding: 16,
-      backgroundColor: "#f0f0f0",
+      backgroundColor: Colors.MainBackground,
     },
     helpItem: {
       marginBottom: 16,
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     helpQuestion: {
       fontSize: 16,
       fontWeight: "bold",
-      color: "green",
+      color: Colors.primary,
     },
     helpAnswer: {
       fontSize: 14,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     },
     privacyContainer: {
       padding: 16,
-      backgroundColor: "#f0f0f0",
+      backgroundColor: Colors.MainBackground,
     },
     privacyText: {
       fontSize: 14,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     modalContent: {
       width: "80%",
       padding: 20,
-      backgroundColor: "white",
+      backgroundColor: Colors.white,
       borderRadius: 10,
       alignItems: "center",
     },
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     modalButton: {
       flex: 1,
       alignItems: "center",
-      backgroundColor: "green",
+      backgroundColor: Colors.primary,
       padding: 10,
       borderRadius: 5,
       marginHorizontal: 5,
@@ -123,14 +123,14 @@ const styles = StyleSheet.create({
     modalButtonContact: {
       flexDirection: "row",
       alignItems: "center",
-      backgroundColor: "green",
+      backgroundColor: Colors.primary,
       padding: 10,
       borderRadius: 5,
       marginBottom: 10,
     },
     modalButtonText: {
       marginLeft: 10,
-      color: "white",
+      color: Colors.white,
       fontSize: 16,
     },
     closeButton: {

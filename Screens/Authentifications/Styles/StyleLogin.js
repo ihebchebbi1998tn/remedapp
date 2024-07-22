@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
       marginTop: 12,
     },
     nextButtonText: {
-      color: "#ffffff",
+      color: Colors.buttonsTexts,
       fontSize: 14,
       fontWeight: "bold",
       marginBottom: "4.3%",

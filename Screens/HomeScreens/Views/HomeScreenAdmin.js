@@ -3,11 +3,9 @@ import {
   View,
   Text,
   TextInput,
-  StyleSheet,
   Image,
   TouchableOpacity,
   SafeAreaView,
-  Dimensions,
   StatusBar,
   FlatList,
   RefreshControl,
@@ -61,8 +59,8 @@ const HomeScreenAdmin = () => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.lightGrey }}>
-      <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.MainBackground }}>
+      <StatusBar backgroundColor={Colors.white} barStyle="dark-content" />
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id.toString()}

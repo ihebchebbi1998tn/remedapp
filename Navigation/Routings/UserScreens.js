@@ -13,17 +13,6 @@ import { ActiveScreenProvider, useActiveScreen } from './ActiveScreenContext';
 const Stack = createStackNavigator();
 
 const UserScreens = () => {
-  const { setActiveScreen } = useActiveScreen();
-  const navigation = useNavigation();
-
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('state', (e) => {
-      const currentRoute = e.data.state?.routes[e.data.state.index]?.name || 'Home';
-      setActiveScreen(currentRoute);
-    });
-
-    return unsubscribe;
-  }, [navigation, setActiveScreen]);
 
   return (
     <Stack.Navigator
@@ -41,13 +30,12 @@ const UserScreens = () => {
 };
 
 const MainScreen = () => {
-  const { activeScreen } = useActiveScreen();
 
   return (
     <>
       <Header />
       <UserScreens />
-      <BottomTabNavigator activeScreen={activeScreen} />
+      <BottomTabNavigator />
     </>
   );
 };

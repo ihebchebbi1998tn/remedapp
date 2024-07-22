@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from '../../Screens/Authentifications/Views/LoginScreen';
 import { UserProvider } from './UserContext';
 import SplashScreen from '../../Screens/Part1/Views/SplashScreen';
-import { Walk1 , Walk2 , Walk3 , Walk4} from '../../Screens/Part1/Views/Walk1';
+import { Walk1, Walk2, Walk3, Walk4 } from '../../Screens/Part1/Views/Walk1';
 import SignupScreen from '../../Screens/Authentifications/Views/SignupScreen';
 import ForgotPasswordScreen from '../../Screens/Authentifications/Views/ForgotPasswordScreen';
 import ForgotPasswordOtp from '../../Screens/Authentifications/Views/ForgotPasswordOtp';
@@ -31,86 +31,61 @@ const RootNavigator = () => {
               animation: 'slide_from_right',
             }}
           />
-          <Stack.Screen
-            name="Walk1"
-            component={Walk1}
+          <Stack.Screen name="Walk1" component={Walk1}
             options={{
               cardStyle: { backgroundColor: 'transparent' },
               animation: 'slide_from_right',
-            }}
-          />
-       <Stack.Screen
-            name="Walk2"
-            component={Walk2}
+            }} />
+          <Stack.Screen name="Walk2" component={Walk2}
             options={{
               cardStyle: { backgroundColor: 'transparent' },
               animation: 'slide_from_right',
-            }}
-          />
-        <Stack.Screen
-            name="Walk3"
-            component={Walk3}
+            }} />
+          <Stack.Screen name="Walk3" component={Walk3}
             options={{
               cardStyle: { backgroundColor: 'transparent' },
               animation: 'slide_from_right',
-            }}
-          />
-        <Stack.Screen
-            name="Walk4"
-            component={Walk4}
+            }} />
+          <Stack.Screen name="Walk4" component={Walk4}
             options={{
               cardStyle: { backgroundColor: 'transparent' },
               animation: 'slide_from_right',
-            }}
-          />
-          <Stack.Screen
-            name="LoginScreen"
-            component={LoginScreen}
+            }} />
+          <Stack.Screen name="LoginScreen" component={LoginScreen}
             options={{
               cardStyle: { backgroundColor: 'transparent' },
               animation: 'slide_from_right',
-            }}
-          />
-          <Stack.Screen
-            name="SignupScreen"
-            component={SignupScreen}
+            }} />
+
+          <Stack.Screen name="SignupScreen" component={SignupScreen}
             options={{
               cardStyle: { backgroundColor: 'transparent' },
               animation: 'slide_from_right',
-            }}
-          />
-          <Stack.Screen
-            name="ForgotPasswordScreen"
-            component={ForgotPasswordScreen}
+            }} />
+
+          <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen}
             options={{
               cardStyle: { backgroundColor: 'transparent' },
               animation: 'slide_from_right',
-            }}
-          />
-          <Stack.Screen
-            name="ForgotPasswordOtp"
-            component={ForgotPasswordOtp}
+            }} />
+
+          <Stack.Screen name="ForgotPasswordOtp" component={ForgotPasswordOtp}
             options={{
               cardStyle: { backgroundColor: 'transparent' },
               animation: 'slide_from_right',
-            }}
-          />
-          <Stack.Screen
-            name="UserScreens"
-            component={UserScreens} 
+            }} />
+
+          <Stack.Screen name="UserScreens" component={UserScreens}
             options={{
               cardStyle: { backgroundColor: 'transparent' },
               animation: 'slide_from_right',
-            }}
-          />
-          <Stack.Screen
-            name="AdminScreens"
-            component={AdminScreens} 
+            }} />
+
+          <Stack.Screen name="AdminScreens" component={AdminScreens} 
             options={{
               cardStyle: { backgroundColor: 'transparent' },
               animation: 'slide_from_right',
-            }}
-          />
+            }} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>

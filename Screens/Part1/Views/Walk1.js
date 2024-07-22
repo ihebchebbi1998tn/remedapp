@@ -9,13 +9,14 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { useTranslation } from "react-i18next";
 import useWalkViewModel from '../ViewModels/WalkViewModel';
-import image1 from "../../../assets/logotheme.png";
-import image2 from "../../../assets/logoall.png";
-import walk2Image from "../../../assets/images/walk2.png";
-import cleanerEnvImage from "../../../assets/images/cleanerEnv.jpg";
-import mapImage from "../../../assets/images/map.jpg";
 import styles from '../Styles/StyleWalk';
-
+import Colors from '../../../utils/color';
+import ImageResources from '../../../utils/ImageRessources';
+const image1 = ImageResources.RemedLogo;
+const image2 = ImageResources.EUlogo;
+const cleanerEnvImage = ImageResources.Walk3;
+const walk2Image = ImageResources.Walk2;
+const mapImage = ImageResources.WalkLocalisation;
 
 const Walk1 = ({ navigation }) => {
   const { t } = useTranslation();
@@ -92,7 +93,7 @@ const Walk4 = ({ navigation }) => {
           <Text style={styles.title}>{t('ENABLE YOUR LOCATION')}</Text>
         </View>
         <View style={styles.footer}>
-          <LinearGradient colors={["#709a60", "#eab845"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.gradient}>
+          <LinearGradient colors={[Colors.primary, Colors.secondary]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.gradient}>
             <TouchableOpacity style={styles.nextButton} onPress={handleLocationPermission}>
               <Text style={styles.nextButtonText}>{t('Use my location')}</Text>
             </TouchableOpacity>
@@ -114,7 +115,7 @@ const Footer = ({ navigation, nextScreen, activeDotIndex, navigateToNextScreen }
           <View key={index} style={[styles.dot, index === activeDotIndex && styles.activeDot]}></View>
         ))}
       </View>
-      <LinearGradient colors={["#709a60", "#eab845"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.gradient}>
+      <LinearGradient colors={[Colors.primary,Colors.secondary]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.gradient}>
         <TouchableOpacity style={styles.nextButton} onPress={() => navigateToNextScreen(nextScreen, activeDotIndex + 1)}>
           <Text style={styles.nextButtonText}>Next</Text>
         </TouchableOpacity>

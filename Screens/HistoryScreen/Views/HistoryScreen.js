@@ -38,9 +38,9 @@ const HistoryScreen = () => {
     openSortModal,
     closeSortModal,
     handleRefresh,
-    setSortByDate,      // Using the setters from the ViewModel
-    setSortByLocation,  // Using the setters from the ViewModel
-    setSortByStatus,    // Using the setters from the ViewModel
+    setSortByDate,      
+    setSortByLocation,  
+    setSortByStatus,    
   } = useHistoryViewModel();
 
   const renderReportItem = ({ item }) => (
@@ -95,7 +95,7 @@ const HistoryScreen = () => {
 
   return (
     <SafeAreaView style={historyScreenStyles.container}>
-      <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
+      <StatusBar  barStyle="dark-content" />
       <View style={historyScreenStyles.content}>
         <View style={historyScreenStyles.searchContainer}>
           <TextInput
@@ -111,7 +111,7 @@ const HistoryScreen = () => {
             style={historyScreenStyles.settingsButton}
             onPress={openSortModal}
           >
-            <Ionicons name="settings" size={24} color="white" />
+            <Ionicons name="settings" size={24} color={Colors.white} />
           </TouchableOpacity>
         </View>
         {initialLoading ? (

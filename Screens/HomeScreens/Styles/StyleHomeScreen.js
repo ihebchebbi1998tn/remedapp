@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 8,
-    backgroundColor: Colors.inputBackground,
     borderRadius: 10,
     marginVertical: 0,
   },
@@ -63,17 +62,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   userName: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
     color: Colors.text,
   },
   userLocation: {
     fontSize: 12,
-    color: Colors.textSecondary,
   },
   distance: {
     fontSize: 12,
-    color: Colors.textSecondary,
     marginTop: 5,
   },
   bottomNavigator: {

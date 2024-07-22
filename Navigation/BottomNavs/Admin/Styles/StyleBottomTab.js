@@ -1,13 +1,13 @@
 import Colors from "../../../../utils/color";
-import { StyleSheet , Dimensions} from "react-native";
-const { width, height } = Dimensions.get("window");
+import {StyleSheet} from "react-native";
+import FontRessources from "../../../../utils/fonts";
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: "#FFF",
+    backgroundColor: Colors.white,
     elevation: 15,
     paddingHorizontal: 12,
     paddingVertical: 6,
@@ -40,36 +40,11 @@ const styles = StyleSheet.create({
   },
   tabLabel: {
     marginTop: 2,
-    fontSize: 10,
-    color: "#A4A4A4",
+    fontSize: FontRessources.BottomNavTabsLabel,
+    color: Colors.BottomNavsInactiveColor,
   },
   activeTabLabel: {
     color: Colors.primary,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  modalContent: {
-    backgroundColor: Colors.white,
-    padding: 20,
-    borderRadius: 10,
-    alignItems: "center",
-    width: width * 0.9,
-    marginBottom: 20,
-  },
-  optionContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 10,
-  },
-  optionText: {
-    marginLeft: 10,
-    fontSize: 16,
-    color: Colors.primary,
-    paddingHorizontal: 10,
   },
 });
   

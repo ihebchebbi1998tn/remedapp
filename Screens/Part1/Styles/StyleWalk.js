@@ -3,7 +3,7 @@ import Colors from "../../../utils/color";
 const styles = StyleSheet.create({
     safeArea: {
       flex: 1,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.background,
     },
     container: {
       flex: 1,
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     },
     imageSmall: {
       width: "80%",
-      height: "17%",
+      height: "16%",
     },
     imageMedium: {
       width: "80%",
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     },
     description: {
       fontSize: 14,
-      color: "#666666",
+      color: Colors.descriptionTexts,
       textAlign: "center",
     },
     footer: {
@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
       marginTop: 12,
     },
     nextButtonText: {
-      color: "#ffffff",
+      color: Colors.buttonsTexts,
       fontSize: 14,
       fontWeight: "bold",
       marginBottom: "4.3%",
     },
     outlinedButton: {
-      backgroundColor: "white",
+      backgroundColor: Colors.white,
       borderRadius: 8,
       paddingVertical: 15,
       paddingHorizontal: 30,
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
       width: 13,
       height: 13,
       borderRadius: 6,
-      backgroundColor: "#cccccc",
+      backgroundColor: Colors.dotsBackground,
       marginHorizontal: 5,
     },
     activeDot: {

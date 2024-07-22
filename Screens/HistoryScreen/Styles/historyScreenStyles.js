@@ -4,7 +4,7 @@ import Colors from "../../../utils/color";
 const historyScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: Colors.MainBackground,
   },
   content: {
     flex: 1,
@@ -16,7 +16,7 @@ const historyScreenStyles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     marginBottom: 10,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.white,
   },
   image: {
     width: "100%",
@@ -36,7 +36,7 @@ const historyScreenStyles = StyleSheet.create({
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 12,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.white,
     marginRight: 10,
   },
   settingsButton: {

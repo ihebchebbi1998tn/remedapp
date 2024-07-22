@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     flex: 0.9,
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 15, // 5% smaller
+    paddingHorizontal: 15, 
   },
   title: {
     fontSize: 15,
@@ -46,42 +46,42 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   logo: {
-    width: 220, // 5% smaller
-    height: 70, // 5% smaller
-    marginBottom: 5, // 5% smaller
+    width: 220, 
+    height: 70, 
+    marginBottom: 5, 
   },
   smallerImage: {
-    width: 270, // Set width of smaller image
-    height: 60, // Set height of smaller image
-    marginBottom: 15, // Margin bottom for smaller image
+    width: 270, 
+    height: 60, 
+    marginBottom: 15, 
   },
   button: {
     width: "100%",
     alignItems: "center",
-    padding: 13, // 5% smaller
-    borderRadius: 8, // 5% smaller
-    marginBottom: 8, // 5% smaller
+    padding: 13, 
+    borderRadius: 8, 
+    marginBottom: 8, 
   },
   buttonText: {
-    fontSize: 13, // 5% smaller
+    fontSize: 13, 
     fontWeight: "bold",
   },
   signupButton: {
     width: "100%",
     alignItems: "center",
-    padding: 13, // 5% smaller
-    borderRadius: 8, // 5% smaller
+    padding: 13, 
+    borderRadius: 8, 
     borderWidth: 1,
   },
   signupButtonText: {
-    fontSize: 13, // 5% smaller
+    fontSize: 13, 
     fontWeight: "bold",
   },
   forgotPasswordButton: {
-    marginTop: 10, // Adjust spacing as needed
+    marginTop: 10,
   },
   forgotPasswordText: {
-    fontSize: 14, // Adjust font size as needed
+    fontSize: 14, 
     color: Colors.primary,
   },
   modalContainer: {
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   modalContent: {
     width: 300,
     padding: 20,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 10,
     alignItems: "center",
   },

@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   inputFilled: {
-    backgroundColor: Colors.green,
+    backgroundColor: Colors.primary,
     color: Colors.white,
   },
   input: {

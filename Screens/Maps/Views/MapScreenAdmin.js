@@ -24,10 +24,12 @@ import {
   fetchAllReports,
 } from "../Services/apiServiceAdmin";
 import useModalView from "../ViewModels/AdminMapViewModel";
-const collectedMarkerImage = require("../../../assets/images/collected_marker.png");
-const pendingMarkerImage = require("../../../assets/images/pending_marker.png");
-const reportedMarkerImage = require("../../../assets/images/reported.png");
-const carImage = require("../../../assets/images/car.png");
+import ImageResources from '../../../utils/ImageRessources';
+const collectedMarkerImage = ImageResources.collectedMarkerImage;
+const pendingMarkerImage = ImageResources.pendingMarkerImage;
+const reportedMarkerImage = ImageResources.reportedMarkerImage;
+const carImage = ImageResources.carImage;
+
 
 const MapScreenAdmin = () => {
   const [markers, setMarkers] = useState([]);
@@ -121,7 +123,7 @@ const MapScreenAdmin = () => {
     );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.lightGrey }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.MainBackground }}>
       <View style={styles.container}>
         <View style={styles.searchContainer}>
           <View style={styles.inputText}>
@@ -217,7 +219,7 @@ const MapScreenAdmin = () => {
         </View>
         <View style={styles.buttonContainer}>
           <LinearGradient
-            colors={["#709a60", "#eab845"]}
+            colors={[Colors.primary, Colors.secondary]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={styles.gradient}

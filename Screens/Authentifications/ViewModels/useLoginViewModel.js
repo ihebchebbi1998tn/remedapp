@@ -13,83 +13,43 @@ export const useLoginViewModel = (navigation) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
-  const { user, updateUser } = useContext(UserContext);
-  const [appLanguage, setAppLanguage] = useState(null);
-
-  useEffect(() => {
-    const fetchAppLanguage = async () => {
-      try {
-        const value = await AsyncStorage.getItem("appLanguage");
-        if (value) {
-          const parsedValue = JSON.parse(value);
-          setAppLanguage(parsedValue.key);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchAppLanguage();
-    const intervalId = setInterval(fetchAppLanguage, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
-
+  const { updateUser } = useContext(UserContext);
+  
   const openSidebar = () => setIsSidebarOpen(true);
   const closeSidebar = () => setIsSidebarOpen(false);
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
   const toggleStayLoggedIn = () => setStayLoggedIn(!stayLoggedIn);
 
-  useEffect(() => {
-    const checkLoggedInUser = async () => {
-      try {
-        const user = await AsyncStorage.getItem("user");
-        if (user) {
-          const parsedUser = JSON.parse(user);
-          updateUser(parsedUser);
-          if (parsedUser.role === "user") {
-            navigation.navigate("UserScreens");
-          } else {
-            navigation.navigate("AdminScreens");
-          }
-        }
-      } catch (error) {
-        console.error("Error retrieving user from AsyncStorage:", error);
-      }
-    };
-
-    checkLoggedInUser();
-  }, [navigation, updateUser]);
-
   const handleLogin = async () => {
     setIsLoading(true);
-    setTimeout(async () => {
-      try {
-        const data = await fetchLogin(email, password);
-        handleLoginResponse(data);
-      } catch (error) {
-        console.error("Error:", error);
-        Alert.alert("Error", "An error occurred while logging in");
-      } finally {
-        setIsLoading(false);
-      }
-    }, 4000);
+    try {
+      const data = await fetchLogin(email, password);
+      handleLoginResponse(data);
+    } catch (error) {
+      console.error("Error:", error);
+      Alert.alert("Error", "An error occurred while logging in");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleLoginResponse = (data) => {
+  const handleLoginResponse = async (data) => {
     if (data.error === "User not found") {
       Alert.alert(t("Error"), t("UserNotFound"));
     } else if (data.error === "Incorrect password") {
       Alert.alert(t("Error"), t("IncorrectPassword"));
     } else {
-      updateUser(data.user);
-      if (stayLoggedIn) {
-        AsyncStorage.setItem("user", JSON.stringify(data.user));
-        console.log(user);
-      } else {
-        AsyncStorage.setItem("user", JSON.stringify("0"));
-        console.log("not saved");
+      try {
+        if (stayLoggedIn) {
+          await AsyncStorage.setItem("user", JSON.stringify(data.user));
+        } else {
+          await AsyncStorage.setItem("user", JSON.stringify(data.user));
+          await AsyncStorage.removeItem("user");
+        }
+      } catch (error) {
+        console.error("Error storing user in AsyncStorage:", error);
       }
-      console.log(data.user.role);
+  
       if (data.user.role === "user") {
         navigation.navigate("UserScreens");
       } else {
@@ -97,6 +57,7 @@ export const useLoginViewModel = (navigation) => {
       }
     }
   };
+  
 
   return {
     email,
@@ -113,6 +74,5 @@ export const useLoginViewModel = (navigation) => {
     isLoading,
     handleLogin,
     handleLoginResponse,
-    appLanguage,
   };
 };

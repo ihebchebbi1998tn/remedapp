@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef, useContext } from "react";
 import {
-  StyleSheet,
   View,
   Text,
   Image,
@@ -18,6 +17,7 @@ import Colors from "../../../utils/color";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserContext } from "../../../Navigation/Routings/UserContext";
 import { BASE_URL } from "../../../Navigation/apiConfig";
+import styles from "../Styles/StatsStyle";
 
 const Stats = () => {
   const { t } = useTranslation();
@@ -30,7 +30,7 @@ const Stats = () => {
   const [appLanguage, setAppLanguage] = useState(null);
   const { user } = useContext(UserContext);
   const [userCountry,setUserCountry] = useState(user.Country)
-  animationValues.length = latestUsers.length; // Ensure extra values are not present
+  animationValues.length = latestUsers.length; 
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
@@ -61,7 +61,6 @@ const Stats = () => {
       }
       setUserCountry(user.Country);
     };
-
     fetchAppLanguage();
     const intervalId = setInterval(fetchAppLanguage, 1000);
     return () => clearInterval(intervalId);
@@ -81,7 +80,7 @@ const Stats = () => {
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const toRad = (value) => (value * Math.PI) / 180;
 
-    const R = 6371; // Radius of the Earth in km
+    const R = 6371; 
     const dLat = toRad(lat2 - lat1);
     const dLon = toRad(lon2 - lon1);
     const a =
@@ -174,7 +173,7 @@ const Stats = () => {
         totalReports={data.length}
         collectedPercentage={calculateCollectedPercentage()}
         appLanguage={appLanguage}
-        userCountry={userCountry} // Add this line
+        userCountry={userCountry} 
 
       />
       <ButtonsRow
@@ -334,7 +333,7 @@ const ButtonsRow = ({ setQrVisible, t, appLanguage }) => (
     ) : (
       <>
         <TouchableOpacity style={styles.button}>
-          <Icon name="phone" size={20} color="#FCF5F3" style={styles.icon} />
+          <Icon name="phone" size={20} color={Colors.white} style={styles.icon} />
           <Text style={styles.buttonText}>{t("stats.callCollect")}</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -344,7 +343,7 @@ const ButtonsRow = ({ setQrVisible, t, appLanguage }) => (
           <Icon
             name="share-alt"
             size={20}
-            color="#FCF5F3"
+            color={Colors.white}
             style={styles.icon}
           />
           <Text style={styles.buttonText}>{t("stats.tellFriend")}</Text>
@@ -373,148 +372,5 @@ const QrModal = ({ qrVisible, setQrVisible, t }) => (
   </Modal>
 );
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop:15,
-    backgroundColor: Colors.white,
-    padding: 20,
-    marginBottom: 10,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  statsContainer: {
-    alignItems: "center",
-    marginBottom: 20,
-    maringTop:10,
-
-  },
-  icon: {
-    marginRight: 0,
-  },
-  iconRight: {
-    marginLeft: '25%',
-    marginRight: 0,
-  },
-  percentageText: {
-    fontSize: 40,
-    color: "#5A9360",
-    marginTop: -110,
-    marginLeft: 7,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#5A9360",
-  },
-  infoRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    marginTop: "17%",
-  },
-  infoItem: {
-    alignItems: "center",
-  },
-  infoText: {
-    fontSize: 18,
-    color: "#5A9360",
-  },
-  infoSubtitle: {
-    fontSize: 14,
-    color: "#5A9360",
-  },
-  buttonsRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    marginTop: 10,
-  },
-  button: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#5A9360",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 25,
-    marginHorizontal: 5,
-  },
-  icon: {
-    marginRight: 10,
-  },
-  buttonText: {
-    color: "#FCF5F3",
-    fontSize: 16,
-    textAlign: "center",
-  },
-  headerText: {
-    fontSize: 20,
-    color: "#5A9360",
-    marginTop: 10,
-    textAlign: "center",
-  },
-  card: {
-    flexDirection: "row",
-    backgroundColor: "#ecd58e",
-    borderRadius: 10,
-    padding: 10,
-    marginVertical: 5,
-    alignItems: "center",
-  },
-  image: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-  },
-  cardContent: {
-    flex: 1,
-    marginLeft: 10,
-  },
-  name: {
-    fontSize: 18,
-    color: "#fff",
-  },
-  location: {
-    fontSize: 14,
-    color: "#fff",
-  },
-  likeButton: {
-    padding: 10,
-  },
-  likeButtonText: {
-    fontSize: 18,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  qrContainer: {
-    backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  qrImage: {
-    width: 200,
-    height: 200,
-  },
-  closeButton: {
-    marginTop: 20,
-    backgroundColor: "#5A9360",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-  },
-  closeButtonText: {
-    color: "#FCF5F3",
-    fontSize: 16,
-  },
-});
 
 export default Stats;

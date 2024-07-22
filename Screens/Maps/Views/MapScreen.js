@@ -18,11 +18,12 @@ import { useMapViewModel } from '../ViewModels/MapViewModel';
 import styles from '../Styles/StyleMapScreen';
 import customMapStyle from '../Styles/customMapStyle';
 import { BASE_URL } from '../../../Navigation/apiConfig';
-const collectedMarkerImage = require('../../../assets/images/collected_marker.png');
-const pendingMarkerImage = require('../../../assets/images/pending_marker.png');
-const reportedMarkerImage = require('../../../assets/images/reported.png');
-const carImage = require('../../../assets/images/green_marker.png');
-const userImage = require('../../../assets/images/car.png');
+import ImageResources from '../../../utils/ImageRessources';
+const collectedMarkerImage = ImageResources.collectedMarkerImage;
+const pendingMarkerImage = ImageResources.pendingMarkerImage;
+const reportedMarkerImage = ImageResources.reportedMarkerImage;
+const carImage = ImageResources.carImage;
+const userImage =  ImageResources.userImage;
 
 const MapScreen = () => {
   const {
@@ -59,7 +60,7 @@ const MapScreen = () => {
     ));
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.lightGrey }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.MainBackground }}>
       <View style={styles.container}>
         <View style={styles.searchContainer}>
           <View style={styles.inputText}>

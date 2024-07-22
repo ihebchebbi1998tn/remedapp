@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
 import Colors from "../../../../utils/color";
-
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
+import FontRessources from "../../../../utils/fonts";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   cameraButton: {
-    height: 40, // Increased height for bigger icon
-    width: 40,  // Increased width for bigger icon
+    height: 40, 
+    width: 40,   
     borderRadius: 40 / 2,
     backgroundColor: Colors.primary,
     justifyContent: "center",
@@ -33,13 +33,16 @@ const styles = StyleSheet.create({
   tabButton: {
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 16, // Increased padding for more space between icons
-    paddingVertical: 6,    // Decreased vertical padding for lower tab height
+    paddingHorizontal: 16, 
+    paddingVertical: 6,    
   },
-  activeTabButton: {},
+  activeTabButton: {
+    fontSize: FontRessources.BottomNavTabsLabel,
+    color: Colors.primary,
+  },
   tabLabel: {
-    fontSize: 12,
-    color: "#A4A4A4",
+    fontSize: FontRessources.BottomNavTabsLabel,
+    color: Colors.BottomNavsInactiveColor,
   },
   activeTabLabel: {
     color: Colors.primary,

@@ -11,9 +11,11 @@ const useSplashScreenViewModel = (navigation, updateUser) => {
     const checkLoggedInUser = async () => {
       try {
         const user = await AsyncStorage.getItem('user');
-        if (user) {
+        console.log(user);
+        if (user && user !== "noUser") {
           const parsedUser = JSON.parse(user);
           updateUser(parsedUser);
+
           if (parsedUser.role === "user") {
             navigation.navigate("UserScreens");
           } else {
@@ -32,7 +34,7 @@ const useSplashScreenViewModel = (navigation, updateUser) => {
 
     checkLoggedInUser();
   }, [navigation, updateUser]);
-  
+
 //CAUSED PROBLEM WITH CHANGING LANGUAGE 
  /*  useEffect(() => {
     const setUserLanguage = async () => {

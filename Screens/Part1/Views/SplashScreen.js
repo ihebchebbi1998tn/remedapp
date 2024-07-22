@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { UserContext } from "../../../Navigation/Routings/UserContext";
 import styles from "../Styles/StyleSplashScreen";
 import useSplashScreenViewModel from "../ViewModels/SplashScreenViewModel";
-
+import ImageResources from '../../../utils/ImageRessources';
 const SplashScreen = ({ navigation }) => {
   const { updateUser } = useContext(UserContext);
   useSplashScreenViewModel(navigation, updateUser);
@@ -16,7 +16,7 @@ const SplashScreen = ({ navigation }) => {
       <StatusBar backgroundColor={Colors.primary} barStyle="light-content" />
       <View style={styles.centeredContent}>
         <Image
-          source={require("../../../assets/logoall.png")}
+          source={ImageResources.EUlogo}
           resizeMode="contain"
           style={styles.image}
         />

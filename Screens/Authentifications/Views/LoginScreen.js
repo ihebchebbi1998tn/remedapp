@@ -15,6 +15,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useLoginViewModel } from "../ViewModels/useLoginViewModel";
 import styles from "../Styles/StyleLogin";
 import { useTranslation } from "react-i18next";
+import ImageResources from '../../../utils/ImageRessources';
 
 export default function LoginScreen({ navigation }) {
   const {
@@ -37,7 +38,7 @@ export default function LoginScreen({ navigation }) {
   const { t } = useTranslation();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primary02 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.background }}>
       <View style={styles.header}>
         <TouchableOpacity onPress={openSidebar} style={styles.sidebarIcon}>
           <Ionicons name="menu" size={24} color={Colors.primary} />
@@ -45,13 +46,13 @@ export default function LoginScreen({ navigation }) {
       </View>
       <View style={styles.container}>
         <Image
-          source={require("../../../assets/logotheme.png")}
+          source={ImageResources.RemedLogo}
           style={styles.logo}
         />
         <Text style={styles.title}>{t("Welcome to RE-MED Community")}</Text>
         <Text style={styles.description}>{t("THE RE-MED PROJECT")}</Text>
         <Image
-          source={require("../../../assets/logoall.png")}
+          source={ImageResources.EUlogo}
           style={styles.smallerImage}
         />
 
@@ -168,7 +169,7 @@ export default function LoginScreen({ navigation }) {
         </View>
 
         <LinearGradient
-          colors={["#709a60", "#eab845"]}
+          colors={[Colors.primary,Colors.secondary]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={styles.gradient}
@@ -179,7 +180,7 @@ export default function LoginScreen({ navigation }) {
             disabled={isLoading || email.trim() === "" || password.trim() === ""}
           >
             {isLoading ? (
-              <ActivityIndicator size="small" color="#ffffff" />
+              <ActivityIndicator style={styles.nextButtonText} size="small" color={Colors.buttonsTexts} />
             ) : (
               <Text style={styles.nextButtonText}>{t("Login")}</Text>
             )}
