@@ -25,7 +25,7 @@ export const useProfileViewModel = () => {
   const [isConfirmModalVisible, setConfirmModalVisible] = useState(false);
   const [contactSubject, setContactSubject] = useState("");
   const [contactMessage, setContactMessage] = useState("");
-  const [email, setEmail] = useState(user.Email);
+  const [email, setEmail] = useState('Iheb.chebbhshshbzbebbejebeji@lcieducation.netI');
   const [password, setPassword] = useState("");
   const [firstname, setFirstname] = useState(user.FirstName);
   const [lastname, setLastname] = useState(user.LastName);

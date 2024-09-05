@@ -29,7 +29,7 @@ const Stats = () => {
   const animationValues = useRef([]).current;
   const [appLanguage, setAppLanguage] = useState(null);
   const { user } = useContext(UserContext);
-  const [userCountry,setUserCountry] = useState(user.Country)
+  const [userCountry,setUserCountry] = useState('Tunis')
   animationValues.length = latestUsers.length; 
   const fetchData = useCallback(async () => {
     try {
@@ -59,7 +59,7 @@ const Stats = () => {
       } catch (error) {
         console.error(error);
       }
-      setUserCountry(user.Country);
+      setUserCountry('Tunis');
     };
     fetchAppLanguage();
     const intervalId = setInterval(fetchAppLanguage, 1000);

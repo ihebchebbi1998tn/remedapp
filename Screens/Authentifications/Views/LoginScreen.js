@@ -5,7 +5,6 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  SafeAreaView,
   ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,6 +15,8 @@ import { useLoginViewModel } from "../ViewModels/useLoginViewModel";
 import styles from "../Styles/StyleLogin";
 import { useTranslation } from "react-i18next";
 import ImageResources from '../../../utils/ImageRessources';
+import { ImageBackground } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function LoginScreen({ navigation }) {
   const {
@@ -38,7 +39,11 @@ export default function LoginScreen({ navigation }) {
   const { t } = useTranslation();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.background }}>
+     <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
+        <ImageBackground
+        source={{ uri: 'https://media.istockphoto.com/id/903533082/vector/abstract-gray-background.jpg?s=612x612&w=0&k=20&c=4Voiv87FE56PeR5cZTBH7y_6rwPG4jaWD6ERIbSfbpk=' }} // Replace with your image URL
+        style={{ flex: 1 }}
+      >
       <View style={styles.header}>
         <TouchableOpacity onPress={openSidebar} style={styles.sidebarIcon}>
           <Ionicons name="menu" size={24} color={Colors.primary} />
@@ -202,11 +207,12 @@ export default function LoginScreen({ navigation }) {
         >
           <Text style={styles.forgotPasswordText}>
             {t("Forgot your")}
-            <Text style={{ fontWeight: "bold" }}> {t("Password ?")}</Text>
+            <Text> {t("Password ?")}</Text>
           </Text>
         </TouchableOpacity>
       </View>
       <SidebarModal isOpen={isSidebarOpen} onClose={closeSidebar} />
+      </ImageBackground>
     </SafeAreaView>
   );
 }

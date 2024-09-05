@@ -4,7 +4,6 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  SafeAreaView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useTranslation } from "react-i18next";
@@ -17,14 +16,15 @@ const image2 = ImageResources.EUlogo;
 const cleanerEnvImage = ImageResources.Walk3;
 const walk2Image = ImageResources.Walk2;
 const mapImage = ImageResources.WalkLocalisation;
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Walk1 = ({ navigation }) => {
   const { t } = useTranslation();
   const { navigateToNextScreen } = useWalkViewModel(navigation);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
+    <View style={styles.container}>
         <View style={styles.imageContainer}>
           <Image source={image1} resizeMode="cover" style={styles.imageSmall} />
           <Image source={image2} resizeMode="cover" style={styles.imageSmall} />
@@ -44,8 +44,8 @@ const Walk2 = ({ navigation }) => {
   const { navigateToNextScreen } = useWalkViewModel(navigation);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
+    <View style={styles.container}>
         <View style={styles.imageContainer}>
           <Image source={walk2Image} resizeMode="cover" style={styles.imageMedium} />
         </View>
@@ -64,8 +64,8 @@ const Walk3 = ({ navigation }) => {
   const { navigateToNextScreen } = useWalkViewModel(navigation);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
+    <View style={styles.container}>
         <View style={styles.imageContainer}>
           <Image source={cleanerEnvImage} resizeMode="cover" style={styles.imageLarge} />
         </View>
@@ -84,8 +84,8 @@ const Walk4 = ({ navigation }) => {
   const { handleLocationPermission } = useWalkViewModel(navigation);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
+    <View style={styles.container}>
         <View style={styles.imageContainer}>
           <Image source={mapImage} resizeMode="cover" style={styles.imageLarge} />
         </View>

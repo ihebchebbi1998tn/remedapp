@@ -25,7 +25,7 @@ export const useHistoryViewModel = () => {
   const fetchReportsData = async () => {
     setInitialLoading(true);
     try {
-      const data = await fetchReports(user.id);
+      const data = await fetchReports('13');
       setReports(data);
       setFilteredReports(data);
       setHasMoreReports(data.length > 0);

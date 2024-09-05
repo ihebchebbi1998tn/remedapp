@@ -3,7 +3,7 @@ import Colors from "../../../utils/color";
 const styles = StyleSheet.create({
     safeArea: {
       flex: 1,
-      backgroundColor: Colors.background,
+      backgroundColor: Colors.white,
     },
     container: {
       flex: 1,
@@ -61,18 +61,14 @@ const styles = StyleSheet.create({
       color: Colors.buttonsTexts,
       fontSize: 14,
       fontWeight: "bold",
-      marginBottom: "4.3%",
+      marginBottom: "7%",
     },
     outlinedButton: {
-      backgroundColor: Colors.white,
       borderRadius: 8,
       paddingVertical: 15,
       paddingHorizontal: 30,
       width: "95%",
       alignItems: "center",
-      marginTop: 20,
-      borderWidth: 2,
-      borderColor: Colors.primary,
     },
     outlinedButtonText: {
       color: Colors.primary,
@@ -95,8 +91,8 @@ const styles = StyleSheet.create({
       backgroundColor: Colors.primary,
     },
     gradient: {
-      width: "95%",
-      borderRadius: 8,
+      width: "50%",
+      borderRadius: 20,
       marginTop: 20,
     },
   });

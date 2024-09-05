@@ -40,17 +40,20 @@ const styles = StyleSheet.create({
   },
   inputText: {
     width: "100%",
-    borderRadius: 8, 
+        borderRadius: 15,
     height: 42, 
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 12, 
     backgroundColor: Colors.white,
+        opacity: 0.9,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  inputFilled: {
-    backgroundColor: Colors.primary,
-    color: Colors.white,
-  },
+
   input: {
     flex: 1,
     marginLeft: 8, 
@@ -67,11 +70,16 @@ const styles = StyleSheet.create({
     marginBottom: 15, 
   },
   button: {
-    width: "100%",
+    width: "50%",
     alignItems: "center",
     padding: 13, 
-    borderRadius: 8, 
+    borderRadius: 20, 
     marginBottom: 8, 
+        shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
   },
   buttonText: {
     fontSize: 13, 
@@ -81,32 +89,10 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     padding: 13, 
-    borderRadius: 8, 
-    borderWidth: 1,
   },
   signupButtonText: {
     fontSize: 13, 
     fontWeight: "bold",
-  },
-  stayLoggedInContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-    marginLeft: '1%',
-  },
-  stayLoggedInCheckbox: {
-    marginRight: 8,
-  },
-  stayLoggedInText: {
-    fontSize: 12,
-    color: Colors.primary,
-  },
-  forgotPasswordButton: {
-    marginTop: 10, 
-  },
-  forgotPasswordText: {
-    fontSize: 14, 
-    color: Colors.primary,
   },
 });
 

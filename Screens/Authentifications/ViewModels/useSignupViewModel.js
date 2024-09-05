@@ -55,10 +55,10 @@ const useSignupViewModel = (navigation) => {
         country,
         password,
       });
-      setModalMessage(t('signup.success'));
+      setModalMessage(t('signup.successMessage'));
       setModalVisible(true);
     } catch (error) {
-      setModalMessage(t('signup.error'));
+      setModalMessage(t('signup.errorMessage'));
       setModalVisible(true);
       console.error(error);
     }

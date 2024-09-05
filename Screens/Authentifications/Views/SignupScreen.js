@@ -5,7 +5,6 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  SafeAreaView,
   ScrollView,
   Modal,
 } from "react-native";
@@ -14,7 +13,8 @@ import { Picker } from "@react-native-picker/picker";
 import Colors from "../../../utils/color";
 import useSignupViewModel from "../ViewModels/useSignupViewModel";
 import styles from "../Styles/StyleSignup";
-import ImageResources from '../../../utils/ImageRessources';
+import ImageResources from "../../../utils/ImageRessources";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SuccessModal = ({ visible, onClose, message, navigation }) => (
   <Modal visible={visible} transparent={true} animationType="slide">
@@ -53,26 +53,20 @@ export default function SignupScreen({ navigation }) {
     setModalVisible,
     handleCloseModal,
     handleSignup,
-    getCountries,
+    getCountries, 
     appLanguage,
   } = useSignupViewModel(navigation);
 
   const countries = getCountries();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.background }}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
-          <Image
-            source={ImageResources.RemedLogo}
-            style={styles.logo}
-          />
+          <Image source={ImageResources.RemedLogo} style={styles.logo} />
           <Text style={styles.title}>{t("signup.title")}</Text>
           <Text style={styles.description}>{t("signup.description")}</Text>
-          <Image
-            source={ImageResources.EUlogo}
-            style={styles.smallerImage}
-          />
+          <Image source={ImageResources.EUlogo} style={styles.smallerImage} />
           {appLanguage === "ar" ? (
             <>
               <View style={styles.inputContainer}>
@@ -152,10 +146,18 @@ export default function SignupScreen({ navigation }) {
                 <Text style={[styles.labelText, { color: Colors.primary }]}>
                   {t("signup.country")}
                 </Text>
-                <View style={styles.inputText}>
+                <View style={[styles.inputText, { flexDirection: "row" }]}>
+                  <Ionicons
+                    name="globe-outline"
+                    size={17}
+                    color={Colors.primary}
+                  />
                   <Picker
                     selectedValue={country}
-                    style={styles.input}
+                    style={[
+                      styles.input,
+                      Platform.OS === "ios" && { height: 150 },
+                    ]}
                     onValueChange={(itemValue) => setCountry(itemValue)}
                   >
                     {countries.map((country, index) => (
@@ -166,13 +168,9 @@ export default function SignupScreen({ navigation }) {
                       />
                     ))}
                   </Picker>
-                  <Ionicons
-                    name="globe-outline"
-                    size={17}
-                    color={Colors.primary}
-                  />
                 </View>
               </View>
+
               <View style={styles.inputContainer}>
                 <Text style={[styles.labelText, { color: Colors.primary }]}>
                   {t("signup.password")}

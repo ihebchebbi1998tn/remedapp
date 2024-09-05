@@ -217,10 +217,10 @@ const ProfileScreen = () => {
               value={password}
               onChangeText={setPassword}
             />
-            <View style={styles.pickerContainer}>
+            <View style={styles.input}>
               <Picker
                 selectedValue={country}
-                style={styles.input}
+                style={styles.pickerContainer}
                 onValueChange={(itemValue) => setCountry(itemValue)}
               >
                 {countries.map((country, index) => (
