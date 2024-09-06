@@ -4,7 +4,6 @@ import MapView, { Marker } from "react-native-maps";
 import {
   View,
   TextInput,
-  SafeAreaView,
   Animated,
   Modal,
   Text,
@@ -25,6 +24,8 @@ import {
 } from "../Services/apiServiceAdmin";
 import useModalView from "../ViewModels/AdminMapViewModel";
 import ImageResources from '../../../utils/ImageRessources';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 const collectedMarkerImage = ImageResources.collectedMarkerImage;
 const pendingMarkerImage = ImageResources.pendingMarkerImage;
 const reportedMarkerImage = ImageResources.reportedMarkerImage;
@@ -123,7 +124,7 @@ const MapScreenAdmin = () => {
     );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.MainBackground }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.MainBackground }} edges={['top', 'left', 'right']}>
       <View style={styles.container}>
         <View style={styles.searchContainer}>
           <View style={styles.inputText}>
