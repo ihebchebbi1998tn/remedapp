@@ -5,6 +5,7 @@ import {
   Image,
   Text,
   TouchableOpacity,
+   FlatList,
   ScrollView,
   Modal,
 } from "react-native";
@@ -59,6 +60,12 @@ export default function SignupScreen({ navigation }) {
 
   const countries = getCountries();
 
+    const renderCountryItem = ({ item }) => (
+    <TouchableOpacity onPress={() => setCountry(item)}>
+      <Text style={styles.countryItem}>{item}</Text>
+    </TouchableOpacity>
+  );
+  
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
@@ -142,34 +149,36 @@ export default function SignupScreen({ navigation }) {
                   />
                 </View>
               </View>
-              <View style={styles.inputContainer}>
-                <Text style={[styles.labelText, { color: Colors.primary }]}>
-                  {t("signup.country")}
-                </Text>
-                <View style={[styles.inputText, { flexDirection: "row" }]}>
-                  <Ionicons
-                    name="globe-outline"
-                    size={17}
-                    color={Colors.primary}
-                  />
-                  <Picker
-                    selectedValue={country}
-                    style={[
-                      styles.input,
-                      Platform.OS === "ios" && { height: 150 },
-                    ]}
-                    onValueChange={(itemValue) => setCountry(itemValue)}
-                  >
-                    {countries.map((country, index) => (
-                      <Picker.Item
-                        key={index}
-                        label={country}
-                        value={country}
-                      />
-                    ))}
-                  </Picker>
-                </View>
-              </View>
+               <View style={styles.inputContainer}>
+            <Text style={[styles.labelText, { color: Colors.primary }]}>
+              {t("signup.country")}
+            </Text>
+            <View style={styles.inputText}>
+              <Ionicons
+                name="globe-outline"
+                size={17}
+                color={Colors.primary}
+              />
+              {Platform.OS === 'ios' ? (
+                <FlatList
+                  data={countries}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={renderCountryItem}
+                  style={{ maxHeight: 200 }}  // Adjust maxHeight for the list
+                />
+              ) : (
+                <Picker
+                  selectedValue={country}
+                  style={styles.input}
+                  onValueChange={(itemValue) => setCountry(itemValue)}
+                >
+                  {countries.map((country, index) => (
+                    <Picker.Item key={index} label={country} value={country} />
+                  ))}
+                </Picker>
+              )}
+            </View>
+          </View>
 
               <View style={styles.inputContainer}>
                 <Text style={[styles.labelText, { color: Colors.primary }]}>
