@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  SafeAreaView,
   Modal,
   TextInput,
 } from "react-native";
@@ -14,6 +13,8 @@ import { useTranslation } from "react-i18next";
 import { useProfileViewModel } from "../ViewModels/profileViewModel";
 import styles from "../Styles/StyleProfileScreen";
 import { Picker } from "@react-native-picker/picker";
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 const ProfileScreen = () => {
   const {
     email,
@@ -53,7 +54,7 @@ const ProfileScreen = () => {
   const { t } = useTranslation();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.white }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.white }} edges={['top', 'left', 'right']}>
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{t("profileScreen.settings")}</Text>
