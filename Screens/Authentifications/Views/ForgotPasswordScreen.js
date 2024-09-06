@@ -1,17 +1,19 @@
 import React from "react";
-import { View, TextInput, Image, Text, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
+import { View, TextInput, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import SidebarModal from "../../../Navigation/SideBar/SidebarModal";
 import Colors from "../../../utils/color";
 import { useTranslation } from "react-i18next";
 import styles from "../Styles/StyleForgotPassword";
 import useForgotPasswordViewModel from "../ViewModels/useForgotPasswordViewModel";
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 export default function ForgotPasswordScreen({ navigation }) {
   const { email, isEmailFilled, handleEmailChange, handleNext } = useForgotPasswordViewModel(navigation);
   const { t } = useTranslation();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primary02 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primary02 }} edges={['top', 'left', 'right']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => {}} style={styles.sidebarIcon}>
           <Ionicons name="menu" size={24} color={Colors.primary} />
