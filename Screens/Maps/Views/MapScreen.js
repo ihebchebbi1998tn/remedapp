@@ -3,7 +3,6 @@ import {
   View,
   TextInput,
   StyleSheet,
-  SafeAreaView,
   Modal,
   Text,
   TouchableOpacity,
@@ -19,6 +18,8 @@ import styles from '../Styles/StyleMapScreen';
 import customMapStyle from '../Styles/customMapStyle';
 import { BASE_URL } from '../../../Navigation/apiConfig';
 import ImageResources from '../../../utils/ImageRessources';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 const collectedMarkerImage = ImageResources.collectedMarkerImage;
 const pendingMarkerImage = ImageResources.pendingMarkerImage;
 const reportedMarkerImage = ImageResources.reportedMarkerImage;
@@ -60,7 +61,7 @@ const MapScreen = () => {
     ));
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.MainBackground }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.MainBackground }} edges={['top', 'left', 'right']}>
       <View style={styles.container}>
         <View style={styles.searchContainer}>
           <View style={styles.inputText}>
