@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  SafeAreaView,
-  StatusBar,
   View,
   Text,
   FlatList,
@@ -18,6 +16,7 @@ import Colors from "../../../utils/color";
 import { useTranslation } from "react-i18next";
 import { useHistoryViewModel } from "../ViewModels/HistoryViewModel";
 import historyScreenStyles from "../Styles/historyScreenStyles";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HistoryScreen = () => {
   const { t } = useTranslation();
@@ -94,8 +93,8 @@ const HistoryScreen = () => {
   };
 
   return (
-    <SafeAreaView style={historyScreenStyles.container}>
-      <StatusBar  barStyle="dark-content" />
+    <SafeAreaView style={historyScreenStyles.container} edges={['top', 'left', 'right']}>
+
       <View style={historyScreenStyles.content}>
         <View style={historyScreenStyles.searchContainer}>
           <TextInput
