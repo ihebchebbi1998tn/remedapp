@@ -5,8 +5,6 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
-  SafeAreaView,
-  StatusBar,
   FlatList,
   RefreshControl,
   ActivityIndicator,
@@ -16,6 +14,8 @@ import Colors from "../../../utils/color";
 import { useTranslation } from "react-i18next";
 import { useSharedViewModel } from '../ViewModels/SharedViewModel';
 import styles from "../Styles/StyleHomeScreen";
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 const HomeScreenAdmin = () => {
   const { search, setSearch, filteredData, refreshing, onRefresh, loadMore } = useSharedViewModel();
   const { t } = useTranslation();
@@ -59,8 +59,7 @@ const HomeScreenAdmin = () => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.MainBackground }}>
-      <StatusBar backgroundColor={Colors.white} barStyle="dark-content" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.MainBackground }} edges={['top', 'left', 'right']}>
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id.toString()}
