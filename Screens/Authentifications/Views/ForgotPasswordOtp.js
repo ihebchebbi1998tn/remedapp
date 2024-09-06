@@ -1,10 +1,11 @@
 import React from "react";
-import { View, TextInput, Image, Text, TouchableOpacity, StyleSheet, SafeAreaView, Modal } from "react-native";
+import { View, TextInput, Image, Text, TouchableOpacity, StyleSheet, Modal } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import SidebarModal from "../../../Navigation/SideBar/SidebarModal";
 import Colors from "../../../utils/color";
 import useForgotPasswordOtpViewModel from "../ViewModels/useForgotPasswordOtpViewModel";
 import styles from "../Styles/StyleForgotPasswordOtp";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ForgotPasswordOtp({ navigation, route }) {
   const {
@@ -27,7 +28,7 @@ export default function ForgotPasswordOtp({ navigation, route }) {
   } = useForgotPasswordOtpViewModel(navigation, route);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primary02 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primary02 }} edges={['top', 'left', 'right']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={openSidebar} style={styles.sidebarIcon}>
           <Ionicons name="menu" size={24} color={Colors.primary} />
