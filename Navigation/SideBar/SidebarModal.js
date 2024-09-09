@@ -6,6 +6,7 @@ import { useLanguage } from "../LanguageContext";
 import Colors from '../../utils/color';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './Styles/StyleSideBar';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SidebarModal = ({ isOpen, onClose }) => {
   const { t, i18n } = useTranslation();
@@ -147,6 +148,8 @@ const SidebarModal = ({ isOpen, onClose }) => {
         </Animated.View>
       </View>
     </Modal>
+   
+
   );
 };
 

@@ -3,6 +3,7 @@ import {
   View,
   TextInput,
   StyleSheet,
+  StatusBar,
   Modal,
   Text,
   TouchableOpacity,
@@ -61,7 +62,8 @@ const MapScreen = () => {
     ));
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.MainBackground }} edges={['top', 'left', 'right']}>
+    <View style={{ flex: 1, backgroundColor: Colors.MainBackground }} >
+        
       <View style={styles.container}>
         <View style={styles.searchContainer}>
           <View style={styles.inputText}>
@@ -222,7 +224,7 @@ const MapScreen = () => {
               </View>
             </Modal>
           </View>
-        </SafeAreaView>
+        </View>
       );
     };
     

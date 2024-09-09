@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
+  StatusBar,
   TextInput,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -14,8 +15,13 @@ import { useProfileViewModel } from "../ViewModels/profileViewModel";
 import styles from "../Styles/StyleProfileScreen";
 import { Picker } from "@react-native-picker/picker";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useState } from "react";
+import { FlatList } from "react-native-gesture-handler";
+
 
 const ProfileScreen = () => {
+  const [countryModalVisible, setCountryModalVisible] = useState(false);
+
   const {
     email,
     setEmail,
@@ -52,9 +58,37 @@ const ProfileScreen = () => {
   } = useProfileViewModel();
 
   const { t } = useTranslation();
+// Custom Modal for Country Selection
+const CountryPickerModal = ({ visible, onClose, countries, onSelect }) => {
+  return (
+    <Modal visible={visible} transparent={true} animationType="slide">
+      <View style={styles.modalContainer}>
+        <View style={styles.modalView}>
+          <FlatList
+            data={countries}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={styles.countryItem}
+                onPress={() => {
+                  onSelect(item);
+                  onClose();
+                }}
+              >
+                <Text style={styles.countryText}>{item}</Text>
+              </TouchableOpacity>
+            )}
+          />
+          
+        </View>
+      </View>
+    </Modal>
+  );
+};
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.white }} edges={['top', 'left', 'right']}>
+    <View style={{ flex: 1, backgroundColor: Colors.white }} >
+ 
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{t("profileScreen.settings")}</Text>
@@ -219,15 +253,11 @@ const ProfileScreen = () => {
               onChangeText={setPassword}
             />
             <View style={styles.input}>
-              <Picker
-                selectedValue={country}
-                style={styles.pickerContainer}
-                onValueChange={(itemValue) => setCountry(itemValue)}
+              <TouchableOpacity
+                onPress={() => setCountryModalVisible(true)}
               >
-                {countries.map((country, index) => (
-                  <Picker.Item key={index} label={country} value={country} />
-                ))}
-              </Picker>
+                <Text>{country || t("signup.country")}</Text>
+              </TouchableOpacity>
             </View>
             <TouchableOpacity
               style={styles.modalButtonContact}
@@ -293,7 +323,13 @@ const ProfileScreen = () => {
         </View>
       </Modal>
     </ScrollView>
-  </SafeAreaView>
+    <CountryPickerModal
+        visible={countryModalVisible}
+        onClose={() => setCountryModalVisible(false)}
+        countries={countries}
+        onSelect={(selectedCountry) => setCountry(selectedCountry)}
+      />
+  </View>
   );
 };
 

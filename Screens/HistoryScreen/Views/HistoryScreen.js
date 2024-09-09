@@ -4,6 +4,7 @@ import {
   Text,
   FlatList,
   TextInput,
+     StatusBar,
   TouchableOpacity,
   ActivityIndicator,
   Image,
@@ -93,8 +94,8 @@ const HistoryScreen = () => {
   };
 
   return (
-    <SafeAreaView style={historyScreenStyles.container} edges={['top', 'left', 'right']}>
-
+    <View style={historyScreenStyles.container} >
+     
       <View style={historyScreenStyles.content}>
         <View style={historyScreenStyles.searchContainer}>
           <TextInput
@@ -188,7 +189,7 @@ const HistoryScreen = () => {
           </View>
         </TouchableOpacity>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  StatusBar,
   RefreshControl,
   ActivityIndicator,
 } from "react-native";
@@ -59,7 +60,7 @@ const HomeScreenAdmin = () => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.MainBackground }} edges={['top', 'left', 'right']}>
+    <View style={{ backgroundColor: Colors.MainBackground }}>
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id.toString()}
@@ -76,7 +77,7 @@ const HomeScreenAdmin = () => {
         onEndReachedThreshold={0.5}
       />
       <View style={styles.bottomNavigator}></View>
-    </SafeAreaView>
+    </View>
   );
 };
 

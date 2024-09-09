@@ -3,6 +3,7 @@ import {
   View,
   Text,
   Image,
+  StatusBar,
   TouchableOpacity,
   FlatList,
   RefreshControl,
@@ -47,7 +48,8 @@ const HomeScreen = () => {
   );
 
   return (
-      <SafeAreaView style={{ flex: 1 , backgroundColor: Colors.MainBackground}} edges={['top', 'left', 'right']}>
+      <View style={{ flex: 1 , backgroundColor: Colors.MainBackground}} >
+            
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id.toString()}
@@ -64,7 +66,7 @@ const HomeScreen = () => {
         onEndReachedThreshold={0.5}
       />
       <View style={styles.bottomNavigator}></View>
-    </SafeAreaView>
+    </View>
   );
 };
 

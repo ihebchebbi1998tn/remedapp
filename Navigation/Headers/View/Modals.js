@@ -2,6 +2,8 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Modal, TextInput } from "react-native";
 import styles from "../Styles/StyleHeader";
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 export const SignOutModal = ({ isOpen, onClose, onConfirm, t }) => {
     return (
         <Modal visible={isOpen} animationType="fade" transparent={true} onRequestClose={onClose}>
@@ -19,11 +21,13 @@ export const SignOutModal = ({ isOpen, onClose, onConfirm, t }) => {
                 </View>
             </View>
         </Modal>
+
     );
 };
 
 export const ReportBugModal = ({ isOpen, onClose, onSend, bugDescription, setBugDescription, t }) => {
     return (
+
         <Modal visible={isOpen} animationType="fade" transparent={true} onRequestClose={onClose}>
             <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
@@ -46,6 +50,7 @@ export const ReportBugModal = ({ isOpen, onClose, onSend, bugDescription, setBug
                 </View>
             </View>
         </Modal>
+
     );
 };
 

@@ -13,7 +13,7 @@ export default function ForgotPasswordScreen({ navigation }) {
   const { t } = useTranslation();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primary02 }} edges={['top', 'left', 'right']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primary02 }} edges={['top', 'left', 'right', 'bottom']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => {}} style={styles.sidebarIcon}>
           <Ionicons name="menu" size={24} color={Colors.primary} />

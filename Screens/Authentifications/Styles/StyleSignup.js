@@ -138,6 +138,54 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     elevation: 2,
   },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Dimmed background
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalView: {
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    borderRadius: 20,
+    padding: 10,
+    width: "85%",
+    maxHeight: "70%",
+    shadowColor: "#000",
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  countryItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+  },
+  countryText: {
+    fontSize: 18,
+    marginLeft: 10,
+    color: "#333",
+  },
+  closeButton: {
+    alignSelf: "flex-end",
+    borderRadius: 20,
+    padding: 10,
+
+  },
+  closeButtonText: {
+    color: Colors.primary,
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  searchInput: {
+    backgroundColor: "#f1f1f1",
+    borderRadius: 20,
+    padding: 10,
+    marginBottom: 15,
+    fontSize: 30,
+  },
+ 
 });
 
 export default styles;

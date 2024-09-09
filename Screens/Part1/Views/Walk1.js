@@ -11,11 +11,6 @@ import useWalkViewModel from '../ViewModels/WalkViewModel';
 import styles from '../Styles/StyleWalk';
 import Colors from '../../../utils/color';
 import ImageResources from '../../../utils/ImageRessources';
-const image1 = ImageResources.RemedLogo;
-const image2 = ImageResources.EUlogo;
-const cleanerEnvImage = ImageResources.Walk3;
-const walk2Image = ImageResources.Walk2;
-const mapImage = ImageResources.WalkLocalisation;
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Walk1 = ({ navigation }) => {
@@ -23,11 +18,11 @@ const Walk1 = ({ navigation }) => {
   const { navigateToNextScreen } = useWalkViewModel(navigation);
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
-    <View style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right', 'bottom']}>
+      <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image source={image1} resizeMode="cover" style={styles.imageSmall} />
-          <Image source={image2} resizeMode="cover" style={styles.imageSmall} />
+          <Image source={ImageResources.RemedLogo} resizeMode="contain" style={styles.imageSmall} />
+          <Image source={ImageResources.EUlogo} resizeMode="contain" style={styles.imageSmall} />
         </View>
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{t('Welcome to RE-MED Community')}</Text>
@@ -44,10 +39,10 @@ const Walk2 = ({ navigation }) => {
   const { navigateToNextScreen } = useWalkViewModel(navigation);
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
-    <View style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right', 'bottom']}>
+      <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image source={walk2Image} resizeMode="cover" style={styles.imageMedium} />
+          <Image source={ImageResources.Walk2} resizeMode="contain" style={styles.imageMedium} />
         </View>
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{t("Reporting Made Easy")}</Text>
@@ -64,10 +59,10 @@ const Walk3 = ({ navigation }) => {
   const { navigateToNextScreen } = useWalkViewModel(navigation);
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
-    <View style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right', 'bottom']}>
+      <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image source={cleanerEnvImage} resizeMode="cover" style={styles.imageLarge} />
+          <Image source={ImageResources.Walk3} resizeMode="contain" style={styles.imageLarge} />
         </View>
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{t('Building a Cleaner Future')}</Text>
@@ -84,10 +79,10 @@ const Walk4 = ({ navigation }) => {
   const { handleLocationPermission } = useWalkViewModel(navigation);
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
-    <View style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right', 'bottom']}>
+      <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image source={mapImage} resizeMode="cover" style={styles.imageLarge} />
+          <Image source={ImageResources.WalkLocalisation} resizeMode="contain" style={styles.imageLarge} />
         </View>
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{t('ENABLE YOUR LOCATION')}</Text>
@@ -111,11 +106,11 @@ const Footer = ({ navigation, nextScreen, activeDotIndex, navigateToNextScreen }
   return (
     <View style={styles.footer}>
       <View style={styles.dotsContainer}>
-        {[0, 1, 2].map((index) => (
+        {[0, 1, 2, 3].map((index) => (
           <View key={index} style={[styles.dot, index === activeDotIndex && styles.activeDot]}></View>
         ))}
       </View>
-      <LinearGradient colors={[Colors.primary,Colors.secondary]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.gradient}>
+      <LinearGradient colors={[Colors.primary, Colors.secondary]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.gradient}>
         <TouchableOpacity style={styles.nextButton} onPress={() => navigateToNextScreen(nextScreen, activeDotIndex + 1)}>
           <Text style={styles.nextButtonText}>Next</Text>
         </TouchableOpacity>
@@ -124,4 +119,4 @@ const Footer = ({ navigation, nextScreen, activeDotIndex, navigateToNextScreen }
   );
 };
 
-export { Walk1, Walk2, Walk3, Walk4};
+export { Walk1, Walk2, Walk3, Walk4 };

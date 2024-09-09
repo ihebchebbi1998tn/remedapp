@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: 8,
     elevation: 5,
-    padding: 10,
     zIndex: 1,
   },
   notificationItem: {

@@ -14,8 +14,7 @@ const SplashScreen = ({ navigation }) => {
   const { t } = useTranslation();
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
-      <StatusBar backgroundColor={Colors.primary} barStyle="light-content" />
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right', 'bottom']}>
       <View style={styles.centeredContent}>
         <Image
           source={ImageResources.EUlogo}

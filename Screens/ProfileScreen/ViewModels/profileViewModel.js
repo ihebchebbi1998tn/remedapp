@@ -27,10 +27,10 @@ export const useProfileViewModel = () => {
   const [contactMessage, setContactMessage] = useState("");
   const [email, setEmail] = useState('Iheb.chebbhshshbzbebbejebeji@lcieducation.netI');
   const [password, setPassword] = useState("");
-  const [firstname, setFirstname] = useState(user.FirstName);
-  const [lastname, setLastname] = useState(user.LastName);
-  const [username, setUsername] = useState(user.Username);
-  const [country, setCountry] = useState(user.Country);
+  const [firstname, setFirstname] = useState("iheb");
+  const [lastname, setLastname] = useState("chebbi");
+  const [username, setUsername] = useState("user123");
+  const [country, setCountry] = useState("Tunisia");
   const [appLanguage, setAppLanguage] = useState(null);
   const [countries, setCountries] = useState(countriesData.en);
 

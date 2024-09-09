@@ -4,8 +4,8 @@ import {
   TextInput,
   Image,
   Text,
+     StatusBar,
   TouchableOpacity,
-   FlatList,
   ScrollView,
   Modal,
 } from "react-native";
@@ -16,6 +16,9 @@ import useSignupViewModel from "../ViewModels/useSignupViewModel";
 import styles from "../Styles/StyleSignup";
 import ImageResources from "../../../utils/ImageRessources";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useState } from "react";
+import { FlatList } from "react-native-gesture-handler";
+import { GestureHandlerRootView } from 'react-native-gesture-handler'; // Import GestureHandlerRootView
 
 const SuccessModal = ({ visible, onClose, message, navigation }) => (
   <Modal visible={visible} transparent={true} animationType="slide">
@@ -30,44 +33,70 @@ const SuccessModal = ({ visible, onClose, message, navigation }) => (
   </Modal>
 );
 
-export default function SignupScreen({ navigation }) {
-  const {
-    t,
-    firstName,
-    setFirstName,
-    lastName,
-    setLastName,
-    username,
-    setUsername,
-    email,
-    setEmail,
-    country,
-    setCountry,
-    password,
-    setPassword,
-    showPassword,
-    togglePasswordVisibility,
-    confirmPassword,
-    setConfirmPassword,
-    modalVisible,
-    modalMessage,
-    setModalVisible,
-    handleCloseModal,
-    handleSignup,
-    getCountries, 
-    appLanguage,
-  } = useSignupViewModel(navigation);
 
-  const countries = getCountries();
-
-    const renderCountryItem = ({ item }) => (
-    <TouchableOpacity onPress={() => setCountry(item)}>
-      <Text style={styles.countryItem}>{item}</Text>
-    </TouchableOpacity>
-  );
-  
+// Custom Modal for Country Selection
+const CountryPickerModal = ({ visible, onClose, countries, onSelect }) => {
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
+    <Modal visible={visible} transparent={true} animationType="slide">
+      <View style={styles.modalContainer}>
+        <View style={styles.modalView}>
+      
+          <FlatList
+            data={countries}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={styles.countryItem}
+                onPress={() => {
+                  onSelect(item);
+                  onClose();
+                }}
+              >
+                <Text style={styles.countryText}>{item}</Text>
+              </TouchableOpacity>
+            )}
+          />
+          
+        </View>
+      </View>
+    </Modal>
+  );
+};
+
+  export default function SignupScreen({ navigation }) {
+    const [countryModalVisible, setCountryModalVisible] = useState(false);
+  
+    const {
+      t,
+      firstName,
+      setFirstName,
+      lastName,
+      setLastName,
+      username,
+      setUsername,
+      email,
+      setEmail,
+      country,
+      setCountry,
+      password,
+      setPassword,
+      showPassword,
+      togglePasswordVisibility,
+      confirmPassword,
+      setConfirmPassword,
+      modalVisible,
+      modalMessage,
+      handleCloseModal,
+      handleSignup,
+      getCountries,
+      appLanguage,
+    } = useSignupViewModel(navigation);
+  
+    const countries = getCountries();
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}> 
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right', 'bottom']}>
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
           <Image source={ImageResources.RemedLogo} style={styles.logo} />
@@ -149,34 +178,13 @@ export default function SignupScreen({ navigation }) {
                   />
                 </View>
               </View>
-               <View style={styles.inputContainer}>
-            <Text style={[styles.labelText, { color: Colors.primary }]}>
-              {t("signup.country")}
-            </Text>
-            <View style={styles.inputText}>
-              <Ionicons
-                name="globe-outline"
-                size={17}
-                color={Colors.primary}
-              />
-              {Platform.OS === 'ios' ? (
-                <FlatList
-                  data={countries}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={renderCountryItem}
-                  style={{ maxHeight: 200 }}  // Adjust maxHeight for the list
-                />
-              ) : (
-                <Picker
-                  selectedValue={country}
-                  style={styles.input}
-                  onValueChange={(itemValue) => setCountry(itemValue)}
-                >
-                  {countries.map((country, index) => (
-                    <Picker.Item key={index} label={country} value={country} />
-                  ))}
-                </Picker>
-              )}
+              <View style={styles.inputContainer}>
+            <Text style={[styles.labelText, { color: Colors.primary }]}>{t("signup.country")}</Text>
+            <View style={[styles.inputText, { flexDirection: "row" }]}>
+              <Ionicons name="globe-outline" size={17} color={Colors.primary} />
+              <TouchableOpacity onPress={() => setCountryModalVisible(true)} style={[styles.input, { flex: 1 }]}>
+                <Text>{country || t("signup.country")}</Text>
+              </TouchableOpacity>
             </View>
           </View>
 
@@ -309,30 +317,20 @@ export default function SignupScreen({ navigation }) {
                 </View>
               </View>
               <View style={styles.inputContainer}>
-                <Text style={[styles.labelText, { color: Colors.primary }]}>
-                  {t("signup.country")}
-                </Text>
-                <View style={styles.inputText}>
-                  <Ionicons
-                    name="globe-outline"
-                    size={17}
-                    color={Colors.primary}
-                  />
-                  <Picker
-                    selectedValue={country}
-                    style={styles.input}
-                    onValueChange={(itemValue) => setCountry(itemValue)}
-                  >
-                    {countries.map((country, index) => (
-                      <Picker.Item
-                        key={index}
-                        label={country}
-                        value={country}
-                      />
-                    ))}
-                  </Picker>
-                </View>
-              </View>
+            <Text style={[styles.labelText, { color: Colors.primary }]}>
+              {t("signup.country")}
+            </Text>
+            <View style={[styles.inputText, { flexDirection: "row" }]}>
+              <Ionicons name="globe-outline" size={17} color={Colors.primary} />
+              <TouchableOpacity
+                onPress={() => setCountryModalVisible(true)}
+                style={[styles.input, { flex: 1 }]}
+              >
+                <Text>{country || t("signup.country")}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
               <View style={styles.inputContainer}>
                 <Text style={[styles.labelText, { color: Colors.primary }]}>
                   {t("signup.password")}
@@ -413,6 +411,14 @@ export default function SignupScreen({ navigation }) {
         message={modalMessage}
         navigation={navigation}
       />
+      <CountryPickerModal
+        visible={countryModalVisible}
+        onClose={() => setCountryModalVisible(false)}
+        countries={countries}
+        onSelect={(selectedCountry) => setCountry(selectedCountry)}
+      />
     </SafeAreaView>
+    </GestureHandlerRootView> 
+
   );
 }

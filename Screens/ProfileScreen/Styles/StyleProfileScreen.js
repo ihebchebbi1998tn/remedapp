@@ -159,6 +159,36 @@ const styles = StyleSheet.create({
       top: 10,
       right: 10,
     },
+    modalContainer: {
+      flex: 1,
+      backgroundColor: "rgba(0, 0, 0, 0.5)", // Dimmed background
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    modalView: {
+      backgroundColor: "rgba(255, 255, 255, 0.95)",
+      borderRadius: 20,
+      padding: 10,
+      width: "85%",
+      maxHeight: "70%",
+      shadowColor: "#000",
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+    },
+    countryItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      padding: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: "#ddd",
+    },
+    countryText: {
+      fontSize: 15,
+      marginLeft: 10,
+      color: "#333",
+    },
+
   });
 
   export default styles;

@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
   listContent: {
     backgroundColor: Colors.pageBackground,
     paddingHorizontal: 15,
-    paddingBottom: 80,
   },
   row: {
     justifyContent: 'space-between',
@@ -82,12 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 5,
   },
-  bottomNavigator: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
+ 
 });
 
 export default styles;

@@ -9,6 +9,8 @@ import { useTranslation } from "react-i18next";
 import { SignOutModal ,  ReportBugModal} from "./Modals";
 import styles from "../Styles/StyleHeader";
 import useHeaderViewModel from "../ViewModels/HeaderViewModel";
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 const Header = () => {
     const {
         isSidebarOpen, isUserDropdownOpen, isSignOutModalOpen, isReportBugModalOpen, bugDescription, setBugDescription,
@@ -18,6 +20,7 @@ const Header = () => {
 
     return (
         <>
+          <SafeAreaView  >
             <View style={styles.container}>
                 <TouchableOpacity onPress={openSidebar} style={styles.sidebarIcon}>
                     <Ionicons name="menu" size={24} color={Colors.primary} />
@@ -51,6 +54,7 @@ const Header = () => {
                 t={t}
             />
             <Header2 />
+            </SafeAreaView>
         </>
     );
 };

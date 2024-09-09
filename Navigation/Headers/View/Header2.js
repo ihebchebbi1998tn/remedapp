@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import styles from "../Styles/StyleHeader2";
 import Colors from "../../../utils/color";
 import useHeader2ViewModel from "../ViewModels/useHeader2ViewModel";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Header2 = () => {
   const {
@@ -15,6 +16,7 @@ const Header2 = () => {
 
   return (
     <>
+      
       <View style={styles.container}>
         <View style={styles.notificationTextContainer}>
           {notificationText.split(' ').map((word, index) => (

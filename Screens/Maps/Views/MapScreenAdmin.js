@@ -124,7 +124,8 @@ const MapScreenAdmin = () => {
     );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.MainBackground }} edges={['top', 'left', 'right']}>
+    <View style={{ flex: 1, backgroundColor: Colors.MainBackground }} >
+
       <View style={styles.container}>
         <View style={styles.searchContainer}>
           <View style={styles.inputText}>
@@ -449,7 +450,7 @@ const MapScreenAdmin = () => {
             </View>
           </Modal>
         </View>
-      </SafeAreaView>
+      </View>
     );
   };
   
