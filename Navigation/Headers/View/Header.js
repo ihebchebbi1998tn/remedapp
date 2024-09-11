@@ -1,6 +1,6 @@
 // Header.js
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity,StatusBar } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../../utils/color";
 import SidebarModal from "../../SideBar/SidebarModal";
@@ -20,7 +20,6 @@ const Header = () => {
 
     return (
         <>
-          <SafeAreaView  >
             <View style={styles.container}>
                 <TouchableOpacity onPress={openSidebar} style={styles.sidebarIcon}>
                     <Ionicons name="menu" size={24} color={Colors.primary} />
@@ -54,7 +53,6 @@ const Header = () => {
                 t={t}
             />
             <Header2 />
-            </SafeAreaView>
         </>
     );
 };

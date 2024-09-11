@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
-import {  fetchReports } from "../Services/apiService"; // Import the API function
+import { fetchReports } from "../Services/apiService";
 import { UserContext } from "../../../Navigation/Routings/UserContext";
+
 export const useHistoryViewModel = () => {
   const { user } = useContext(UserContext);
 
@@ -20,12 +21,12 @@ export const useHistoryViewModel = () => {
 
   useEffect(() => {
     fetchReportsData();
-  }, []);
+  }, [user.id]);
 
   const fetchReportsData = async () => {
     setInitialLoading(true);
     try {
-      const data = await fetchReports('13');
+      const data = await fetchReports(user.id, page);
       setReports(data);
       setFilteredReports(data);
       setHasMoreReports(data.length > 0);

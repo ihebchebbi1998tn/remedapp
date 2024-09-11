@@ -2,12 +2,11 @@ import { useState, useEffect, useContext } from "react";
 import * as Location from "expo-location";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
-import {
-  Platform
-} from "react-native";
+import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserContext } from "../../../Routings/UserContext";
 import { submitReport, submitErrorAI } from "../Services/apiService";
+
 const useBottomTabNavigatorViewModel = () => {
   const [mainModalVisible, setMainModalVisible] = useState(false);
   const [formModalVisible, setFormModalVisible] = useState(false);
@@ -17,14 +16,14 @@ const useBottomTabNavigatorViewModel = () => {
   const [location, setLocation] = useState("");
   const [locationAvailable, setLocationAvailable] = useState(false);
   const [image, setImage] = useState(null);
-  const [altitude, setaltitude] = useState(null);
+  const [altitude, setAltitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const { user } = useContext(UserContext);
   const [appLanguage, setAppLanguage] = useState(null);
-  const [foundTags, setfoundTags] = useState([]);
+  const [foundTags, setFoundTags] = useState([]);
   const [falseURL, setFalseURL] = useState("");
 
   useEffect(() => {
@@ -32,8 +31,7 @@ const useBottomTabNavigatorViewModel = () => {
       try {
         const value = await AsyncStorage.getItem("appLanguage");
         if (value) {
-          const parsedValue = JSON.parse(value);
-          setAppLanguage(parsedValue.key);
+          setAppLanguage(JSON.parse(value).key);
         }
       } catch (error) {
         console.error(error);
@@ -57,14 +55,7 @@ const useBottomTabNavigatorViewModel = () => {
   };
 
   const submitForm = async (t) => {
-    if (
-      !title ||
-      !description ||
-      !location ||
-      !altitude ||
-      !longitude ||
-      !imageFile?.uri
-    ) {
+    if (!title || !description || !location || !altitude || !longitude || !imageFile?.uri) {
       alert(t("AllFieldsAreRequired"));
       return;
     }
@@ -91,12 +82,12 @@ const useBottomTabNavigatorViewModel = () => {
 
     try {
       const result = await submitReport(formData, user, title, description, user.Country, altitude, longitude);
-      if (result.status === true) {
+      if (result.status) {
         closeModal();
         setThankYouModalVisible(true);
         setTimeout(() => setThankYouModalVisible(false), 2000);
       } else {
-        setfoundTags(result.tags);
+        setFoundTags(result.tags);
         setFalseURL(result.image_url);
         closeModal();
         setErrorModalVisible(true);
@@ -155,7 +146,7 @@ const useBottomTabNavigatorViewModel = () => {
       }
       let { coords } = await Location.getCurrentPositionAsync({});
       setLocationAvailable(true);
-      setaltitude(coords.latitude);
+      setAltitude(coords.latitude);
       setLongitude(coords.longitude);
       setLocation(`Altitude: ${coords.latitude}, Longitude: ${coords.longitude}`);
     } catch (error) {
@@ -192,4 +183,3 @@ const useBottomTabNavigatorViewModel = () => {
 };
 
 export default useBottomTabNavigatorViewModel;
-  

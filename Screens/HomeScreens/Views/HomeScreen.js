@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Image,
-  StatusBar,
   TouchableOpacity,
   FlatList,
   RefreshControl,
@@ -13,7 +12,6 @@ import Colors from "../../../utils/color";
 import Stats from "./Stats";
 import { useSharedViewModel } from '../ViewModels/SharedViewModel';
 import styles from "../Styles/StyleHomeScreen";
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HomeScreen = () => {
   const {
@@ -49,7 +47,6 @@ const HomeScreen = () => {
 
   return (
       <View style={{ flex: 1 , backgroundColor: Colors.MainBackground}} >
-            
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id.toString()}

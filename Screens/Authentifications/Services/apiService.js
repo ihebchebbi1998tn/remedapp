@@ -1,22 +1,46 @@
 import { BASE_URL } from "../../../Navigation/apiConfig";
 
 export const fetchLogin = async (username, password) => {
-  const response = await fetch(`${BASE_URL}remed/api/utilisateur/login.php`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
-  });
-  return await response.json();
+  try {
+    const response = await fetch(`${BASE_URL}api/users/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+    console.log("Email:", username, "Password:", password);
+
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Login error:", error);
+    throw error;
+  }
 };
 
+
 export const signup = async (userInfo) => {
-    try {
-      const response = await axios.post(`${BASE_URL}remed/api/utilisateur/create_utilisateur.php`, userInfo);
-      return response.data;
-    } catch (error) {
-      throw error;
+  try {
+    const response = await fetch(`${BASE_URL}api/users/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userInfo), 
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`);
     }
-  };
+    return await response.json();
+  } catch (error) {
+    console.error("Signup error:", error);
+    throw error;
+  }
+};
   
   export const sendOtpCode = async (email, randomCode) => {
     try {
@@ -31,7 +55,7 @@ export const signup = async (userInfo) => {
   
   export const updatePassword = async (email, newPassword) => {
     try {
-      const response = await fetch(`${BASE_URL}remed/api/utilisateur/updatepassword.php?Email=${email}&Password=${newPassword}`, {
+      const response = await fetch(`${BASE_URL}api/users/update-password`, {
         method: "POST",
         headers: {
           Accept: "application/json",

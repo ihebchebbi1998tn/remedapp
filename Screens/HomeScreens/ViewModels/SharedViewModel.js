@@ -30,17 +30,19 @@ export const useSharedViewModel = () => {
 
   const fetchData = async (pageNum) => {
     try {
-      const limit = 2;
+      const limit = 10; 
       const result = await fetchReports(pageNum, limit);
+  
       if (result.length > 0) {
         setData(prevData => (pageNum === 1 ? result : [...prevData, ...result]));
       } else {
-        setIsLoadingMore(false);
+        setIsLoadingMore(false); 
       }
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   const getUserLocationData = async () => {
     try {
@@ -62,7 +64,7 @@ export const useSharedViewModel = () => {
       location: item.location || "Unknown",
       distance: distance + ' km',
       coords: { lat: parseFloat(item.altitude), lng: parseFloat(item.longitude) },
-      image: { uri: `${BASE_URL}remed/api/reports/` + item.picture },
+      image: { uri: `${BASE_URL}` + item.picture },
       isLiked: false,
     };
   });
@@ -79,9 +81,10 @@ export const useSharedViewModel = () => {
 
   const loadMore = () => {
     if (isLoadingMore) {
-      setPage(prevPage => prevPage + 1);
+      setPage(prevPage => prevPage + 1); 
     }
   };
+  
 
   return {
     search,

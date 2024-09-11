@@ -15,8 +15,6 @@ export const fetchAppLanguage = async (setAppLanguage) => {
   }
 };
 
-// Mark Report as Collected
-// Mark Report as Collected
 export const markReportAsCollected = async (
   selectedMarker,
   markers,
@@ -32,9 +30,9 @@ export const markReportAsCollected = async (
 
   try {
     const response = await fetch(
-      `${BASE_URL}/remed/api/reports/mark_collected.php?report_id=${selectedMarker.id}&pickedup_by=Iheb`,
+      `${BASE_URL}api/reports/mark-collected?report_id=${selectedMarker.id}&pickedup_by=Technician B`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -59,14 +57,13 @@ export const markReportAsCollected = async (
   }
 };
 
-
 // Mark Report as Reported
 export const markReportAsReported = async (selectedMarker, markers, setMarkers, setFilteredMarkers, setSelectedMarker, setReportModalVisible) => {
   try {
     const response = await fetch(
-      `${BASE_URL}/remed/api/reports/mark_reported.php?report_id=${selectedMarker.id}&pickedup_by=Iheb`,
+      `${BASE_URL}api/reports/mark-reported?report_id=${selectedMarker.id}&pickedup_by=Technician B`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -91,13 +88,17 @@ export const markReportAsReported = async (selectedMarker, markers, setMarkers, 
   }
 };
 
-// Fetch All Reports
 export const fetchAllReports = async (setMarkers, setFilteredMarkers) => {
   try {
-    const response = await fetch(`${BASE_URL}/remed/api/reports/getall_report.php`);
-    const data = await response.json();
-    setMarkers(data);
-    setFilteredMarkers(data);
+    const response = await fetch(`${BASE_URL}api/reports/all`);
+    
+    if (response.ok) {
+      const data = await response.json();
+      setMarkers(data);
+      setFilteredMarkers(data);
+    } else {
+      console.error('Error fetching all reports:', response.statusText);
+    }
   } catch (error) {
     console.error("Error fetching data:", error);
   }

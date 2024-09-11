@@ -12,16 +12,17 @@ export const submitReport = async (formData, user, title, description, userCount
     pickedup_by: "null",
   });
 
-  const response = await fetch(
-    `${BASE_URL}remed/api/reports/create_report.php?${queryParams.toString()}`,
-    {
-      method: "POST",
-      body: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
+  const response = await fetch(`${BASE_URL}api/reports/create`, {
+    method: "POST",
+    body: formData,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to submit report');
+  }
 
   return response.json();
 };

@@ -1,7 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from "react-native";
 import HomeScreen from '../../Screens/HomeScreens/Views/HomeScreen';
 import MapScreen from '../../Screens/Maps/Views/MapScreen';
 import ProfileScreen from '../../Screens/ProfileScreen/Views/ProfileScreen';
@@ -33,9 +34,12 @@ const MainScreen = () => {
 
   return (
     <>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar barStyle="dark-content" backgroundColor="white" translucent={false} />
       <Header />
       <UserScreens />
       <BottomTabNavigator />
+      </SafeAreaView>
     </>
   );
 };

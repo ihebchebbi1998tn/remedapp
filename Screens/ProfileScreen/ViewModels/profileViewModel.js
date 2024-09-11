@@ -101,14 +101,14 @@ export const useProfileViewModel = () => {
       Username: username,
       Country: country,
     };
-
+  
     try {
-      await updateProfile(user.id, profileData);
-      Alert.alert("Success", "Profile updated successfully");
+      const response = await updateProfile(user.id, profileData);
+      Alert.alert("Success", response.message);  
     } catch (error) {
       Alert.alert("Error updating profile:", error.message);
     }
-
+  
     handleCloseEditProfileModal();
   };
 

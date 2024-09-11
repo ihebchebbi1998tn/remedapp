@@ -43,20 +43,19 @@ export const useLoginViewModel = (navigation) => {
         if (stayLoggedIn) {
           await AsyncStorage.setItem("user", JSON.stringify(data.user));
         } else {
-          await AsyncStorage.setItem("user", JSON.stringify(data.user));
-          await AsyncStorage.removeItem("user");
+          updateUser(data.user); 
+        }
+        if (data.user.role === "user") {
+          navigation.navigate("UserScreens");
+        } else {
+          navigation.navigate("AdminScreens");
         }
       } catch (error) {
-        console.error("Error storing user in AsyncStorage:", error);
-      }
-  
-      if (data.user.role === "user") {
-        navigation.navigate("UserScreens");
-      } else {
-        navigation.navigate("AdminScreens");
+        console.error("Error storing user data:", error);
       }
     }
   };
+  
   
 
   return {

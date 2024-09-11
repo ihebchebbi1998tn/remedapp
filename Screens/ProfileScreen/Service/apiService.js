@@ -19,21 +19,33 @@ export const sendContactMessage = async (contactData) => {
 };
 
 export const updateProfile = async (userId, profileData) => {
-  const updateUrl = `${BASE_URL}remed/api/utilisateur/update_utilisateur.php?id=${userId}`;
-  
-  const formData = new FormData();
-  
-  for (let key in profileData) {
-    formData.append(key, profileData[key]);
-  }
-  
+  const updateUrl = `${BASE_URL}api/users/update`;
+
+  const payload = {
+    id: userId,
+    firstName: profileData.FirstName,
+    lastName: profileData.LastName,
+    username: profileData.Username,
+    email: profileData.Email,
+    country: profileData.Country,
+    password: profileData.mot_de_passe 
+  };
+
   try {
-    const response = await fetch(updateUrl, { method: "POST", body: formData });
-    const result = await response.text();
-    
+    const response = await fetch(updateUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
     if (!response.ok) {
-      throw new Error(result);
+      const error = await response.json();
+      throw new Error(error.message || "Failed to update user profile");
     }
+
+    const result = await response.json();
     return result;
   } catch (error) {
     throw new Error(error.message);

@@ -2,10 +2,11 @@ import { BASE_URL } from "../../../Navigation/apiConfig";
 import * as Location from 'expo-location';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const fetchReports = async (pageNum, limit = 2) => {
-  const response = await fetch(`${BASE_URL}remed/api/reports/getall_reportslazy.php?page=${pageNum}&limit=${limit}`);
+export const fetchReports = async (pageNum, limit = 10) => {
+  const response = await fetch(`${BASE_URL}api/reports/all-lazy?page=${pageNum}&limit=${limit}`);
   return response.json();
 };
+
 
 export const getUserLocation = async () => {
   let { status } = await Location.requestForegroundPermissionsAsync();

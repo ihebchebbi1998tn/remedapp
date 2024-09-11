@@ -41,7 +41,6 @@ const SidebarModal = ({ isOpen, onClose }) => {
       i18n.changeLanguage(languageKey);
       if (!isInitialLoad) {
         await AsyncStorage.setItem('appLanguage', JSON.stringify(language));
-        
       }
       changeLanguage(languageKey);
       setIsLanguageMenuOpen(false);
@@ -92,7 +91,7 @@ const SidebarModal = ({ isOpen, onClose }) => {
       visible={isOpen}
       onRequestClose={onClose}
     >
-      <View style={styles.modalContainer}>
+      <SafeAreaView style={styles.modalContainer}>
         <Animated.View
           {...panResponder.panHandlers}
           style={[styles.container, { transform: [{ translateX: slideAnim }] }]}
@@ -146,10 +145,8 @@ const SidebarModal = ({ isOpen, onClose }) => {
             </View>
           </View>
         </Animated.View>
-      </View>
+      </SafeAreaView>
     </Modal>
-   
-
   );
 };
 

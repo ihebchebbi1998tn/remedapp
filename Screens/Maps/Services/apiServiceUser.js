@@ -13,7 +13,11 @@ export const fetchAppLanguage = async () => {
 
 export const fetchMarkers = async () => {
   try {
-    const response = await fetch(`${BASE_URL}remed/api/reports/getall_report.php`);
+    const response = await fetch(`${BASE_URL}api/reports/all`);
+    if (!response.ok) {
+      console.error('Failed to fetch markers:', response.statusText);
+      return [];
+    }
     const data = await response.json();
     return data;
   } catch (error) {
@@ -22,30 +26,40 @@ export const fetchMarkers = async () => {
   }
 };
 
-export const markReportAsCollected = async (BASE_URL, selectedMarker) => {
-  const response = await fetch(
-    `${BASE_URL}remed/api/reports/mark_collected.php?report_id=${selectedMarker.id}&pickedup_by=Iheb`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  return response.ok;
+export const markReportAsCollected = async (selectedMarker) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}api/reports/mark-collected?report_id=${selectedMarker.id}&pickedup_by=Technician B`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }
+    );
+    return response.ok;
+  } catch (error) {
+    console.error('Error marking report as collected:', error);
+    return false;
+  }
 };
 
-export const markReportAsReported = async (BASE_URL, selectedMarker) => {
-  const response = await fetch(
-    `${BASE_URL}remed/api/reports/mark_reported.php?report_id=${selectedMarker.id}&pickedup_by=Iheb`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  return response.ok;
+export const markReportAsReported = async (selectedMarker) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}api/reports/mark-reported?report_id=${selectedMarker.id}&pickedup_by=Technician B`,
+      {
+        method: "PUT", 
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }
+    );
+    return response.ok;
+  } catch (error) {
+    console.error('Error marking report as reported:', error);
+    return false;
+  }
 };
 
 export const initialCarLocations = [
@@ -54,8 +68,6 @@ export const initialCarLocations = [
   { latitude: 25.353661, longitude: 55.427359 },
 ];
 
-export const getMarkers = async (BASE_URL) => {
-  const response = await fetch(`${BASE_URL}remed/api/reports/getall_report.php`);
-  const data = await response.json();
-  return data;
+export const getMarkers = async () => {
+  return await fetchMarkers(); 
 };

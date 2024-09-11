@@ -60,7 +60,7 @@ const useSignupViewModel = (navigation) => {
     } catch (error) {
       setModalMessage(t('signup.errorMessage'));
       setModalVisible(true);
-      console.error(error);
+      console.error("Signup error:", error);
     }
   };
 
@@ -73,6 +73,7 @@ const useSignupViewModel = (navigation) => {
     };
     return countries[language] || countries.en;
   };
+
   const handleCloseModal = () => {
     setModalVisible(false);
     navigation.navigate('LoginScreen');
