@@ -15,7 +15,7 @@ import { useProfileViewModel } from "../ViewModels/profileViewModel";
 import styles from "../Styles/StyleProfileScreen";
 import { Picker } from "@react-native-picker/picker";
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useState } from "react";
+import { useState , useCallback } from "react";
 import { FlatList } from "react-native-gesture-handler";
 
 
@@ -58,12 +58,15 @@ const ProfileScreen = () => {
   } = useProfileViewModel();
 
   const { t } = useTranslation();
-// Custom Modal for Country Selection
+
+  
+ // Custom Modal for Country Selection
 const CountryPickerModal = ({ visible, onClose, countries, onSelect }) => {
   return (
     <Modal visible={visible} transparent={true} animationType="slide">
       <View style={styles.modalContainer}>
         <View style={styles.modalView}>
+      
           <FlatList
             data={countries}
             keyExtractor={(item, index) => index.toString()}
@@ -79,12 +82,13 @@ const CountryPickerModal = ({ visible, onClose, countries, onSelect }) => {
               </TouchableOpacity>
             )}
           />
-          
         </View>
       </View>
     </Modal>
   );
 };
+
+  
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }} >
@@ -252,13 +256,12 @@ const CountryPickerModal = ({ visible, onClose, countries, onSelect }) => {
               value={password}
               onChangeText={setPassword}
             />
-            <View style={styles.input}>
-              <TouchableOpacity
-                onPress={() => setCountryModalVisible(true)}
-              >
-                <Text>{country || t("signup.country")}</Text>
-              </TouchableOpacity>
-            </View>
+           {/*  <View style={styles.input}>
+            <TouchableOpacity onPress={() => setCountryModalVisible(true)}>
+  <Text>{country || t("signup.country")}</Text>
+</TouchableOpacity>
+
+            </View> */}
             <TouchableOpacity
               style={styles.modalButtonContact}
               onPress={handleSaveProfile}

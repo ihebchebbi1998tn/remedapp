@@ -1,16 +1,25 @@
-import React from 'react';
+import {  useEffect } from "react";
+
+import { SafeAreaView, StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { StatusBar } from "react-native";
 import HomeScreenAdmin from '../../Screens/HomeScreens/Views/HomeScreenAdmin';
-import Header from '../Headers/View/Header';
-import BottomTabNavigatorAdmin from '../BottomNavs/Admin/View/BottomTabNavigatorAdmin';
 import MapScreenAdmin from '../../Screens/Maps/Views/MapScreenAdmin';
 import ProfileScreen from '../../Screens/ProfileScreen/Views/ProfileScreen';
+import BottomTabNavigatorAdmin from '../BottomNavs/Admin/View/BottomTabNavigatorAdmin';
+import Header from '../Headers/View/Header';
 
 const Stack = createStackNavigator();
 
-const AdminScreens = () => {
+
+
+const AdminScreens = ({ route }) => {
+  const { stayLoggedInValue } = route?.params || {}; 
+
+  useEffect(() => {
+    console.log("Stay Logged In Value:", stayLoggedInValue);
+  }, [stayLoggedInValue]);
+  
   return (
     <Stack.Navigator initialRouteName="HomeScreenAdmin" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomeScreenAdmin" component={HomeScreenAdmin} />
@@ -19,13 +28,12 @@ const AdminScreens = () => {
     </Stack.Navigator>
   );
 };
-
-const MainScreen = () => {
+const MainScreen = ({ route }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle="dark-content" backgroundColor="white" translucent={false} />
       <Header />
-      <AdminScreens />
+      <AdminScreens route={route} />
       <BottomTabNavigatorAdmin />
     </SafeAreaView>
   );

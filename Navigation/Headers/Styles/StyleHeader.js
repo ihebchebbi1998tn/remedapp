@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   },
   userDropdown: {
     position: 'absolute',
-    top: '40%',
+    top: '5%',
     right: '12%',
     backgroundColor: '#ffffff',
     borderRadius: 8,

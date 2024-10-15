@@ -1,17 +1,23 @@
 import { BASE_URL } from "../../../Navigation/apiConfig";
 
 export const sendContactMessage = async (contactData) => {
-  const contactUrl = `${BASE_URL}remed/api/utilisateur/sendemail.php`;
-  
-  const params = new URLSearchParams(contactData).toString();
-  
+  const contactUrl = `${BASE_URL}api/users/send-email`; 
+
   try {
-    const response = await fetch(`${contactUrl}?${params}`, { method: "GET" });
-    const result = await response.text();
-    
+    const response = await fetch(contactUrl, {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json", 
+      },
+      body: JSON.stringify(contactData), 
+    });
+
+    const result = await response.json();
+
     if (!response.ok) {
-      throw new Error(result);
+      throw new Error(result.error || "Failed to send email"); 
     }
+
     return result;
   } catch (error) {
     throw new Error(error.message);

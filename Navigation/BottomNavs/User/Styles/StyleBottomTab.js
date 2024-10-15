@@ -134,6 +134,22 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 3,
   },
+
+  submitButtonAAi: {
+    marginTop: 20,
+    backgroundColor: Colors.primary,
+    width: "70%",
+        alignItems: "center",
+        padding: 13,
+        borderRadius: 20,
+        marginBottom: 8,
+        opacity: 0.9,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 3,
+  },
   submitButtonText: {
     color: "#FFF",
     fontSize: 16,

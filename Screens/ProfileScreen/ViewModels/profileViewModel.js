@@ -1,10 +1,10 @@
-// profileViewModel.js
 
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../../Navigation/Routings/UserContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { sendContactMessage, updateProfile } from "../Service/apiService";
 import { Alert } from "react-native";
+import { useTranslation } from "react-i18next";
 
 const countriesData = {
   en: ["Tunisia", "Italy", "France", "England"],
@@ -25,14 +25,15 @@ export const useProfileViewModel = () => {
   const [isConfirmModalVisible, setConfirmModalVisible] = useState(false);
   const [contactSubject, setContactSubject] = useState("");
   const [contactMessage, setContactMessage] = useState("");
-  const [email, setEmail] = useState('Iheb.chebbhshshbzbebbejebeji@lcieducation.netI');
+  const [email, setEmail] = useState(user.Email);
   const [password, setPassword] = useState("");
-  const [firstname, setFirstname] = useState("iheb");
-  const [lastname, setLastname] = useState("chebbi");
-  const [username, setUsername] = useState("user123");
-  const [country, setCountry] = useState("Tunisia");
+  const [firstname, setFirstname] = useState(user.FirstName);
+  const [lastname, setLastname] = useState(user.LastName);
+  const [username, setUsername] = useState(user.Username);
+  const [country, setCountry] = useState(user.Country);
   const [appLanguage, setAppLanguage] = useState(null);
   const [countries, setCountries] = useState(countriesData.en);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchAppLanguage = async () => {
@@ -78,11 +79,11 @@ export const useProfileViewModel = () => {
 
     try {
       await sendContactMessage(contactData);
-      Alert.alert("Success", "Message sent successfully");
+      Alert.alert(t("profileScreen.Success"),t("header.SuccessMessage"));
       setContactSubject("");
       setContactMessage("");
     } catch (error) {
-      Alert.alert("Error", error.message);
+      Alert.alert(t("Error"), error.message);
     }
 
     handleCloseContactModal();
@@ -99,12 +100,12 @@ export const useProfileViewModel = () => {
       FirstName: firstname,
       LastName: lastname,
       Username: username,
-      Country: country,
+      Country: country, 
     };
-  
+    
     try {
       const response = await updateProfile(user.id, profileData);
-      Alert.alert("Success", response.message);  
+      Alert.alert(t("profileScreen.Success"),t("profileScreen.profilesuccess"));  
     } catch (error) {
       Alert.alert("Error updating profile:", error.message);
     }

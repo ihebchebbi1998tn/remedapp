@@ -4,6 +4,9 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserContext } from "../../Routings/UserContext";
 import { sendBugReportAPI } from "../Services/apiService2";
+import { Alert } from "react-native";
+import { useTranslation } from "react-i18next";
+
 
 const useHeaderViewModel = () => {
     const navigation = useNavigation();
@@ -13,6 +16,7 @@ const useHeaderViewModel = () => {
     const [isReportBugModalOpen, setIsReportBugModalOpen] = useState(false);
     const [bugDescription, setBugDescription] = useState("");
     const { user } = useContext(UserContext);
+    const { t } = useTranslation();
 
     const openSidebar = () => setIsSidebarOpen(true);
     const closeSidebar = () => setIsSidebarOpen(false);

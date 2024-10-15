@@ -34,7 +34,7 @@ const Stats = () => {
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
-        `${BASE_URL}remed/api/reports/getall_report.php`
+        `${BASE_URL}api/reports/all`
       );
       const result = await response.json();
       setData((prevData) => {
@@ -107,7 +107,7 @@ const Stats = () => {
 
   const calculateCollectedPercentage = () => {
     const collectedCount = data.reduce(
-      (count, item) => (item.state === "Collected" ? count + 1 : count),
+      (count, item) => ((item.state === "Collected" && item.state === 'Reported') ? count + 1 : count),
       0
     );
     return ((collectedCount / data.length) * 100).toFixed(0);

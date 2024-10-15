@@ -48,10 +48,10 @@ const useBottomTabNavigatorViewModel = () => {
   };
 
   const closeModal = () => {
-    setTimeout(() => {
+   
       setMainModalVisible(false);
       setFormModalVisible(false);
-    }, 300);
+   
   };
 
   const submitForm = async (t) => {
@@ -83,13 +83,11 @@ const useBottomTabNavigatorViewModel = () => {
     try {
       const result = await submitReport(formData, user, title, description, user.Country, altitude, longitude);
       if (result.status) {
-        closeModal();
         setThankYouModalVisible(true);
         setTimeout(() => setThankYouModalVisible(false), 2000);
       } else {
         setFoundTags(result.tags);
         setFalseURL(result.image_url);
-        closeModal();
         setErrorModalVisible(true);
         setTimeout(() => setErrorModalVisible(false), 50000);
       }
@@ -98,6 +96,8 @@ const useBottomTabNavigatorViewModel = () => {
       setTimeout(() => setErrorModalVisible(false), 6000);
     } finally {
       setLoading(false);
+      setMainModalVisible(false);
+      setFormModalVisible(false);
     }
   };
 

@@ -313,7 +313,7 @@ const renderModals = ({
             </View>
           )}
           <TouchableOpacity
-            style={styles.submitButton}
+            style={styles.submitButtonAAi}
             onPress={submitErrorAI}
           >
                       <Text style={styles.submitButtonText}>

@@ -14,7 +14,7 @@ export const useLoginViewModel = (navigation) => {
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
   const { updateUser } = useContext(UserContext);
-  
+
   const openSidebar = () => setIsSidebarOpen(true);
   const closeSidebar = () => setIsSidebarOpen(false);
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
@@ -26,7 +26,7 @@ export const useLoginViewModel = (navigation) => {
       const data = await fetchLogin(email, password);
       handleLoginResponse(data);
     } catch (error) {
-      console.error("Error:", error);
+      console.error(t("Error"), error);
       Alert.alert("Error", "An error occurred while logging in");
     } finally {
       setIsLoading(false);
@@ -34,29 +34,36 @@ export const useLoginViewModel = (navigation) => {
   };
 
   const handleLoginResponse = async (data) => {
-    if (data.error === "User not found") {
-      Alert.alert(t("Error"), t("UserNotFound"));
-    } else if (data.error === "Incorrect password") {
-      Alert.alert(t("Error"), t("IncorrectPassword"));
+    if (data.error) {
+      if (data.error === "User not found") {
+        Alert.alert(t("Error"), t("UserNotFound"));
+      } else if (data.error === "Incorrect password") {
+        Alert.alert(t("Error"), t("IncorrectPassword"));
+      } else {
+        Alert.alert(t("Error"), t("An unexpected error occurred"));
+      }
     } else {
       try {
         if (stayLoggedIn) {
           await AsyncStorage.setItem("user", JSON.stringify(data.user));
         } else {
-          updateUser(data.user); 
+          await AsyncStorage.setItem("user", JSON.stringify(data.user));
         }
+  
+        updateUser(data.user);  
+
+        const stayLoggedInValue = stayLoggedIn ? 1 : 2; 
+
         if (data.user.role === "user") {
-          navigation.navigate("UserScreens");
+          navigation.navigate("UserScreens", { stayLoggedInValue });
         } else {
-          navigation.navigate("AdminScreens");
+          navigation.navigate("AdminScreens", { stayLoggedInValue });
         }
       } catch (error) {
         console.error("Error storing user data:", error);
       }
     }
   };
-  
-  
 
   return {
     email,

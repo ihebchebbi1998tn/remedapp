@@ -11,7 +11,7 @@ const useSplashScreenViewModel = (navigation, updateUser) => {
     const checkLoggedInUser = async () => {
       try {
         const user = await AsyncStorage.getItem('user');
-        console.log(user);
+     
         if (user && user !== "noUser") {
           const parsedUser = JSON.parse(user);
           updateUser(parsedUser);

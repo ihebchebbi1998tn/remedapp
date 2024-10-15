@@ -1,10 +1,9 @@
-// HeaderAPI.js
 import { BASE_URL } from "../../apiConfig";
 
 export const sendBugReportAPI = async (user, bugDescription) => {
-    const { FirstName, LastName, id } = user;
-    const subject = 'Bug Report';
-    const url = `${BASE_URL}/remed/api/utilisateur/sendbug.php`;
+    const { firstName, lastName, id } = user;  
+    const subject = 'Bug Report';  
+    const url = `${BASE_URL}api/users/send-bug`; 
 
     const response = await fetch(url, {
         method: 'POST',
@@ -12,8 +11,8 @@ export const sendBugReportAPI = async (user, bugDescription) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            firstName: FirstName,
-            lastName: LastName,
+            firstName, 
+            lastName, 
             id,
             subject,
             message: bugDescription,

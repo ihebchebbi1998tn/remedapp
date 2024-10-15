@@ -41,29 +41,29 @@ const useSignupViewModel = (navigation) => {
   };
 
   const handleSignup = async () => {
-    if (password !== confirmPassword) {
-      alert(t('signup.passwordMismatch'));
-      return;
-    }
+  if (password !== confirmPassword) {
+    alert(t('signup.passwordMismatch'));
+    return;
+  }
 
-    try {
-      const data = await signup({
-        firstName,
-        lastName,
-        username,
-        email,
-        country,
-        password,
-      });
-      setModalMessage(t('signup.successMessage'));
-      setModalVisible(true);
-    } catch (error) {
-      setModalMessage(t('signup.errorMessage'));
-      setModalVisible(true);
-      console.error("Signup error:", error);
-    }
-  };
-
+  try {
+    const data = await signup({
+      firstName,
+      lastName,
+      username,
+      email,
+      country,
+      password,
+    });
+    setModalMessage(t('signup.successMessage'));
+    setModalVisible(true);
+  } catch (error) {
+    setModalMessage(error.message || t('signup.errorMessage'));
+    setModalVisible(true);
+    console.error("Signup error:", error);
+  }
+};
+  
   const getCountries = (language) => {
     const countries = {
       en: ["Tunisia", "Italy", "France", "England"],

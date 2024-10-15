@@ -1,1 +1,1 @@
-export const BASE_URL = "http://vps-0c1f981a.vps.ovh.ca:3001/";
+export const BASE_URL = "https://vps-0c1f981a.vps.ovh.ca:3001/";

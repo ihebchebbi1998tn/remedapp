@@ -242,6 +242,7 @@ const styles = StyleSheet.create({
   confirmationTitle: {
     fontSize: 18,
     fontWeight: "bold",
+    color: Colors.white,
     marginBottom: 20,
   },
   confirmationButtonContainer: {

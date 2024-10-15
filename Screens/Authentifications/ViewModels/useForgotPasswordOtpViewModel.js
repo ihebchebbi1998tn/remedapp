@@ -16,34 +16,27 @@ const useForgotPasswordOtpViewModel = (navigation, route) => {
 
   useEffect(() => {
     const generateRandomCode = () => {
-      return Math.floor(10000 + Math.random() * 90000).toString();
+      return Math.floor(10000 + Math.random() * 90000).toString(); // Generate a random 5-digit OTP code
     };
 
     const sendCodeToApi = async () => {
       const randomCode = generateRandomCode();
       setGeneratedCode(randomCode);
       try {
-        const result = await sendOtpCode(email, randomCode);
+        const result = await sendOtpCode(email, randomCode); // Send OTP to the new API
         if (result.success) {
           console.log("Code sent successfully");
         } else {
-          console.log("Code sent successfully");
+          Alert.alert(t('Error'), t('Failed to send OTP code'));
         }
       } catch (error) {
         console.error("Error sending code:", error);
+        Alert.alert(t('Error'), t('Failed to send OTP code'));
       }
     };
 
     sendCodeToApi();
   }, [email]);
-
-  const openSidebar = () => {
-    setIsSidebarOpen(true);
-  };
-
-  const closeSidebar = () => {
-    setIsSidebarOpen(false);
-  };
 
   const handleOtpInputChange = (index, value) => {
     const updatedOtpCode = [...otpCode];
@@ -51,40 +44,41 @@ const useForgotPasswordOtpViewModel = (navigation, route) => {
     setOtpCode(updatedOtpCode);
 
     if (value !== "" && index < inputs.current.length - 1) {
-      inputs.current[index + 1].focus();
+      inputs.current[index + 1].focus(); // Automatically move to the next input field
     }
   };
 
   const handleOtpSubmit = async () => {
-    const enteredCode = otpCode.join("");
+    const enteredCode = otpCode.join(""); // Combine the individual digits into a single OTP code
     if (enteredCode === generatedCode) {
-      setIsModalVisible(true);
+      setIsModalVisible(true); // If OTP is correct, show the modal to update the password
     } else {
       Alert.alert(t('Error'), t('The code is incorrect'));
     }
   };
 
   const handlePasswordChange = async () => {
-    if (newPassword === confirmPassword) {
-      try {
-        const json = await updatePassword(email, newPassword);
-
-        if (json) {
-          setIsModalVisible(false);
-          Alert.alert(t('Success'), t('Password updated successfully'), [
-            { text: "OK", onPress: () => navigation.navigate("LoginScreen") }
-          ]);
-        } else {
-          console.log("Failed to update password");
-          Alert.alert(t('Error'), t('Failed to update password'));
-        }
-      } catch (error) {
-        console.error("Error updating password:", error.message);
-      }
-    } else {
+    if (newPassword !== confirmPassword) {
       Alert.alert(t('Error'), t('Passwords do not match'));
+      return;
+    }
+  
+    try {
+      const response = await updatePassword(email, newPassword); // Call API
+      if (response.success) {
+        setIsModalVisible(false);
+        Alert.alert(t('Success'), t('Password updated successfully'), [
+          { text: "OK", onPress: () => navigation.navigate("LoginScreen") }
+        ]);
+      } else {
+        Alert.alert(t('Error'), response.message || t('Failed to update password'));
+      }
+    } catch (error) {
+      console.error("Error updating password:", error.message);
+      Alert.alert(t('Error'), t('An unexpected error occurred. Please try again.'));
     }
   };
+  
 
   return {
     otpCode,
@@ -95,8 +89,8 @@ const useForgotPasswordOtpViewModel = (navigation, route) => {
     t,
     inputs,
     setOtpCode,
-    openSidebar,
-    closeSidebar,
+    openSidebar: () => setIsSidebarOpen(true),
+    closeSidebar: () => setIsSidebarOpen(false),
     handleOtpInputChange,
     handleOtpSubmit,
     handlePasswordChange,
