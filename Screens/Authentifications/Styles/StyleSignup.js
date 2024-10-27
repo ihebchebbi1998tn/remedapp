@@ -136,8 +136,10 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
+    alignSelf: "center",  // This ensures the button aligns at the center within its parent
     elevation: 2,
   },
+  
   modalContainer: {
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0.5)", 

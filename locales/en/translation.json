@@ -60,7 +60,7 @@
     "alreadyAccount": "Already have an account?",
     "logIn": "Log In",
     "passwordMismatch": "Passwords do not match",
-    "successMessage": "Thank you for joining the RE-MED community, {{firstName}}! We're excited to have you on board.",
+    "successMessage": "Thank you for joining the RE-MED community,! We're excited to have you on board.",
     "errorMessage": "Error creating user: "
   },
   "sidebar": {
