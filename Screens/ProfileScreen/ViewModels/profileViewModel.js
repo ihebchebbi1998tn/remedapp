@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { sendContactMessage, updateProfile } from "../Service/apiService";
 import { Alert } from "react-native";
 import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
 
 const countriesData = {
   en: ["Tunisia", "Italy", "France", "England"],
@@ -113,6 +114,17 @@ export const useProfileViewModel = () => {
     handleCloseEditProfileModal();
   };
 
+  
+  const handleDeleteUser = async () => {
+    try {
+      await deleteUser(user.id); // Call the deleteUser API with user ID
+        await AsyncStorage.removeItem('user');
+            navigation.navigate('LoginScreen');
+    } catch (error) {
+      Alert.alert(t("Error"), error.message);
+    }
+  };
+  
   return {
     email,
     setEmail,
