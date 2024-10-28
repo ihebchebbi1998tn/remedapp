@@ -150,5 +150,6 @@ export const useProfileViewModel = () => {
     handleSendContactMessage,
     handleSaveProfile,
     handleConfirmUpdate,
+    handleDeleteUser, // Add delete user function to return object
   };
 };
