@@ -83,6 +83,7 @@
         "subject": "Sujet",
         "message": "Message",
         "send": "Envoyer",
+            "deleteProfile": "Supprimer",
         "email": "Email",
         "telephone": "Téléphone",
         "password": "Mot de passe",
