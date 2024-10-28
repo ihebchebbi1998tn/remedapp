@@ -282,6 +282,14 @@ const CountryPickerModal = ({ visible, onClose, countries, onSelect }) => {
                 </>
               )}
             </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.modalButtonContact, { backgroundColor: 'red' }]} // Optional: style for delete button
+        onPress={handleDeleteProfile}
+      >
+        <Text style={styles.modalButtonText}>
+          {t("profileScreen.deleteProfile")}
+        </Text>
+      </TouchableOpacity>
             <TouchableOpacity
               style={styles.closeButton}
               onPress={handleCloseEditProfileModal}
