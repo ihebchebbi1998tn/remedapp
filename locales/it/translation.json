@@ -85,6 +85,7 @@
       "send": "Inviare",
       "email": "Email",
       "telephone": "Telefono",
+                  "deleteProfile": "Eliminare",
       "password": "Password",
       "save": "Salva",
       "version": "V 0.0.0.1",
