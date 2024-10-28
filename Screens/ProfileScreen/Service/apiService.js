@@ -57,3 +57,26 @@ export const updateProfile = async (userId, profileData) => {
     throw new Error(error.message);
   }
 };
+
+export const deleteUser = async (userId) => {
+  const deleteUrl = `${BASE_URL}api/users/delete/${userId}`;
+
+  try {
+    const response = await fetch(deleteUrl, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Failed to delete user");
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
