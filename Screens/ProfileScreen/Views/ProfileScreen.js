@@ -55,6 +55,7 @@ const ProfileScreen = () => {
     handleSendContactMessage,
     handleSaveProfile,
     handleConfirmUpdate,
+    handleDeleteUser,
   } = useProfileViewModel();
 
   const { t } = useTranslation();
@@ -284,7 +285,7 @@ const CountryPickerModal = ({ visible, onClose, countries, onSelect }) => {
             </TouchableOpacity>
       <TouchableOpacity
         style={[styles.modalButtonContact, { backgroundColor: 'red' }]} // Optional: style for delete button
-        onPress={handleDeleteProfile}
+        onPress={handleDeleteUser}
       >
         <Text style={styles.modalButtonText}>
           {t("profileScreen.deleteProfile")}
