@@ -1,7 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Alert } from 'react-native';
 import { fetchReports, getUserLocation, fetchAppLanguage } from '../Services/apiService';
 import { calculateDistance } from './calculateDistance';
 import { BASE_URL } from '../../../Navigation/apiConfig';
+import { useTranslation } from "react-i18next";
+
 export const useSharedViewModel = () => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
@@ -10,6 +13,7 @@ export const useSharedViewModel = () => {
   const [page, setPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(true);
   const [appLanguage, setAppLanguage] = useState('');
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchAppLanguageData();
@@ -42,12 +46,30 @@ export const useSharedViewModel = () => {
     }
   };
 
-  const getUserLocationData = async () => {
-    try {
+  const requestLocationPermission = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status === 'granted') {
       const location = await getUserLocation();
       setUserLocation(location);
-    } catch (error) {
-      console.error(error.message);
+    } else {
+      Alert.alert(t('NeededLocal'));
+    }
+  };
+
+  const getUserLocationData = async () => {
+    const { status } = await Location.getForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert(
+        t('localask'),
+        t('whyweuse'),
+        [
+          { text: t('cancellocali'), style: "cancel" },
+          { text: t('AllowLocal'), onPress: requestLocationPermission }
+        ]
+      );
+    } else {
+      const location = await getUserLocation();
+      setUserLocation(location);
     }
   };
 
@@ -90,6 +112,6 @@ export const useSharedViewModel = () => {
     refreshing,
     onRefresh,
     loadMore,
-    appLanguage, 
+    appLanguage,
   };
 };
