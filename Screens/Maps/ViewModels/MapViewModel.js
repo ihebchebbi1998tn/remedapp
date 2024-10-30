@@ -70,11 +70,18 @@ export const useMapViewModel = () => {
     getUserLocation();
   }, []);
 
-  const handleLocateMe = async () => {
+const handleLocateMe = useCallback(async () => {
     try {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Permission to access location was denied');
+      if (status !== "granted") {
+        Alert.alert(
+          t("localask"),
+          t("whyweuse"),
+          [
+            { text: t("cancellocali"), style: "cancel" },
+            { text: t("AllowLocal"), onPress: handleLocateMe }
+          ]
+        );
         return;
       }
       let { coords } = await Location.getCurrentPositionAsync({});
@@ -91,9 +98,9 @@ export const useMapViewModel = () => {
         });
       }
     } catch (error) {
-      console.error('Error getting location:', error);
+      console.error("Error getting location:", error);
     }
-  };
+  }, [t]);
 
   const handleSearch = (text) => {
     setSearch(text);
