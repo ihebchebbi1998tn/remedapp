@@ -12,6 +12,11 @@
   "Use my location": "Utiliser ma position",
   "Skip for now": "Passer pour l'instant",  
   "The code is incorrect": "Le code est incorrect",
+   "localask": "Accès à la localisation requis",
+  "whyweuse": "Nous utilisons votre position pour fournir des recommandations adaptées aux lieux à proximité. Veuillez autoriser l'accès à la localisation pour continuer",
+  "cancellocali": "Annuler",
+  "AllowLocal": "Autoriser",
+  "NeededLocal": "L'autorisation de localisation est requise pour continuer."
   "Success": "Succès",
   "Password updated successfully": "Mot de passe mis à jour avec succès",
   "Failed to update password": "Échec de la mise à jour du mot de passe",
