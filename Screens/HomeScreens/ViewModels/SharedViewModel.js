@@ -44,12 +44,30 @@ export const useSharedViewModel = () => {
   };
   
 
-  const getUserLocationData = async () => {
-    try {
+ const requestLocationPermission = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status === 'granted') {
       const location = await getUserLocation();
       setUserLocation(location);
-    } catch (error) {
-      console.error(error.message);
+    } else {
+      Alert.alert(t('NeededLocal'));
+    }
+  };
+
+  const getUserLocationData = async () => {
+    const { status } = await Location.getForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert(
+        t('localask'),
+        t('whyweuse'),
+        [
+          { text: t('cancellocali'), style: "cancel" },
+          { text: t('AllowLocal'), onPress: requestLocationPermission }
+        ]
+      );
+    } else {
+      const location = await getUserLocation();
+      setUserLocation(location);
     }
   };
 
