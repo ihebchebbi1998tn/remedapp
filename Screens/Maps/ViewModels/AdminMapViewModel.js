@@ -4,6 +4,7 @@ import haversine from "haversine-distance";
 import getDirections from "react-native-google-maps-directions";
 import { useTranslation } from "react-i18next";
 import { BASE_URL } from "../../../Navigation/apiConfig"; // Keep the BASE_URL import if used in other parts
+import { Alert } from "react-native";
 
 const useModalView = (markers, setMarkers, setFilteredMarkers, setSelectedMarker) => {
   const [search, setSearch] = useState("");
@@ -19,11 +20,19 @@ const useModalView = (markers, setMarkers, setFilteredMarkers, setSelectedMarker
     };
     getUserLocation();
   }, []);
-
+  
   const handleLocateMe = useCallback(async () => {
     try {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
+        Alert.alert(
+          t("localask"),
+          t("whyweuse"),
+          [
+            { text: t("cancellocali"), style: "cancel" },
+            { text: t("AllowLocal"), onPress: handleLocateMe }
+          ]
+        );
         return;
       }
       let { coords } = await Location.getCurrentPositionAsync({});
@@ -42,8 +51,7 @@ const useModalView = (markers, setMarkers, setFilteredMarkers, setSelectedMarker
     } catch (error) {
       console.error("Error getting location:", error);
     }
-  }, []);
-
+  }, [t]);
   const handleSearch = (text) => {
     setSearch(text);
     const filtered = markers.filter(

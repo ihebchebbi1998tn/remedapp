@@ -2,6 +2,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { fetchReports, getUserLocation, fetchAppLanguage } from '../Services/apiService';
 import { calculateDistance } from './calculateDistance';
 import { BASE_URL } from '../../../Navigation/apiConfig';
+import { useTranslation } from "react-i18next";
+import { Alert } from 'react-native';
+
 export const useSharedViewModel = () => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
@@ -10,6 +13,7 @@ export const useSharedViewModel = () => {
   const [page, setPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(true);
   const [appLanguage, setAppLanguage] = useState('');
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchAppLanguageData();

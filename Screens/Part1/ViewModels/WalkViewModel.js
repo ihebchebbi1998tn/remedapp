@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import * as Location from 'expo-location';
+import { Alert } from 'react-native';
 import { useTranslation } from "react-i18next";
 
 const useWalkViewModel = (navigation) => {
@@ -17,12 +18,16 @@ const useWalkViewModel = (navigation) => {
     );
   };
 
+  const handleLocationPermission = () => {
+    showLocationRequestExplanation();
+  };
+  
   const requestLocationPermission = async () => {
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
       
       if (status === 'granted') {
-        navigateToLoginScreen();
+        navigation.navigate("LoginScreen");  // Updated line
       } else {
         Alert.alert(t('NeededLocal'));
       }
@@ -41,6 +46,7 @@ const useWalkViewModel = (navigation) => {
   return {
     activeDotIndex,
     handleLocationPermission,
+    showLocationRequestExplanation,
     navigateToNextScreen
   };
 };
