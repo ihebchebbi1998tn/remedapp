@@ -81,11 +81,9 @@ const Walk4 = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right', 'bottom']}>
       <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Image source={ImageResources.WalkLocalisation} resizeMode="contain" style={styles.imageLarge} />
-        </View>
-        <View style={styles.contentContainer}>
-          <Text style={styles.title}>{t('ENABLE YOUR LOCATION')}</Text>
+        <View style={styles.allowContainer}>
+          <Text style={styles.title}>{t('ENABLEYOURLOCATION')}</Text>
+          <Text style={styles.description}>{t('AllowLocationText')}</Text>
         </View>
         <View style={styles.footer}>
           <LinearGradient colors={[Colors.primary, Colors.secondary]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.gradient}>
@@ -101,6 +99,7 @@ const Walk4 = ({ navigation }) => {
     </SafeAreaView>
   );
 };
+
 
 const Footer = ({ navigation, nextScreen, activeDotIndex, navigateToNextScreen }) => {
   return (

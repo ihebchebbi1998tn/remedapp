@@ -30,6 +30,12 @@ const styles = StyleSheet.create({
       marginBottom: "27%",
       alignItems: "center",
     },
+    allowContainer: {
+      paddingTop: "60%" ,
+      paddingHorizontal: 20,
+      marginBottom: "27%",
+      alignItems: "center",
+    },
     title: {
       fontSize: 22,
       fontWeight: "bold",
