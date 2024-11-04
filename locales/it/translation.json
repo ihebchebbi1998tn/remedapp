@@ -9,6 +9,8 @@
   "Use my location": "Usa la mia posizione",
   "Report": "Rapporto",
   "Collect": "Raccogliere",
+    "Permission denied": "Permesso negato",
+  "Location permission is required to continue.": "Il permesso di accesso alla posizione è richiesto per continuare.",
   "Skip for now": "Salta per ora",  
    "localask": "Accesso alla posizione richiesto",
    "whyweuse": "Consentire l'accesso alla posizione ci aiuta a individuare esattamente la posizione dei rifiuti segnalati, rendendo la pulizia più efficiente.",
