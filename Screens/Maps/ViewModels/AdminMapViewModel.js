@@ -21,37 +21,51 @@ const useModalView = (markers, setMarkers, setFilteredMarkers, setSelectedMarker
     getUserLocation();
   }, []);
   
-  const handleLocateMe = useCallback(async () => {
-    try {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert(
-          t("localask"),
-          t("whyweuse"),
-          [
-            { text: t("cancellocali"), style: "cancel" },
-            { text: t("AllowLocal"), onPress: handleLocateMe }
-          ]
-        );
-        return;
-      }
-      let { coords } = await Location.getCurrentPositionAsync({});
-      setUserLocation({
+ const handleLocateMe = useCallback(async () => {
+  try {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert(
+        t("localask"),
+        t("whyweuse"),
+        [
+          { text: t("cancellocali"), style: "cancel" },
+          {
+            text: t("AllowLocal"),
+            onPress: async () => {
+              const retryStatus = await Location.requestForegroundPermissionsAsync();
+              if (retryStatus.status === "granted") {
+                await handleLocateMe();
+              } else {
+                Alert.alert(t("Permission denied"), t("Location permission is required to continue."));
+              }
+            },
+          },
+        ]
+      );
+      return;
+    }
+
+    const { coords } = await Location.getCurrentPositionAsync({});
+    setUserLocation({
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+    });
+
+    if (mapRef.current) {
+      mapRef.current.animateToRegion({
         latitude: coords.latitude,
         longitude: coords.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
       });
-      if (mapRef.current) {
-        mapRef.current.animateToRegion({
-          latitude: coords.latitude,
-          longitude: coords.longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
-        });
-      }
-    } catch (error) {
-      console.error("Error getting location:", error);
     }
-  }, [t]);
+  } catch (error) {
+    console.error("Error getting location:", error);
+    Alert.alert(t("Error"), t("Could not retrieve location."));
+  }
+}, [t, mapRef]);
+  
   const handleSearch = (text) => {
     setSearch(text);
     const filtered = markers.filter(
