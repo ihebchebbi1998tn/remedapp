@@ -15,6 +15,8 @@
    "localask": "Accès à la localisation requis",
    "whyweuse": "Autoriser l'accès à la localisation nous aide à identifier l'emplacement exact des déchets signalés, rendant le nettoyage plus efficace.",
    "cancellocali": "Annuler",
+   "Permission denied": "Permission refusée",
+  "Location permission is required to continue.": "L'autorisation de localisation est requise pour continuer.",
   "AllowLocal": "Autoriser",
   "AllowLocationText": "Autoriser l'accès à la localisation nous aide à identifier l'emplacement exact des déchets signalés, rendant le nettoyage plus efficace.",
 "ENABLEYOURLOCATION": "ACTIVEZ VOTRE LOCALISATION",
