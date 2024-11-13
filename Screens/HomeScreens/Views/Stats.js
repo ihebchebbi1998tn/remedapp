@@ -139,7 +139,7 @@ const Stats = () => {
             lat: parseFloat(item.latitude),
             lng: parseFloat(item.longitude),
           },
-          image: { uri: `${BASE_URL}remed/api/reports/` + item.picture },
+          image: { uri: `${BASE_URL}` + item.picture },
           state: item.state,
         };
       });

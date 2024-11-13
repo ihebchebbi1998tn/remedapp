@@ -11,6 +11,7 @@
   "Someone have reported building waiste in :": "Quelqu'un a signalé la construction de déchets à :",
   "Use my location": "Utiliser ma position",
   "Skip for now": "Passer pour l'instant",  
+  "cameraPermissionDenied": "Vous devez autoriser la fonctionnalité de la caméra pour utiliser la caméra et prendre des photos ou les télécharger.",
   "The code is incorrect": "Le code est incorrect",
    "localask": "Accès à la localisation requis",
    "whyweuse": "Autoriser l'accès à la localisation nous aide à identifier l'emplacement exact des déchets signalés, rendant le nettoyage plus efficace.",
@@ -67,7 +68,7 @@
         "alreadyAccount": "Vous avez déjà un compte?",
         "logIn": "Se connecter",
         "passwordMismatch": "Les mots de passe ne correspondent pas",
-        "successMessage": "Merci d'avoir rejoint la communauté RE-MED, {{firstName}}! Nous sommes ravis de vous avoir à bord.",
+        "successMessage": "Merci d'avoir rejoint la communauté RE-MED! Nous sommes ravis de vous avoir à bord.",
         "errorMessage": "Erreur lors de la création de l'utilisateur : "
       },
       "sidebar": {

@@ -2,7 +2,7 @@
   "expo": {
     "name": "remed",
     "slug": "remed",
-    "version": "1.0.0",
+    "version": "1.0.2",  
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -35,7 +35,9 @@
         "googleMaps": {
           "apiKey": "AIzaSyCp9ra0Wds6wiRGSRQywr8NhQn799lbpZA"
         }
-      }
+      },
+      "versionCode": 2,       
+      "versionName": "1.0.2"   
     },
     "web": {
       "favicon": "./assets/favicon.png"

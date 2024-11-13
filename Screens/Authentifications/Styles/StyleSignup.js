@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   inputText: {
     width: "100%",
     borderRadius: 15,  // Increased for rounder corners
-    height: 42,   
+    height: 50,   // Increased height for more space
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 12,    
@@ -76,19 +76,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-        width: "50%",
-        borderRadius: 20,
+    width: "50%",
+    borderRadius: 20,
     height: 50,   
     alignItems: "center",
     justifyContent: "center",
     marginTop: 10,    
     backgroundColor: Colors.primary,
     shadowColor: "#000", // Shadow color
-    shadowColor: "#000",
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 3,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
   },
   buttonText: {
     fontSize: 15,     
@@ -173,7 +172,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     borderRadius: 20,
     padding: 10,
-
   },
   closeButtonText: {
     color: Colors.primary,
@@ -187,7 +185,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     fontSize: 30,
   },
- 
 });
 
 export default styles;

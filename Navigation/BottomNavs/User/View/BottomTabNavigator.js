@@ -7,6 +7,7 @@ import {
   Modal,
   Animated,
   Image,
+  Alert,
   ActivityIndicator,
 } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
@@ -15,7 +16,11 @@ import Colors from "../../../../utils/color";
 import styles from "../Styles/StyleBottomTab";
 import { getTabArr, TabButton } from "./tabsview";
 import useBottomTabNavigatorViewModel from "../ViewModels/useModalView";
-
+import * as Permissions from "expo-permissions"; // Use expo-permissions to handle permissions
+import { useState , useEffect } from "react";
+import * as MediaLibrary from 'expo-media-library';
+import { Camera } from 'expo-camera'; // Use Camera permission from expo-camera
+import { Location } from "expo-media-library";
 const renderModals = ({
   mainModalVisible,
   formModalVisible,
@@ -356,6 +361,53 @@ const BottomTabNavigator = () => {
   const { t } = useTranslation();
   const TabArr = getTabArr(t);
 
+
+
+  const [cameraPermission, setCameraPermission] = useState(null);
+  const [mediaPermission, setMediaPermission] = useState(null); // Add media permission
+
+  useEffect(() => {
+    const requestPermissions = async () => {
+      try {
+        // Request Camera Permission
+        const { status: cameraStatus } = await Camera.requestCameraPermissionsAsync();
+        setCameraPermission(cameraStatus);
+
+        // Request Media Library Permission for full access to media (not just photos or videos)
+        const { status: mediaStatus } = await MediaLibrary.requestPermissionsAsync();
+        setMediaPermission(mediaStatus);
+      } catch (error) {
+        console.error('Error requesting permissions:', error);
+        Alert.alert(
+          t('error'),
+          t('permissions_request_failed')
+        );
+      }
+    };
+
+    requestPermissions();
+  }, []);
+
+  const handleCameraPressWithPermission = async () => {
+    try {
+      // Check if both camera and media permissions are granted
+      if (cameraPermission === 'granted' && mediaPermission === 'granted') {
+        handleCameraPress();
+      } else {
+        Alert.alert(
+          t('permissions_required'),
+          t('camera_and_media_permissions_needed')
+        );
+      }
+    } catch (error) {
+      console.error('Error in handleCameraPressWithPermission:', error);
+      Alert.alert(
+        t('error'),
+        t('camera_access_failed')
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.tabGroup}>
@@ -364,10 +416,11 @@ const BottomTabNavigator = () => {
         ))}
       </View>
       <View style={styles.cameraContainer}>
-        <TouchableOpacity
+      <TouchableOpacity
           style={styles.cameraButton}
-          onPress={handleCameraPress}
+          onPress={handleCameraPressWithPermission} // Use the new function here
           activeOpacity={0.8}
+          disabled={cameraPermission !== 'granted' || mediaPermission !== 'granted'} // Disable button if permissions are not granted
         >
           <AntDesign name="camera" size={27} color="#FFF" />
         </TouchableOpacity>

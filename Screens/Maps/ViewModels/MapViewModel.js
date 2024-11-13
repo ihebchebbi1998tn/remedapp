@@ -8,6 +8,8 @@ import styles from '../Styles/StyleMapScreen';
 import { Text } from 'react-native';
 import { useTranslation } from "react-i18next";
 import { Alert } from "react-native";
+import React, { useCallback } from 'react';
+
 
 const initialCarLocations = [
   { latitude: 25.353261, longitude: 55.427259 },

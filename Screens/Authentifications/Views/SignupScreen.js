@@ -4,10 +4,13 @@ import {
   TextInput,
   Image,
   Text,
-     StatusBar,
+   StatusBar,
   TouchableOpacity,
+  KeyboardAvoidingView,
   ScrollView,
   Modal,
+  Platform,
+
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
@@ -96,6 +99,10 @@ const CountryPickerModal = ({ visible, onClose, countries, onSelect }) => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}> 
+     <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
     <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right', 'bottom']}>
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
@@ -418,6 +425,7 @@ const CountryPickerModal = ({ visible, onClose, countries, onSelect }) => {
         onSelect={(selectedCountry) => setCountry(selectedCountry)}
       />
     </SafeAreaView>
+    </KeyboardAvoidingView>
     </GestureHandlerRootView> 
 
   );

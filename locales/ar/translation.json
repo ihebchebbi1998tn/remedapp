@@ -10,6 +10,7 @@
   "Success": "نجاح",
   "Report": "تقرير",
   "Collect": "جمع",
+  "cameraPermissionDenied": "يجب عليك السماح باستخدام الكاميرا لتتمكن من استخدامها والتقاط الصور أو رفعها.",
     "Permission denied": "تم رفض الإذن",
   "Location permission is required to continue.": "يتطلب الاستمرار إذن الوصول إلى الموقع.",
   "localask": "مطلوب الوصول إلى الموقع",
@@ -67,7 +68,7 @@
     "alreadyAccount": "هل لديك حساب بالفعل؟",
     "logIn": "تسجيل الدخول",
     "passwordMismatch": "كلمات السر غير متطابقة",
-    "successMessage": "شكرا لانضمامك إلى مجتمع RE-MED، {{firstName}}! نحن متحمسون لوجودك معنا.",
+    "successMessage": "شكرا لانضمامك إلى مجتمع RE-MED، ! نحن متحمسون لوجودك معنا.",
     "errorMessage": "خطأ في إنشاء المستخدم: "
   },
   "sidebar": {

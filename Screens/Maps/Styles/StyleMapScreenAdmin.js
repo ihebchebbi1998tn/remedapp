@@ -192,14 +192,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: Colors.primary,
     borderWidth: 1,
-    paddingHorizontal: 10,
-    height: 40,
+    paddingHorizontal: 9,  // Reduced padding by 1
+    height: 38,  // Reduced height by 2
   },
   input: {
     flex: 1,
-    marginLeft: 10,
+    marginLeft: 9,  // Reduced margin by 1
     color: Colors.primary,
   },
+  
   dropdown: {
     marginTop: 5,
     backgroundColor: Colors.white,

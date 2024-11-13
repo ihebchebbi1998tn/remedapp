@@ -17,6 +17,7 @@
    "AllowLocal": "Allow",
    "NeededLocal": "Location access is required to identify the reported trash location.",
   "Someone": "Someone",
+  "cameraPermissionDenied": "You need to allow camera functionality to use the camera and take pictures or upload it.",
   "Welcome to RE-MED Community": "Welcome to RE-MED Community",
   "THE RE-MED PROJECT": "The RE-MED project has been supported by funding from the European Union ENI CBC MED Program (Education Research Technological Development and Innovation) under study agreement N°28-1682",
   "username": "Username",
@@ -67,7 +68,7 @@
     "alreadyAccount": "Already have an account?",
     "logIn": "Log In",
     "passwordMismatch": "Passwords do not match",
-    "successMessage": "Thank you for joining the RE-MED community,! We're excited to have you on board.",
+    "successMessage": "Thank you for joining the RE-MED community! We're excited to have you on board.",
     "errorMessage": "Error creating user: "
   },
   "sidebar": {

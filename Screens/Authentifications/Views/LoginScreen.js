@@ -6,7 +6,10 @@ import {
   Text,
    StatusBar,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Alert,
   ActivityIndicator,
+  Platform
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import SidebarModal from "../../../Navigation/SideBar/SidebarModal";
@@ -41,6 +44,10 @@ export default function LoginScreen({ navigation }) {
 
   return (
      <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right', 'bottom']}>
+       <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
         <ImageBackground
         source={{ uri: 'https://media.istockphoto.com/id/903533082/vector/abstract-gray-background.jpg?s=612x612&w=0&k=20&c=4Voiv87FE56PeR5cZTBH7y_6rwPG4jaWD6ERIbSfbpk=' }} // Replace with your image URL
         style={{ flex: 1 }}
@@ -214,6 +221,7 @@ export default function LoginScreen({ navigation }) {
       </View>
       <SidebarModal isOpen={isSidebarOpen} onClose={closeSidebar} />
       </ImageBackground>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

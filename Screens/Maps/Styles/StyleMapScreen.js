@@ -193,20 +193,20 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderColor: Colors.primary,
     borderWidth: 1,
-    paddingHorizontal: 10,
-    height: 40,
-        shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 3,
+    paddingHorizontal: 9,  // Reduced padding by 1
+    height: 38,  // Reduced height by 2
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
   },
   input: {
     flex: 1,
-    marginLeft: 10,
+    marginLeft: 9,  // Reduced margin by 1
     color: Colors.primary,
-    
   },
+  
   dropdown: {
     marginTop: 5,
     backgroundColor: Colors.white,

@@ -4,6 +4,8 @@ import { calculateDistance } from './calculateDistance';
 import { BASE_URL } from '../../../Navigation/apiConfig';
 import { useTranslation } from "react-i18next";
 import { Alert } from 'react-native';
+import * as Location from 'expo-location';
+
 
 export const useSharedViewModel = () => {
   const [search, setSearch] = useState("");
