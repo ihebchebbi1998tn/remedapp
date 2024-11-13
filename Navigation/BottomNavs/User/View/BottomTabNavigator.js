@@ -362,20 +362,35 @@ const BottomTabNavigator = () => {
   const TabArr = getTabArr(t);
 
 
-
   const [cameraPermission, setCameraPermission] = useState(null);
-  const [mediaPermission, setMediaPermission] = useState(null); // Add media permission
+  const [mediaPermission, setMediaPermission] = useState(null);
 
   useEffect(() => {
     const requestPermissions = async () => {
       try {
-        // Request Camera Permission
-        const { status: cameraStatus } = await Camera.requestCameraPermissionsAsync();
-        setCameraPermission(cameraStatus);
+        // Show alert explaining why permissions are needed
+        Alert.alert(
+          t('permissions_needed'),
+          t('permissions_explanation'), // Replace with a string like "We need access to your camera and media to upload photos or videos."
+          [
+            {
+              text: t('cancel'),
+              style: 'cancel',
+            },
+            {
+              text: t('ok'),
+              onPress: async () => {
+                // Request Camera Permission
+                const { status: cameraStatus } = await Camera.requestCameraPermissionsAsync();
+                setCameraPermission(cameraStatus);
 
-        // Request Media Library Permission for full access to media (not just photos or videos)
-        const { status: mediaStatus } = await MediaLibrary.requestPermissionsAsync();
-        setMediaPermission(mediaStatus);
+                // Request Media Library Permission for full access to media (not just photos or videos)
+                const { status: mediaStatus } = await MediaLibrary.requestPermissionsAsync();
+                setMediaPermission(mediaStatus);
+              },
+            },
+          ]
+        );
       } catch (error) {
         console.error('Error requesting permissions:', error);
         Alert.alert(
@@ -390,13 +405,12 @@ const BottomTabNavigator = () => {
 
   const handleCameraPressWithPermission = async () => {
     try {
-      // Check if both camera and media permissions are granted
       if (cameraPermission === 'granted' && mediaPermission === 'granted') {
         handleCameraPress();
       } else {
         Alert.alert(
           t('permissions_required'),
-          t('camera_and_media_permissions_needed')
+          t('camera_and_media_permissions_needed') // "Camera and media permissions are required to use this feature."
         );
       }
     } catch (error) {
@@ -407,7 +421,6 @@ const BottomTabNavigator = () => {
       );
     }
   };
-
   return (
     <View style={styles.container}>
       <View style={styles.tabGroup}>
@@ -418,9 +431,9 @@ const BottomTabNavigator = () => {
       <View style={styles.cameraContainer}>
       <TouchableOpacity
           style={styles.cameraButton}
-          onPress={handleCameraPressWithPermission} // Use the new function here
+          onPress={handleCameraPressWithPermission}
           activeOpacity={0.8}
-          disabled={cameraPermission !== 'granted' || mediaPermission !== 'granted'} // Disable button if permissions are not granted
+          disabled={cameraPermission !== 'granted' || mediaPermission !== 'granted'}
         >
           <AntDesign name="camera" size={27} color="#FFF" />
         </TouchableOpacity>
