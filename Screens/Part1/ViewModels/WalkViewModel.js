@@ -9,32 +9,30 @@ const useWalkViewModel = (navigation) => {
 
   const showLocationRequestExplanation = () => {
     Alert.alert(
-      t('localask'),
-      t('whyweuse'),
+      t('localask'), // Title of the alert
+      t('whyweuse'), // Description of why you need location
       [
-        { text: t('cancellocali'), style: "cancel" },
-        { text: t('AllowLocal'), onPress: requestLocationPermission }
+        { text: t('cancellocali'), style: "cancel" }, // Cancel button
+        { text: t('AllowLocal'), onPress: requestLocationPermission } // Confirm action
       ]
     );
   };
 
   const handleLocationPermission = () => {
-    showLocationRequestExplanation();
+    showLocationRequestExplanation(); // Show the custom alert
   };
-  
+
   const requestLocationPermission = async () => {
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
-      
       if (status === 'granted') {
-        navigation.navigate("LoginScreen");  // Updated line
+        navigation.navigate("LoginScreen"); // Navigate when permission is granted
       } else {
-        Alert.alert(t('NeededLocal'));
+        Alert.alert(t('NeededLocal')); // Alert when permission is denied
       }
-      
     } catch (error) {
       console.error("Error requesting location permission:", error);
-      Alert.alert('An error occurred while requesting location access. Please try again.');
+      Alert.alert('An error occurred while requesting location access. Please try again.'); // Handle errors
     }
   };
 
@@ -47,7 +45,7 @@ const useWalkViewModel = (navigation) => {
     activeDotIndex,
     handleLocationPermission,
     showLocationRequestExplanation,
-    navigateToNextScreen
+    navigateToNextScreen,
   };
 };
 
