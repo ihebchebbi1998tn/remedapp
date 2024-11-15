@@ -88,12 +88,9 @@ const Walk4 = ({ navigation }) => {
         <View style={styles.footer}>
           <LinearGradient colors={[Colors.primary, Colors.secondary]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.gradient}>
             <TouchableOpacity style={styles.nextButton} onPress={handleLocationPermission}>
-              <Text style={styles.nextButtonText}>{t('Use my location')}</Text>
+              <Text style={styles.nextButtonText}>{t('Next')}</Text>
             </TouchableOpacity>
           </LinearGradient>
-          <TouchableOpacity style={styles.outlinedButton} onPress={() => navigation.navigate("LoginScreen")}>
-            <Text style={styles.outlinedButtonText}>{t('Skip for now')}</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
