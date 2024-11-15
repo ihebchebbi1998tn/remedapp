@@ -14,9 +14,10 @@ import Colors from "../../../utils/color";
 import Stats from "./Stats";
 import { useSharedViewModel } from "../ViewModels/SharedViewModel";
 import styles from "../Styles/StyleHomeScreen";
-
+import { useTranslation } from "react-i18next";
 const HomeScreen = () => {
   const { filteredData, refreshing, onRefresh, loadMore } = useSharedViewModel();
+  const { t } = useTranslation();
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -74,29 +75,31 @@ const HomeScreen = () => {
 
       {/* Modal for displaying item details */}
       <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            {selectedItem && (
-              <>
-                <Image source={selectedItem.image} style={styles.modalImage} />
-                <Text style={styles.modalTitle}>{selectedItem.name}</Text>
-                <Text style={styles.modalLocation}>{selectedItem.location}</Text>
-                <Text style={styles.modalDistance}>{selectedItem.distance}</Text>
-                <Button
-                  title="Close"
-                  onPress={() => setModalVisible(false)}
-                  color={Colors.primary}
-                />
-              </>
-            )}
-          </View>
-        </View>
-      </Modal>
+  animationType="fade"
+  transparent={true}
+  visible={modalVisible}
+  onRequestClose={() => setModalVisible(false)}
+>
+  <View style={styles.modalOverlay}>
+    <View style={styles.modalContainer}>
+      {selectedItem && (
+        <>
+          <Image source={selectedItem.image} style={styles.modalImage} />
+          <Text style={styles.modalTitle}>{selectedItem.name}</Text>
+          <Text style={styles.modalLocation}>{selectedItem.location}</Text>
+          <Text style={styles.modalDistance}>{selectedItem.distance}</Text>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => setModalVisible(false)}
+          >
+            <Text style={styles.closeButtonText}>{t('close')}</Text>
+          </TouchableOpacity>
+        </>
+      )}
+    </View>
+  </View>
+</Modal>
+
     </View>
   );
 };

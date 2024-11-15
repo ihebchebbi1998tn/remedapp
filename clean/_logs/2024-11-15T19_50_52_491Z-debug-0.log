@@ -7,8 +7,8 @@
 6 silly config:load:file:C:\Users\ihebc\AppData\Roaming\npm\etc\npmrc
 7 verbose title npm start
 8 verbose argv "start"
-9 verbose logfile logs-max:10 dir:C:\REMED\clean\_logs\2024-11-13T21_43_15_621Z-
-10 verbose logfile C:\REMED\clean\_logs\2024-11-13T21_43_15_621Z-debug-0.log
+9 verbose logfile logs-max:10 dir:C:\REMED\clean\_logs\2024-11-15T19_50_52_491Z-
+10 verbose logfile C:\REMED\clean\_logs\2024-11-15T19_50_52_491Z-debug-0.log
 11 silly logfile start cleaning logs, removing 1 files
 12 silly logfile done cleaning log files
 13 verbose exit 0
