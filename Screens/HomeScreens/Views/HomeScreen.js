@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,20 +6,25 @@ import {
   TouchableOpacity,
   FlatList,
   RefreshControl,
+  Modal,
+  Button,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "../../../utils/color";
 import Stats from "./Stats";
-import { useSharedViewModel } from '../ViewModels/SharedViewModel';
+import { useSharedViewModel } from "../ViewModels/SharedViewModel";
 import styles from "../Styles/StyleHomeScreen";
 
 const HomeScreen = () => {
-  const {
-    filteredData,
-    refreshing,
-    onRefresh,
-    loadMore,
-  } = useSharedViewModel();
+  const { filteredData, refreshing, onRefresh, loadMore } = useSharedViewModel();
+
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleItemPress = (item) => {
+    setSelectedItem(item);
+    setModalVisible(true);
+  };
 
   const renderHeader = () => (
     <>
@@ -28,7 +33,10 @@ const HomeScreen = () => {
   );
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => handleItemPress(item)}
+    >
       <View style={styles.cardContent}>
         <Image source={item.image} style={styles.cardImage} />
         {item.isLiked && (
@@ -46,7 +54,7 @@ const HomeScreen = () => {
   );
 
   return (
-      <View style={{ flex: 1 , backgroundColor: Colors.MainBackground}} >
+    <View style={{ flex: 1, backgroundColor: Colors.MainBackground }}>
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id.toString()}
@@ -55,7 +63,7 @@ const HomeScreen = () => {
         renderItem={renderItem}
         numColumns={2}
         columnWrapperStyle={styles.row}
-        key={'two-column'}
+        key={"two-column"}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
@@ -63,6 +71,32 @@ const HomeScreen = () => {
         onEndReachedThreshold={0.5}
       />
       <View style={styles.bottomNavigator}></View>
+
+      {/* Modal for displaying item details */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            {selectedItem && (
+              <>
+                <Image source={selectedItem.image} style={styles.modalImage} />
+                <Text style={styles.modalTitle}>{selectedItem.name}</Text>
+                <Text style={styles.modalLocation}>{selectedItem.location}</Text>
+                <Text style={styles.modalDistance}>{selectedItem.distance}</Text>
+                <Button
+                  title="Close"
+                  onPress={() => setModalVisible(false)}
+                  color={Colors.primary}
+                />
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
