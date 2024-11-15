@@ -18,6 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserContext } from "../../../Navigation/Routings/UserContext";
 import { BASE_URL } from "../../../Navigation/apiConfig";
 import styles from "../Styles/StatsStyle";
+import { Linking } from "react-native";
 
 const Stats = () => {
   const { t } = useTranslation();
@@ -313,7 +314,9 @@ const ButtonsRow = ({ setQrVisible, t, appLanguage }) => (
   <View style={styles.buttonsRow}>
     {appLanguage === "ar" ? (
       <>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button}         
+        onPress={() => Linking.openURL('tel:+21629249512')}
+        >
           <Text style={styles.buttonText}>{t("stats.callCollect")}</Text>
           <Icon name="phone" size={20} color="#FCF5F3" style={[styles.icon, styles.iconRight]} />
         </TouchableOpacity>
@@ -332,7 +335,9 @@ const ButtonsRow = ({ setQrVisible, t, appLanguage }) => (
       </>
     ) : (
       <>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button}
+        onPress={() => Linking.openURL('tel:+21629249512')}
+         >
           <Icon name="phone" size={20} color={Colors.white} style={styles.icon} />
           <Text style={styles.buttonText}>{t("stats.callCollect")}</Text>
         </TouchableOpacity>
