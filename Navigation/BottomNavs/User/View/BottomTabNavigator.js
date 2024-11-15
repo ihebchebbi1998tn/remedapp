@@ -362,65 +362,82 @@ const BottomTabNavigator = () => {
   const TabArr = getTabArr(t);
 
 
-  const [cameraPermission, setCameraPermission] = useState(null);
+const [cameraPermission, setCameraPermission] = useState(null);
   const [mediaPermission, setMediaPermission] = useState(null);
 
   useEffect(() => {
-    const requestPermissions = async () => {
+    const checkPermissions = async () => {
       try {
-        // Show alert explaining why permissions are needed
-        Alert.alert(
-          t('permissions_needed'),
-          t('permissions_explanation'), // Replace with a string like "We need access to your camera and media to upload photos or videos."
-          [
-            {
-              text: t('cancel'),
-              style: 'cancel',
-            },
-            {
-              text: t('ok'),
-              onPress: async () => {
-                // Request Camera Permission
-                const { status: cameraStatus } = await Camera.requestCameraPermissionsAsync();
-                setCameraPermission(cameraStatus);
-
-                // Request Media Library Permission for full access to media (not just photos or videos)
-                const { status: mediaStatus } = await MediaLibrary.requestPermissionsAsync();
-                setMediaPermission(mediaStatus);
-              },
-            },
-          ]
-        );
+        // Check current permissions
+        const cameraStatus = await Camera.getCameraPermissionsAsync();
+        const mediaStatus = await MediaLibrary.getPermissionsAsync();
+        
+        // If permissions are already granted, update state
+        if (cameraStatus.status === 'granted') {
+          setCameraPermission('granted');
+        }
+        if (mediaStatus.status === 'granted') {
+          setMediaPermission('granted');
+        } else {
+          // If permissions are not granted, request them
+          requestPermissions();
+        }
       } catch (error) {
-        console.error('Error requesting permissions:', error);
+        console.error('Error checking permissions:', error);
         Alert.alert(
           t('error'),
-          t('permissions_request_failed')
+          t('permissions_check_failed')
         );
       }
     };
 
-    requestPermissions();
+    checkPermissions();
   }, []);
 
-  const handleCameraPressWithPermission = async () => {
+  const requestPermissions = async () => {
     try {
-      if (cameraPermission === 'granted' && mediaPermission === 'granted') {
-        handleCameraPress();
-      } else {
-        Alert.alert(
-          t('permissions_required'),
-          t('camera_and_media_permissions_needed') // "Camera and media permissions are required to use this feature."
-        );
-      }
+      Alert.alert(
+        t('permissions_needed'),
+        t('permissions_explanation'), // "We need access to your camera and media to upload photos or videos."
+        [
+          {
+            text: t('cancel'),
+            style: 'cancel',
+          },
+          {
+            text: t('ok'),
+            onPress: async () => {
+              // Request Camera Permission
+              const { status: cameraStatus } = await Camera.requestCameraPermissionsAsync();
+              setCameraPermission(cameraStatus);
+
+              // Request Media Library Permission
+              const { status: mediaStatus } = await MediaLibrary.requestPermissionsAsync();
+              setMediaPermission(mediaStatus);
+            },
+          },
+        ]
+      );
     } catch (error) {
-      console.error('Error in handleCameraPressWithPermission:', error);
+      console.error('Error requesting permissions:', error);
       Alert.alert(
         t('error'),
-        t('camera_access_failed')
+        t('permissions_request_failed')
       );
     }
   };
+
+  const handleCameraPressWithPermission = async () => {
+    if (cameraPermission === 'granted' && mediaPermission === 'granted') {
+      // Your camera handling logic goes here
+    } else {
+      Alert.alert(
+        t('permissions_required'),
+        t('camera_and_media_permissions_needed') // "Camera and media permissions are required to use this feature."
+      );
+    }
+  };
+  
   return (
     <View style={styles.container}>
       <View style={styles.tabGroup}>
