@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,20 +6,28 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
-  StatusBar,
   RefreshControl,
-  ActivityIndicator,
+  Modal,
+  Button,
 } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import Colors from "../../../utils/color";
 import { useTranslation } from "react-i18next";
-import { useSharedViewModel } from '../ViewModels/SharedViewModel';
+import { useSharedViewModel } from "../ViewModels/SharedViewModel";
 import styles from "../Styles/StyleHomeScreen";
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HomeScreenAdmin = () => {
-  const { search, setSearch, filteredData, refreshing, onRefresh, loadMore } = useSharedViewModel();
+  const { search, setSearch, filteredData, refreshing, onRefresh, loadMore } =
+    useSharedViewModel();
   const { t } = useTranslation();
+
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleItemPress = (item) => {
+    setSelectedItem(item);
+    setModalVisible(true);
+  };
 
   const renderHeader = () => (
     <View style={styles.searchContainer}>
@@ -42,7 +50,11 @@ const HomeScreenAdmin = () => {
   );
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.card} key={item.id}>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => handleItemPress(item)}
+      key={item.id}
+    >
       <View style={styles.cardContent}>
         <Image source={item.image} style={styles.cardImage} />
         {item.isLiked && (
@@ -60,7 +72,7 @@ const HomeScreenAdmin = () => {
   );
 
   return (
-    <View style={{ backgroundColor: Colors.MainBackground }}>
+    <View style={{ backgroundColor: Colors.MainBackground, flex: 1 }}>
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id.toString()}
@@ -69,7 +81,7 @@ const HomeScreenAdmin = () => {
         renderItem={renderItem}
         numColumns={2}
         columnWrapperStyle={styles.row}
-        key={'two-column'}
+        key={"two-column"}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
@@ -77,9 +89,34 @@ const HomeScreenAdmin = () => {
         onEndReachedThreshold={0.5}
       />
       <View style={styles.bottomNavigator}></View>
+
+      {/* Modal for displaying item details */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            {selectedItem && (
+              <>
+                <Image source={selectedItem.image} style={styles.modalImage} />
+                <Text style={styles.modalTitle}>{selectedItem.name}</Text>
+                <Text style={styles.modalLocation}>{selectedItem.location}</Text>
+                <Text style={styles.modalDistance}>{selectedItem.distance}</Text>
+                <Button
+                  title="Close"
+                  onPress={() => setModalVisible(false)}
+                  color={Colors.primary}
+                />
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
-
 
 export default HomeScreenAdmin;
