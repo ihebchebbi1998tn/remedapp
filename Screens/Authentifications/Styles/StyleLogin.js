@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
       },
       button: {
-        width: "80%",
+        width: "100%",
         alignItems: "center",
         padding: 13,
         borderRadius: 8,
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
       },
       signupButton: {
-        width: "50%",
+        width: "100%",
         alignItems: "center",
         padding: 12,
         borderRadius: 20,
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         borderRadius: 20,
         marginTop: 12,
+       backgroundColor: Colors.primary,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.3,
@@ -148,6 +149,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: "1%",
       },
+    
     });
     
     export default styles;

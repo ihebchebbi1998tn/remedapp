@@ -181,24 +181,25 @@ export default function LoginScreen({ navigation }) {
           </View>
         </View>
 
-        <LinearGradient
-          colors={[Colors.primary,Colors.secondary]}
+
+
+    
+        <TouchableOpacity
+          style={styles.gradient} // Ensures touchable area is the entire gradient
+          onPress={handleLogin} // Add onPress to the wrapper to handle the login
+          colors={[Colors.primary, Colors.secondary]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
-          style={styles.gradient}
         >
-         <TouchableOpacity
-            style={styles.nextButton}
-            onPress={handleLogin}
-            disabled={isLoading || email.trim() === "" || password.trim() === ""}
-          >
-            {isLoading ? (
-              <ActivityIndicator style={styles.nextButtonText} size="small" color={Colors.buttonsTexts} />
-            ) : (
-              <Text style={styles.nextButtonText}>{t("Login")}</Text>
-            )}
-          </TouchableOpacity>
-        </LinearGradient>
+        
+           
+              {isLoading ? (
+                <ActivityIndicator style={styles.nextButtonText} size="small" color={Colors.buttonsTexts} />
+              ) : (
+                <Text style={styles.nextButtonText}>{t("Login")}</Text>
+              )}
+        </TouchableOpacity>
+
 
         <TouchableOpacity
           style={[styles.signupButton, { borderColor: Colors.primary }]}

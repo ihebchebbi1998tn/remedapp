@@ -13,7 +13,7 @@ const useWalkViewModel = (navigation) => {
       t('whyweuse'), // Description of why you need location
       [
         { text: t('cancellocali'), style: "cancel" }, // Cancel button
-        { text: t('AllowLocal'), onPress: requestLocationPermission } // Confirm action
+        { text: t('Next'), onPress: requestLocationPermission } // Confirm action
       ]
     );
   };

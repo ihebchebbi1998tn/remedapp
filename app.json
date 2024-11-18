@@ -36,8 +36,8 @@
           "apiKey": "AIzaSyCp9ra0Wds6wiRGSRQywr8NhQn799lbpZA"
         }
       },
-      "versionCode": 3,       
-      "versionName": "1.0.2"   
+      "versionCode": 5,       
+      "versionName": "1.0.5"   
     },
     "web": {
       "favicon": "./assets/favicon.png"
