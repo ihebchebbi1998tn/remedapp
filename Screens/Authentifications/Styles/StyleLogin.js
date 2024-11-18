@@ -112,19 +112,20 @@ const styles = StyleSheet.create({
       color: Colors.primary,
     },
     gradient: {
-      width: "95%",
-      borderRadius: 8,
-      marginTop: 20,
-    },
-    nextButton: {
-      borderRadius: 8,
-      paddingVertical: 5, 
-      paddingHorizontal: 24, 
-      width: "100%",
-      alignItems: "center",
-      justifyContent: "center", 
-      marginTop: 12,
-    },
+    width: "100%", // Ensure the button takes up full width of the parent container
+    borderRadius: 8,
+    marginTop: 20,
+  },
+  nextButton: {
+    borderRadius: 8,
+    paddingVertical: 12, // Increase vertical padding to make the area more clickable
+    paddingHorizontal: 24, // Ensure proper horizontal padding
+    width: "100%", // Ensure it takes up full width within the container
+    alignItems: "center",
+    justifyContent: "center", 
+    marginTop: 12,
+  },
+
     nextButtonText: {
       color: Colors.buttonsTexts,
       fontSize: 14,
