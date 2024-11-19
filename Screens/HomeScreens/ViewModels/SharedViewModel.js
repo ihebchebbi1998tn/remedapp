@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { Alert } from 'react-native';
 import * as Location from 'expo-location';
 
-
 export const useSharedViewModel = () => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
@@ -48,9 +47,8 @@ export const useSharedViewModel = () => {
       console.error(error);
     }
   };
-  
 
- const requestLocationPermission = async () => {
+  const requestLocationPermission = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status === 'granted') {
       const location = await getUserLocation();
@@ -67,7 +65,6 @@ export const useSharedViewModel = () => {
         t('localask'),
         t('whyweuse'),
         [
-          { text: t('cancellocali'), style: "cancel" },
           { text: t('AllowLocal'), onPress: requestLocationPermission }
         ]
       );
@@ -108,7 +105,6 @@ export const useSharedViewModel = () => {
       setPage(prevPage => prevPage + 1); 
     }
   };
-  
 
   return {
     search,
