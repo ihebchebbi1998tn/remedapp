@@ -8,11 +8,10 @@ const useWalkViewModel = (navigation) => {
   const { t } = useTranslation();
 
   const showLocationRequestExplanation = () => {
-    Alert.alert(
+   Alert.alert(
       t('localask'), // Title of the alert
       t('whyweuse'), // Description of why you need location
       [
-        { text: t('cancellocali'), style: "cancel" }, // Cancel button
         { text: t('Next'), onPress: requestLocationPermission } // Confirm action
       ]
     );
@@ -22,7 +21,7 @@ const useWalkViewModel = (navigation) => {
     showLocationRequestExplanation(); // Show the custom alert
   };
 
-  const requestLocationPermission = async () => {
+ const requestLocationPermission = async () => {
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status === 'granted') {
