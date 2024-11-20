@@ -401,10 +401,6 @@ const [cameraPermission, setCameraPermission] = useState(null);
         t('permissions_explanation'), // "We need access to your camera and media to upload photos or videos."
         [
           {
-            text: t('cancel'),
-            style: 'cancel',
-          },
-          {
             text: t('ok'),
             onPress: async () => {
               // Request Camera Permission
