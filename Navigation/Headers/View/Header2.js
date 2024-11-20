@@ -16,17 +16,12 @@ const Header2 = () => {
 
   return (
     <>
-      
       <View style={styles.container}>
         <View style={styles.notificationTextContainer}>
           {notificationText.split(' ').map((word, index) => (
             <Text key={index} style={word === ":" ? styles.colon : [styles.notificationText, appLanguage === "ar" && styles.notificationTextRTL]}>{word}{" "}</Text>
           ))}
         </View>
-        <TouchableOpacity style={styles.notificationIcon} onPress={openNotification}>
-          <Ionicons name="notifications-outline" size={24} color={Colors.primary} />
-          <View style={styles.notificationDot}></View>
-        </TouchableOpacity>
       </View>
     </>
   );
