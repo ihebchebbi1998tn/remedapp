@@ -425,7 +425,7 @@ const [cameraPermission, setCameraPermission] = useState(null);
 
   const handleCameraPressWithPermission = async () => {
     if (cameraPermission === 'granted' && mediaPermission === 'granted') {
-      // Your camera handling logic goes here
+         handleCameraPress();
     } else {
       Alert.alert(
         t('permissions_required'),
