@@ -43,8 +43,8 @@ const useHeader2ViewModel = () => {
 
         const latestReports = data.slice(0, 5).map(report => {
           return appLanguage === "ar"
-            ? ` ${report.location} ${t("Someone have reported building waiste in :")} `
-            : `${t("Someone have reported building waiste in :")} ${report.location}`;
+            ? ` ${report.location} ${t("Someone have reported building waiste in :")} 🛎`
+            : `🛎 ${t("Someone have reported building waiste in :")} ${report.location}`;
         });
 
         setNotificationTexts(latestReports);
