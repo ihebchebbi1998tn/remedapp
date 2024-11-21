@@ -317,14 +317,6 @@ const renderModals = ({
               </View>
             </View>
           )}
-          <TouchableOpacity
-            style={styles.submitButtonAAi}
-            onPress={submitErrorAI}
-          >
-                      <Text style={styles.submitButtonText}>
-              {t("BottomTabNavigator.MadeMistake")}
-            </Text>
-          </TouchableOpacity>
         </View>
       </View>
     </Modal>
