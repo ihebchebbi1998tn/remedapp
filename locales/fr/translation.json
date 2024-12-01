@@ -209,7 +209,7 @@
         "Collect": "Collecter",
         "Report": "Signaler",
         "Navigate": "Naviguer vers l'Emplacement"
-      }
-      
+      },
+      "CredentialsDoNotMatch": "Les identifiants ne correspondent pas"
   }
   

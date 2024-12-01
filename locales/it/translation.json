@@ -119,7 +119,8 @@
   "A3": "Sì, creare un account è necessario per utilizzare la nostra applicazione.",
   "A4": "La nostra applicazione supporta l'inglese, l'arabo, il francese e l'italiano.",
   "A5": "Sì, l'app è gratuita da scaricare e utilizzare.",   
-  "privacyPolicy": "In REMED, ci impegniamo a servirti meglio. Per fare ciò, raccogliamo alcuni dati per aiutarci a tracciare i tuoi rapporti e garantire che siano assegnati per una raccolta rapida. I tuoi dati ti avvantaggiano permettendoci di monitorare e affrontare rapidamente i tuoi rapporti, assegnarli ai membri giusti del team per tempi di risposta più rapidi, migliorare i nostri servizi anticipando le tue esigenze e offrendo supporto personalizzato. La tua privacy è importante per noi e i dati che raccogliamo vengono utilizzati esclusivamente per questi scopi per migliorare la tua esperienza con REMED."
+  "privacyPolicy": "In REMED, ci impegniamo a servirti meglio. Per fare ciò, raccogliamo alcuni dati per aiutarci a tracciare i tuoi rapporti e garantire che siano assegnati per una raccolta rapida. I tuoi dati ti avvantaggiano permettendoci di monitorare e affrontare rapidamente i tuoi rapporti, assegnarli ai membri giusti del team per tempi di risposta più rapidi, migliorare i nostri servizi anticipando le tue esigenze e offrendo supporto personalizzato. La tua privacy è importante per noi e i dati che raccogliamo vengono utilizzati esclusivamente per questi scopi per migliorare la tua esperienza con REMED.",
+  "CredentialsDoNotMatch": "Le credenziali non corrispondono"
     },
     "stats": {
       "latestReports": "Ultimi 3 rapporti",

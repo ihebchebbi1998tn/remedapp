@@ -9,6 +9,7 @@ import {
   Image,
   Alert,
   ActivityIndicator,
+  Linking,
 } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
@@ -40,6 +41,7 @@ const renderModals = ({
   setTitle,
   setDescription,
   closeModal,
+  setErrorModalVisible,
   t,
 }) => (
   <>
@@ -416,14 +418,39 @@ const [cameraPermission, setCameraPermission] = useState(null);
   };
 
   const handleCameraPressWithPermission = async () => {
-    if (cameraPermission === 'granted' && mediaPermission === 'granted') {
-         handleCameraPress();
+    console.log("Checking camera permissions...");
+
+    // Check current permissions status
+    const cameraStatus = await Camera.getCameraPermissionsAsync();
+
+    if (cameraStatus.status === 'granted') {
+        console.log("Permissions granted, opening camera...");
+        handleCameraPress();
     } else {
-      Alert.alert(
-        t('permissions_required'),
-        t('camera_and_media_permissions_needed') // "Camera and media permissions are required to use this feature."
-      );
+        console.log("Permissions not granted, checking if we can ask again...");
+        if (cameraStatus.canAskAgain) {
+            console.log("Requesting permissions again...");
+            const { status: newCameraStatus } = await Camera.requestCameraPermissionsAsync();
+            if (newCameraStatus === 'granted') {
+                handleCameraPress();
+            } else {
+                alertUserToManuallyEnablePermissions();
+            }
+        } else {
+            alertUserToManuallyEnablePermissions();
+        }
     }
+  };
+
+  const alertUserToManuallyEnablePermissions = () => {
+    Alert.alert(
+        "Permissions Required",
+        "Camera permissions are required to use this feature. Please enable them from your settings.",
+        [
+            { text: "Cancel", style: "cancel" },
+            { text: "Open Settings", onPress: () => Linking.openSettings() } // This opens the device settings
+        ]
+    );
   };
   
   return (
@@ -438,7 +465,6 @@ const [cameraPermission, setCameraPermission] = useState(null);
           style={styles.cameraButton}
           onPress={handleCameraPressWithPermission}
           activeOpacity={0.8}
-          disabled={cameraPermission !== 'granted' || mediaPermission !== 'granted'}
         >
           <AntDesign name="camera" size={27} color="#FFF" />
         </TouchableOpacity>

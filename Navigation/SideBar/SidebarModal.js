@@ -7,6 +7,11 @@ import Colors from '../../utils/color';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './Styles/StyleSideBar';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Linking } from 'react-native';
+
+const openWebsite = () => {
+  Linking.openURL('https://www.s-reg.tn/');
+};
 
 const SidebarModal = ({ isOpen, onClose }) => {
   const { t, i18n } = useTranslation();
@@ -106,9 +111,10 @@ const SidebarModal = ({ isOpen, onClose }) => {
               <Text style={styles.description}>{t('sidebar.description')}</Text>
               <Image source={require('../../assets/logoall.png')} style={styles.image} />
 
-              <Text style={[styles.menuItem, styles.centerText]}>
-                {t('sidebar.menuItems.visitWebsite')}
-              </Text>
+              <Text style={[styles.menuItem, styles.centerText]} onPress={openWebsite}>
+  {t('sidebar.menuItems.visitWebsite')}
+</Text>
+
               <View style={styles.separator} />
               <Text style={[styles.menuItem, styles.centerText]}>
                 {t('sidebar.menuItems.checkPoints')}

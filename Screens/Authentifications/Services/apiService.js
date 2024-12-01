@@ -1,4 +1,5 @@
 import { BASE_URL } from "../../../Navigation/apiConfig";
+import i18n from 'i18next';
 
 export const fetchLogin = async (username, password) => {
   try {
@@ -8,7 +9,7 @@ export const fetchLogin = async (username, password) => {
       body: JSON.stringify({ username, password }),
     });
     if (!response.ok) {
-      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      throw new Error(i18n.t("CredentialsDoNotMatch"));
     }
 
     return await response.json();
