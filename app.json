@@ -2,7 +2,7 @@
   "expo": {
     "name": "remed",
     "slug": "remed",
-    "version": "1.0.4",  
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,13 +11,15 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "com.dev.remed",
       "config": {
         "googleMapsApiKey": "AIzaSyCMkb6IXHavqSlWJVua2bLvPJq9wZxMHpI"
+      },
+      "infoPlist": {
+        "UIBackgroundModes": ["remote-notification"]
       }
     },
     "android": {
@@ -27,8 +29,16 @@
       },
       "permissions": [
         "CAMERA",
-        "CAMERA_ROLL",
-        "LOCATION"
+        "LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
       ],
       "package": "com.dev.remed",
       "config": {
@@ -36,16 +46,37 @@
           "apiKey": "AIzaSyCp9ra0Wds6wiRGSRQywr8NhQn799lbpZA"
         }
       },
-      "versionCode": 12,       
-      "versionName": "1.0.12"   
+      "versionCode": 12,
+      "versionName": "1.0.12",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "https",
+              "host": "remed.app"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "locales": {
+      "en": "./locales/en.json",
+      "fr": "./locales/fr.json"
+    },
     "extra": {
+      "apiUrl": "https://api.remed.com",
       "eas": {
         "projectId": "c9aaf46f-6577-421b-83b9-b3ffeeb5e648"
       }
-    }
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "scheme": "remed"
   }
 }
