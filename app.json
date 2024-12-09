@@ -19,6 +19,16 @@
         "googleMapsApiKey": "AIzaSyCMkb6IXHavqSlWJVua2bLvPJq9wZxMHpI"
       },
       "infoPlist": {
+        "UIBackgroundModes": ["remote-notification"],
+        "NSCameraUsageDescription": "We need access to your camera for scanning and taking pictures.",
+        "NSPhotoLibraryUsageDescription": "We need access to your photo library for uploading images.",
+        "NSMicrophoneUsageDescription": "We need access to your microphone for audio recording.",
+        "NSLocationWhenInUseUsageDescription": "We need access to your location for enhanced functionality.",
+        "NSLocationAlwaysUsageDescription": "We need access to your location in the background for better service.",
+        "NSMotionUsageDescription": "We need access to motion sensors for fitness-related activities."
+      }
+    },
+      "infoPlist": {
         "UIBackgroundModes": ["remote-notification"]
       }
     },
